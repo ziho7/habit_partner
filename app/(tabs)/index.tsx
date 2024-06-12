@@ -1,70 +1,63 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native'
+import React from 'react'
+import CustomButton from '@/components/CustomButton'
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+// import {images} from '../../constants'
+import images from '@/constants/images'
+import Donut2 from '@/components/Donut2'
 
-export default function HomeScreen() {
+const Home = () => {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+    <SafeAreaView className='mx-4'>
+      {/* title */}
+      <View className='flex-row h-16 justify-between items-center'>
+        <Text className='font-extrabold text-[24px]'>Habit Partner</Text>
+        <Text className=''>June 11</Text>
+      </View>
+      {/* calender */}
+      <View className='flex-row h-16 justify-between items-center'>
+        <View className='flex-row justify-start space-x-2'>
+          <CustomButton title='Today' handlePress={() => { }} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Week' handlePress={() => { }} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Month' handlePress={() => { }} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+        </View>
+
+        <TouchableOpacity className='bg-black' onPress={() => { }}>
+          {/* <Text>Press Here</Text> */}
+          <Image source={images.add} className='w-[26px] h-[26px]' />
+
+        </TouchableOpacity>
+      </View>
+
+      {/* habit list */}
+      <View className='mt-4'>
+        <View className='flex-row justify-between items-center h-[160px] bg-mypurple-light rounded-xl px-4'>
+          <View className='flex-col'>
+            <View className='flex-row items-center space-x-4 mb-2'>
+              <View className='bg-mypurple h-[36px] w-[36px] rounded-full justify-center items-center'>
+                <Image
+                  source={images.ball}
+                  className='w-[26px] h-[26px]'
+                  resizeMode='contain'
+                />
+              </View>
+              <Text className='font-semibold text-[20px]'>Sport</Text>
+            </View>
+            <Text className='text-[12px] text-mygray'>2024.03.07-2024.09.07</Text>
+            <Text className='text-[12px] text-mygray'>每天一次</Text>
+            <Text className='text-[12px] text-mygray'>已坚持30天</Text>
+          </View>
+
+          {/* <Donut /> */}
+          
+          <Donut2 />
+
+
+        </View>
+      </View>
+
+    </SafeAreaView>
+  )
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+export default Home
