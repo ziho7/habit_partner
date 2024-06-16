@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, TouchableOpacity, Image, SectionList, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
 import CustomButton from '@/components/CustomButton'
 
 // import {images} from '../../constants'
@@ -12,10 +12,12 @@ import SeperateLine from '@/components/SeperateLine'
 import HabitCard from '@/components/HabitCard'
 
 
+
 const Home = () => {
   const { loading, isLogged } = useGlobalContext()
 
   const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
+  let count = useRef(0)
 
   const todayHabits = getTodayHabits()
   console.log(todayHabits)
@@ -54,7 +56,19 @@ const Home = () => {
             return <HabitCard beginDate={dateToSlash(item.startDate)} endDate={dateToSlash(item.endDate)} totalCount={item.records.get(dateToSlash(item.startDate))?.done.toString() || '0'} name={item.name} />
           }}
           keyExtractor={(item) => item.id.toString()}
-          SectionSeparatorComponent={() => <SeperateLine />}
+          // SectionSeparatorComponent={(e) => {
+          //   console.log(e);
+            
+          //   return e.leadingItem ?  <SeperateLine/> : null
+          // }}
+
+          renderSectionHeader = {({section}) => {
+            if (section.title === 'finished') {
+              return <SeperateLine/>  
+            }
+            
+            return null
+          }}
         />
         {/* dividing ling */}
         

@@ -91,7 +91,6 @@ export const getMonthHabits = function () {
 const sortHabits = function (habits: Habit[]) {
     const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
     let unfinishedList = habits.filter(habit => {
-        // console.log(habit.records.get(currentDate) ?? { done: 0 })
         return habit.startDate <= currentDate &&
             habit.endDate >= currentDate &&
             (habit.records.get(currentDate) ?? { done: 0 }).done < habit.everycount
@@ -103,8 +102,6 @@ const sortHabits = function (habits: Habit[]) {
             (habit.records.get(currentDate) ?? { done: 0 }).done > habit.everycount
     })
 
-    // console.log(unfinishedList)
-    // console.log(finishedList)
 
     return [{
         "title": "unfinished",
