@@ -1,12 +1,9 @@
 import { View, Text, SafeAreaView, TouchableOpacity, Image, SectionList, ScrollView } from 'react-native'
 import React, { useRef, useState } from 'react'
 import CustomButton from '@/components/CustomButton'
-
-// import {images} from '../../constants'
 import images from '@/constants/images'
-import Donut2 from '@/components/Donut2'
 import { useGlobalContext } from '@/context/GlobalProvider'
-import { Habit, getCurrentDateAndDayOfWeekInTimeZone, getMonthHabits, getTodayHabits, getWeekHabits } from '@/lib/get_data'
+import { getCurrentDateAndDayOfWeekInTimeZone, getMonthHabits, getTodayHabits, getWeekHabits } from '@/lib/get_data'
 import { dateToSlash } from '@/lib/utils'
 import SeperateLine from '@/components/SeperateLine'
 import HabitCard from '@/components/HabitCard'
