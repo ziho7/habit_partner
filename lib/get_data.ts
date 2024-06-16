@@ -23,7 +23,7 @@ const habits: Habit[] = [
     {
         id: 1,
         user_id: "123",
-        name: 'Sport',
+        name: 'Study',
 
         startDate: '2024-03-07',
         endDate: '2024-09-07',
@@ -42,7 +42,7 @@ const habits: Habit[] = [
     {
         id: 2,
         user_id: "123",
-        name: 'Sport',
+        name: 'Jump Roll',
         startDate: '2024-03-07',
         endDate: '2024-09-07',
         creatorId: '1231239',
@@ -72,6 +72,23 @@ const habits: Habit[] = [
             ["2024-03-08", { done: 8 }],
             ["2024-03-09", { done: 1 }],
         ])
+    },
+    {
+        id: 4,
+        user_id: "123",
+        name: 'Swim',
+        startDate: '2024-03-07',
+        endDate: '2024-09-07',
+        creatorId: '1231239',
+        everycount: 5,
+        type: 0,
+        showsDays: [4, 5, 6, 7],
+        createTime: "2024-05-07",
+        records: new Map<string, Record>([
+            ["2024-03-07", { done: 0 }],
+            ["2024-03-08", { done: 8 }],
+            ["2024-03-09", { done: 1 }],
+        ])
     }
 ]
 
@@ -81,11 +98,11 @@ export const getTodayHabits = function () {
 }
 
 export const getWeekHabits = function () {
-    return habits
+    return sortHabits(habits)
 }
 
 export const getMonthHabits = function () {
-    return habits
+    return sortHabits(habits)
 }
 
 const sortHabits = function (habits: Habit[]) {
@@ -112,8 +129,8 @@ const sortHabits = function (habits: Habit[]) {
         "data": finishedList
     }
     ]
-
 }
+
 
 new Intl.DateTimeFormat("fr-CA", { year: "numeric", month: "2-digit", day: "2-digit" }).format(Date.now())
 
