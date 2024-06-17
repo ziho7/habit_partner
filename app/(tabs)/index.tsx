@@ -61,7 +61,6 @@ const Home = () => {
         transparent={true}
       >
         <AddHabit closeCallBack={() => setShowAddHabit(false)} okCallBack={() => {}} />
-
       </Modal>
     </SafeAreaView>
 

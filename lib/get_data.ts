@@ -9,13 +9,13 @@ export interface Habit {
     endDate: string
     creatorId: string
     everycount: number
-    type: number
+    type: number // 0 daily 1 weekly 2 monthly
     showsDays: number[]
     records: Map<string, Record>
     createTime: string
 }
 
-interface Record {
+export interface Record {
     done: number
 }
 
