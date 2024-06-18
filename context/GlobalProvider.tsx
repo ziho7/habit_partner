@@ -1,4 +1,6 @@
+import { getCurrentDateAndDayOfWeekInTimeZone, getTimeZone } from "@/lib/get_data";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 // import { getCurrentUser } from "../lib/appwrite";
 
@@ -11,6 +13,7 @@ const GlobalProvider = ({ children }: {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const timeZone = getTimeZone()
 
 //   useEffect(() => {
 //     getCurrentUser()
@@ -39,6 +42,7 @@ const GlobalProvider = ({ children }: {
         user,
         setUser,
         loading,
+        timeZone
       }}
     >
       {children}

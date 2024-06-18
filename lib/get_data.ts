@@ -12,7 +12,7 @@ export interface Habit {
     type: number // 0 daily 1 weekly 2 monthly
     showsDays: number[]
     records: Map<string, Record>
-    createTime: string
+    createTime: Date
 }
 
 export interface Record {
@@ -31,7 +31,7 @@ const habits: Habit[] = [
         everycount: 10,
         type: 0,
         showsDays: [1, 2, 3],
-        createTime: "2024-05-07",
+        createTime: new Date(2024,5,7),
         records: new Map<string, Record>([
             ["2024-03-07", { done: 0 }],
             ["2024-03-08", { done: 12 }],
@@ -49,7 +49,7 @@ const habits: Habit[] = [
         everycount: 10,
         type: 0,
         showsDays: [1, 2, 3],
-        createTime: "2024-05-07",
+        createTime: new Date(2024,5,7),
         records: new Map<string, Record>([
             ["2024-03-07", { done: 1 }],
             ["2024-03-08", { done: 5 }],
@@ -66,7 +66,7 @@ const habits: Habit[] = [
         everycount: 5,
         type: 0,
         showsDays: [4, 5, 6, 7],
-        createTime: "2024-05-07",
+        createTime: new Date(2024,5,7),
         records: new Map<string, Record>([
             ["2024-03-07", { done: 0 }],
             ["2024-03-08", { done: 8 }],
@@ -83,7 +83,7 @@ const habits: Habit[] = [
         everycount: 5,
         type: 0,
         showsDays: [4, 5, 6, 7],
-        createTime: "2024-05-07",
+        createTime: new Date(2024,5,7),
         records: new Map<string, Record>([
             ["2024-03-07", { done: 0 }],
             ["2024-03-08", { done: 8 }],
@@ -152,4 +152,11 @@ export const getCurrentDateAndDayOfWeekInTimeZone = () => {
 
     return { currentDate, dayOfWeek };
 };
+
+
+export const getTimeZone = () => {
+    return getCalendars()[0].timeZone
+}
+
+
 
