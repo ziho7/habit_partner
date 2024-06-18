@@ -29,9 +29,11 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
         ])
     } as Habit)
 
-    const [pickDate, setPickDate] = useState(new Date())
+    const [pickStartDate, setPickStartDate] = useState(new Date())
+    const [pickEndDate, setPickEndDate] = useState(new Date())
 
     const [showStartDatePicker, setShowStartDatePicker] = useState(false)
+    const [showEndDatePicker, setShowEndDatePicker] = useState(false)
 
 
     return (
@@ -124,7 +126,9 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             </Text>
                             <CustomIconButton
                                 image={images.arrowRight}
-                                callBackFunction={() => { }}
+                                callBackFunction={() => { 
+                                    setShowEndDatePicker(true)
+                                }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
                                 customStyle='w-[16px] h-[16px]'
                             />
@@ -147,11 +151,20 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </View>
 
                     <DateModal
-                        showStartDatePicker={showStartDatePicker}
+                        showDatePicker={showStartDatePicker}
                         closeFunction={() => setShowStartDatePicker(false)}
-                        pickDate={pickDate}
+                        pickDate={pickStartDate}
                         onChangeFunction={(selectedDate) => {
                             setHabit({ ...habit, startDate: dateTypeToDash(selectedDate) })
+                        }}
+                    />
+
+                    <DateModal 
+                        showDatePicker={showEndDatePicker}
+                        closeFunction={() => setShowEndDatePicker(false)}
+                        pickDate={pickEndDate}
+                        onChangeFunction={(selectedDate) => {
+                            setHabit({ ...habit, endDate: dateTypeToDash(selectedDate) })
                         }}
                     />
 

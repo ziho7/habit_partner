@@ -2,14 +2,14 @@ import { View, Text, Modal, TouchableOpacity } from 'react-native'
 import React from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const DateModal = ({showStartDatePicker, closeFunction, onChangeFunction, pickDate}: {
-    showStartDatePicker: boolean,
+const DateModal = ({showDatePicker, closeFunction, onChangeFunction, pickDate}: {
+    showDatePicker: boolean,
     closeFunction: () => void,
     pickDate: Date,
     onChangeFunction: (data: any) => void
 }) => {
     return <Modal
-        visible={showStartDatePicker}
+        visible={showDatePicker}
         onRequestClose={closeFunction}
         animationType='slide'
 
