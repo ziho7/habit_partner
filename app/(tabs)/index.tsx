@@ -14,7 +14,7 @@ import AddHabit from '@/components/AddHabit'
 
 
 const Home = () => {
-  const { loading, isLogged } = useGlobalContext()
+  const { loading, isLogged, timeZone } = useGlobalContext()
 
   const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
   const [showHabits, setShowHabits] = useState(getTodayHabits())
