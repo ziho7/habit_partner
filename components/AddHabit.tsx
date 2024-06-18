@@ -3,9 +3,8 @@ import React, { useState } from 'react'
 import CustomIconButton from './CustomIconButton'
 import images from '@/constants/images'
 import { Record, Habit } from '@/lib/get_data'
-
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { dateTypeToDash } from '@/lib/utils'
+import DateModal from './DateModal'
 
 
 
@@ -147,35 +146,14 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         </View>
                     </View>
 
-
-                    <Modal
-                        visible={showStartDatePicker}
-                        onRequestClose={() => setShowStartDatePicker(false)}
-                        animationType='slide'
-                        
-                        presentationStyle='overFullScreen'
-                        transparent={true}
-                    >
-                        <TouchableOpacity
-                            className='h-1/4 flex-1 justify-end h-[200px]'
-                            onPressOut={() => {setShowStartDatePicker(false)}}
-                        >
-                            <View
-                                className=' bg-[#FFFFFF] p-4 rounded-xl my-4 space-y-6'
-                            >
-                                <DateTimePicker
-                                    mode='date'
-                                    value={pickDate}
-                                    display='spinner'
-                                    onChange={(event, selectedDate) => {
-                                        if (selectedDate) {
-                                            setHabit({ ...habit, startDate: dateTypeToDash(selectedDate)})
-                                        }
-                                    }}
-                                />
-                            </View>
-                        </TouchableOpacity>
-                    </Modal>
+                    <DateModal
+                        showStartDatePicker={showStartDatePicker}
+                        closeFunction={() => setShowStartDatePicker(false)}
+                        pickDate={pickDate}
+                        onChangeFunction={(selectedDate) => {
+                            setHabit({ ...habit, startDate: dateTypeToDash(selectedDate) })
+                        }}
+                    />
 
                 </View>
             </View>
