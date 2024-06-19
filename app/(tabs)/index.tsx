@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, TouchableOpacity, Image, SectionList, ScrollView, Modal, StyleSheet, TextInput } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CustomButton from '@/components/CustomButton'
 import images from '@/constants/images'
 import { useGlobalContext } from '@/context/GlobalProvider'
@@ -17,7 +17,7 @@ const Home = () => {
   const { loading, isLogged, timeZone } = useGlobalContext()
 
   const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
-  const [showHabits, setShowHabits] = useState(getTodayHabits())
+  const [showHabits, setShowHabits] = useState<any>([])
   const [showAddHabit, setShowAddHabit] = useState(false)
 
   const getHeader = () => {
@@ -26,14 +26,23 @@ const Home = () => {
       <View className='flex-row h-16 justify-between items-center'>
         <View className='flex-row justify-start space-x-2'>
           <CustomButton title='Today' handlePress={() => { setShowHabits(getTodayHabits()) }} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Week' handlePress={() => { setShowHabits(getWeekHabits()) }} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Month' handlePress={() => { setShowHabits(getMonthHabits()) }} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Week' handlePress={() => { setShowHabits(getTodayHabits()) }} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Month' handlePress={() => { setShowHabits(getTodayHabits()) }} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
         </View>
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
 
       </View>
     </>
   }
+
+  useEffect(() => {
+    const fetchHabits = async () => {
+      const resHabits = await getTodayHabits(); // Make sure this function resolves the promise
+      setShowHabits(resHabits);
+    };
+
+    fetchHabits();
+  }, []);
 
   return (
     <SafeAreaView className='mx-4'>

@@ -5,6 +5,7 @@ import images from '@/constants/images'
 import { Record, Habit } from '@/lib/get_data'
 import { dateTypeToDash } from '@/lib/utils'
 import DateModal from './DateModal'
+import { addHabit } from '@/lib/storage'
 
 
 
@@ -15,17 +16,21 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 }) => {
 
     const [habit, setHabit] = useState({
-        id: 100,
+        id: "",
         user_id: "",
         name: '',
         startDate: '2024-03-07',
         endDate: '2024-09-07',
-        creatorId: '1231239',
+        creatorId: '',
         everycount: 1,
         type: 0,
         showsDays: [],
-        createTime: new Date(2024, 5, 7),
+        createTime: new Date(),
         records: new Map<string, Record>([
+            ["2024-03-07", { done: 0 }],
+            ["2024-03-08", { done: 12 }],
+            ["2024-03-09", { done: 11 }],
+            ["2024-06-16", { done: 11 }],
         ])
     } as Habit)
 
@@ -54,6 +59,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         image={images.ok}
                         callBackFunction={
                             () => {
+                                addHabit(habit)
                                 okCallBack()
                             }
                         }

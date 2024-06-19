@@ -1,7 +1,9 @@
 import { getCalendars } from 'expo-localization';
 import { dateToDash } from './utils';
+import { getAllHabits } from './storage';
+import { Type, Expose } from 'class-transformer';
 
-export interface Habit {
+export class Habit {
     id: string // uuid
     user_id: string
     name: string
@@ -11,11 +13,13 @@ export interface Habit {
     everycount: number
     type: number // 0 daily 1 weekly 2 monthly
     showsDays: number[]
+    // @Type(() => Record)
     records: Map<string, Record>
     createTime: Date
 }
 
-export interface Record {
+export class Record {
+    @Expose()
     done: number
 }
 
@@ -31,7 +35,7 @@ const habits: Habit[] = [
         everycount: 10,
         type: 0,
         showsDays: [1, 2, 3],
-        createTime: new Date(2024,5,7),
+        createTime: new Date(2024, 5, 7),
         records: new Map<string, Record>([
             ["2024-03-07", { done: 0 }],
             ["2024-03-08", { done: 12 }],
@@ -49,7 +53,7 @@ const habits: Habit[] = [
         everycount: 10,
         type: 0,
         showsDays: [1, 2, 3],
-        createTime: new Date(2024,5,7),
+        createTime: new Date(2024, 5, 7),
         records: new Map<string, Record>([
             ["2024-03-07", { done: 1 }],
             ["2024-03-08", { done: 5 }],
@@ -66,7 +70,7 @@ const habits: Habit[] = [
         everycount: 5,
         type: 0,
         showsDays: [4, 5, 6, 7],
-        createTime: new Date(2024,5,7),
+        createTime: new Date(2024, 5, 7),
         records: new Map<string, Record>([
             ["2024-03-07", { done: 0 }],
             ["2024-03-08", { done: 8 }],
@@ -74,7 +78,7 @@ const habits: Habit[] = [
         ])
     },
     {
-        id: 4,
+        id: "4",
         user_id: "",
         name: 'Swim',
         startDate: '2024-03-07',
@@ -83,7 +87,7 @@ const habits: Habit[] = [
         everycount: 5,
         type: 0,
         showsDays: [4, 5, 6, 7],
-        createTime: new Date(2024,5,7),
+        createTime: new Date(2024, 5, 7),
         records: new Map<string, Record>([
             ["2024-03-07", { done: 0 }],
             ["2024-03-08", { done: 8 }],
@@ -92,8 +96,22 @@ const habits: Habit[] = [
     }
 ]
 
-export const getTodayHabits = function () {
-    return sortHabits(habits)
+export const getTodayHabits1 = function () {
+    let habits: Habit[] = []
+    getAllHabits().then((res) => {
+        habits = res
+    })
+    let sortedHabits = sortHabits(habits)
+
+    return sortedHabits
+
+}
+
+export const getTodayHabits = async function () {
+    let res = await getAllHabits();
+    let habits: Habit[] = res;
+    let sortedHabits = sortHabits(habits);
+    return sortedHabits;
 }
 
 export const getWeekHabits = function () {
@@ -106,28 +124,36 @@ export const getMonthHabits = function () {
 
 const sortHabits = function (habits: Habit[]) {
     const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
-    let unfinishedList = habits.filter(habit => {
-        return habit.startDate <= currentDate &&
-            habit.endDate >= currentDate &&
-            (habit.records.get(currentDate) ?? { done: 0 }).done < habit.everycount
-    })
+    let unfinishedList: Habit[] = []
+    let finishedList: Habit[] = []
+    console.log('habit before sort',habits);
+    for (let habit of habits) {
+        console.log('records',habit.records);
+        console.log('records res', habit.records.get(currentDate));
+    
+        // 不在制定日期内的habit不显示
+        if (habit.startDate > currentDate || habit.endDate < currentDate) {
+            continue
+        }
 
-    let finishedList = habits.filter(habit => {
-        return habit.startDate <= currentDate &&
-            habit.endDate >= currentDate &&
-            (habit.records.get(currentDate) ?? { done: 0 }).done > habit.everycount
-    })
-
-
-    return [{
+        if ((habit.records.get(currentDate) ?? { done: 0 }).done < habit.everycount) {
+            unfinishedList.push(habit)
+        } else {
+            finishedList.push(habit)
+        }
+    }
+    let res = [{
         "title": "unfinished",
         "data": unfinishedList,
     },
     {
         "title": "finished",
         "data": finishedList
-    }
-    ]
+    }]
+    console.log('res',res);
+    
+
+    return res
 }
 
 
