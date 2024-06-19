@@ -21,7 +21,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
         startDate: '2024-03-07',
         endDate: '2024-09-07',
         creatorId: '1231239',
-        everycount: 0,
+        everycount: 1,
         type: 0,
         showsDays: [],
         createTime: new Date(2024, 5, 7),
@@ -87,18 +87,19 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </View>
 
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Goal</Text>
-                        <View className='flex-row items-center h-12 '>
-                            <Text className=' items-center justify-center'>
-                                7
-                            </Text>
-                            <CustomIconButton
-                                image={images.arrowRight}
-                                callBackFunction={() => { }}
-                                containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
-                            />
-                        </View>
+                        <Text>Times to Complete</Text>
+                        <TextInput
+                            className='h-12 border-2 border-mypurple-light bg-mypurple-light rounded-lg px-6'
+                            onChangeText={(text) => {
+                                let num = parseInt(text)
+                                if (text === '') {
+                                    num = 0
+                                }
+                                setHabit({ ...habit, everycount : num})
+                            }}
+                            value={habit.everycount === 0 ? '' : habit.everycount.toString()}
+                            placeholder='5'
+                        />
                     </View>
 
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
@@ -126,7 +127,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             </Text>
                             <CustomIconButton
                                 image={images.arrowRight}
-                                callBackFunction={() => { 
+                                callBackFunction={() => {
                                     setShowEndDatePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
@@ -159,7 +160,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         }}
                     />
 
-                    <DateModal 
+                    <DateModal
                         showDatePicker={showEndDatePicker}
                         closeFunction={() => setShowEndDatePicker(false)}
                         pickDate={pickEndDate}
