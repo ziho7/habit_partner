@@ -1,37 +1,48 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Habit } from './get_data';
+import uuid from 'react-native-uuid';
+import {randomUUID} from 'crypto'
 
-const storeData = async (value: string) => {
+// user to all habits key
+const userHabitsKey = 'userHabits'
+
+export const addHabit = function (habit: Habit) {
+    let habitId = uuid.v4('string')
+    if (typeof habitId === 'string') {
+        habit.id = habitId
+    }
+    
+    // 将habit存入单独的文件， key是habitId
+    let habitJson = JSON.stringify(habit)
+    setData(habit.id.toString(), habitJson)
+
+    // 将habitId存入userHabits
+    getData(userHabitsKey).then((allhabitsId) => {
+        let userHabits = allhabitsId ? JSON.parse(allhabitsId) : []
+        userHabits.push(habitId)
+        setData(userHabitsKey, JSON.stringify(userHabits))
+    }).catch((e) => {
+        console.log(e);
+        throw e
+    })
+}
+
+
+
+
+const setData = async (key: string, value: string) => {
     try {
-        await AsyncStorage.setItem('my-key', value);
+        await AsyncStorage.setItem(key, value);
     } catch (e) {
-        // saving error
+        throw e
     }
 };
 
-const storeData2 = async (value: string) => {
+const getData = async (key: string) => {
     try {
-        const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem('my-key', jsonValue);
+        const value = await AsyncStorage.getItem(key);
+        return value
     } catch (e) {
-        // saving error
-    }
-};
-const getData = async () => {
-    try {
-        const value = await AsyncStorage.getItem('my-key');
-        if (value !== null) {
-            // value previously stored
-        }
-    } catch (e) {
-        // error reading value
-    }
-};
-
-const getData2 = async () => {
-    try {
-        const jsonValue = await AsyncStorage.getItem('my-key');
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-        // error reading value
+        throw e
     }
 };

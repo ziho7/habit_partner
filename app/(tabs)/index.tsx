@@ -60,7 +60,10 @@ const Home = () => {
         presentationStyle='overFullScreen'
         transparent={true}
       >
-        <AddHabit closeCallBack={() => setShowAddHabit(false)} okCallBack={() => {}} />
+        <AddHabit closeCallBack={() => setShowAddHabit(false)} okCallBack={() => {
+          setShowAddHabit(false)
+          setShowHabits(getTodayHabits())
+        }} />
       </Modal>
     </SafeAreaView>
 

@@ -2,7 +2,7 @@ import { getCalendars } from 'expo-localization';
 import { dateToDash } from './utils';
 
 export interface Habit {
-    id: number
+    id: string // uuid
     user_id: string
     name: string
     startDate: string
@@ -21,7 +21,7 @@ export interface Record {
 
 const habits: Habit[] = [
     {
-        id: 1,
+        id: "1",
         user_id: "123",
         name: 'Study',
 
@@ -40,7 +40,7 @@ const habits: Habit[] = [
         ])
     },
     {
-        id: 2,
+        id: "2",
         user_id: "123",
         name: 'Jump Roll',
         startDate: '2024-03-07',
@@ -57,7 +57,7 @@ const habits: Habit[] = [
         ])
     },
     {
-        id: 3,
+        id: "3",
         user_id: "123",
         name: 'Sport',
         startDate: '2024-03-07',
@@ -75,7 +75,7 @@ const habits: Habit[] = [
     },
     {
         id: 4,
-        user_id: "123",
+        user_id: "",
         name: 'Swim',
         startDate: '2024-03-07',
         endDate: '2024-09-07',
@@ -91,7 +91,6 @@ const habits: Habit[] = [
         ])
     }
 ]
-
 
 export const getTodayHabits = function () {
     return sortHabits(habits)

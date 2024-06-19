@@ -52,7 +52,11 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </Text>
                     <CustomIconButton
                         image={images.ok}
-                        callBackFunction={okCallBack}
+                        callBackFunction={
+                            () => {
+                                okCallBack()
+                            }
+                        }
                         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
                         customStyle='w-[8px] h-[8px]'
                     />
