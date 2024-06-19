@@ -1,134 +1,35 @@
 import { getCalendars } from 'expo-localization';
 import { dateToDash } from './utils';
-import { getAllHabits } from './storage';
-import { Type, Expose, Transform, plainToClass } from 'class-transformer';
-import "reflect-metadata";
-
-export class Habit {
-    id: string // uuid
-    user_id: string
-    name: string
-    startDate: string
-    endDate: string
-    creatorId: string
-    everycount: number
-    type: number // 0 daily 1 weekly 2 monthly
-    showsDays: number[]
-    
-    @Transform(value => {
-        let map = new Map<string, Record>();
-        for (let entry of Object.entries(value.value))
-          map.set(entry[0], plainToClass(Record, entry[1]));
-        return map;
-      }, { toClassOnly: true })
-    records: Map<string, Record>
-    createTime: Date
-
-}
-
-export class Record {
-    @Expose()
-    done: number
-}
-
-const habits: Habit[] = [
-    {
-        id: "1",
-        user_id: "123",
-        name: 'Study',
-
-        startDate: '2024-03-07',
-        endDate: '2024-09-07',
-        creatorId: '1231239',
-        everycount: 10,
-        type: 0,
-        showsDays: [1, 2, 3],
-        createTime: new Date(2024, 5, 7),
-        records: new Map<string, Record>([
-            ["2024-03-07", { done: 0 }],
-            ["2024-03-08", { done: 12 }],
-            ["2024-03-09", { done: 11 }],
-            ["2024-06-16", { done: 11 }],
-        ])
-    },
-    {
-        id: "2",
-        user_id: "123",
-        name: 'Jump Roll',
-        startDate: '2024-03-07',
-        endDate: '2024-09-07',
-        creatorId: '1231239',
-        everycount: 10,
-        type: 0,
-        showsDays: [1, 2, 3],
-        createTime: new Date(2024, 5, 7),
-        records: new Map<string, Record>([
-            ["2024-03-07", { done: 1 }],
-            ["2024-03-08", { done: 5 }],
-            ["2024-03-09", { done: 2 }],
-        ])
-    },
-    {
-        id: "3",
-        user_id: "123",
-        name: 'Sport',
-        startDate: '2024-03-07',
-        endDate: '2024-09-07',
-        creatorId: '1231239',
-        everycount: 5,
-        type: 0,
-        showsDays: [4, 5, 6, 7],
-        createTime: new Date(2024, 5, 7),
-        records: new Map<string, Record>([
-            ["2024-03-07", { done: 0 }],
-            ["2024-03-08", { done: 8 }],
-            ["2024-03-09", { done: 1 }],
-        ])
-    },
-    {
-        id: "4",
-        user_id: "",
-        name: 'Swim',
-        startDate: '2024-03-07',
-        endDate: '2024-09-07',
-        creatorId: '1231239',
-        everycount: 5,
-        type: 0,
-        showsDays: [4, 5, 6, 7],
-        createTime: new Date(2024, 5, 7),
-        records: new Map<string, Record>([
-            ["2024-03-07", { done: 0 }],
-            ["2024-03-08", { done: 8 }],
-            ["2024-03-09", { done: 1 }],
-        ])
-    }
-]
+import { Habit, getAllHabits } from './storage';
 
 
-export const getTodayHabits = async function () {
+export const getTodayHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
     let sortedHabits = sortHabits(habits);
     return sortedHabits;
 }
 
-export const getWeekHabits = function () {
-    return sortHabits(habits)
+export const getWeekHabits = async () => {
+    let res = await getAllHabits();
+    let habits: Habit[] = res;
+    let sortedHabits = sortHabits(habits);
+    return sortedHabits;
 }
 
-export const getMonthHabits = function () {
-    return sortHabits(habits)
+export const getMonthHabits =async () => {
+    let res = await getAllHabits();
+    let habits: Habit[] = res;
+    let sortedHabits = sortHabits(habits);
+    return sortedHabits;
 }
 
 const sortHabits = function (habits: Habit[]) {
     const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
     let unfinishedList: Habit[] = []
     let finishedList: Habit[] = []
-    console.log('habit before sort',habits);
     for (let habit of habits) {
-        console.log('records',habit.records);
-        console.log('records res', habit.records.get(currentDate));
-    
+        
         // 不在制定日期内的habit不显示
         if (habit.startDate > currentDate || habit.endDate < currentDate) {
             continue

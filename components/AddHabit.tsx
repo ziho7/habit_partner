@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, Modal } from 'react-native'
 import React, { useState } from 'react'
 import CustomIconButton from './CustomIconButton'
 import images from '@/constants/images'
-import { Record, Habit } from '@/lib/get_data'
+import { Record, Habit } from '@/lib/storage'
 import { dateTypeToDash } from '@/lib/utils'
 import DateModal from './DateModal'
 import { addHabit } from '@/lib/storage'
@@ -12,7 +12,7 @@ import { addHabit } from '@/lib/storage'
 
 const AddHabit = ({ closeCallBack, okCallBack }: {
     closeCallBack: () => void,
-    okCallBack: () => void
+    okCallBack: () => Promise<void>
 }) => {
 
     const [habit, setHabit] = useState({
@@ -58,9 +58,10 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     <CustomIconButton
                         image={images.ok}
                         callBackFunction={
-                            () => {
-                                addHabit(habit)
-                                okCallBack()
+                            async () => {
+                                await addHabit(habit)
+                                await okCallBack()
+                                closeCallBack()
                             }
                         }
                         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'

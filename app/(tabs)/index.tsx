@@ -20,8 +20,10 @@ const Home = () => {
   const [showHabits, setShowHabits] = useState<any>([])
   const [showAddHabit, setShowAddHabit] = useState(false)
 
-  const handleTitlePress = async () => {
+  const fetchHabits = async () => {
     const todayHabits = await getTodayHabits()
+    console.log('todayHabits', todayHabits);
+    
     setShowHabits(todayHabits)
   }
 
@@ -30,9 +32,9 @@ const Home = () => {
       <Header dayOfWeek={dayOfWeek} currentDate={currentDate} />
       <View className='flex-row h-16 justify-between items-center'>
         <View className='flex-row justify-start space-x-2'>
-          <CustomButton title='Today' handlePress={handleTitlePress} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Week' handlePress={handleTitlePress} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Month' handlePress={handleTitlePress} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Today' handlePress={fetchHabits} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Week' handlePress={fetchHabits} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Month' handlePress={fetchHabits} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
         </View>
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
 
@@ -41,11 +43,6 @@ const Home = () => {
   }
 
   useEffect(() => {
-    const fetchHabits = async () => {
-      const resHabits = await getTodayHabits(); // Make sure this function resolves the promise
-      setShowHabits(resHabits);
-    };
-
     fetchHabits();
   }, []);
 
@@ -65,6 +62,7 @@ const Home = () => {
         }}
 
         ListHeaderComponent={getHeader}
+        ListEmptyComponent={<Text>Empty Please, add a new habit first</Text>}
       />
 
       <Modal
@@ -74,8 +72,8 @@ const Home = () => {
         presentationStyle='overFullScreen'
         transparent={true}
       >
-        <AddHabit closeCallBack={() => setShowAddHabit(false)} okCallBack={() => {
-          setShowAddHabit(false)
+        <AddHabit closeCallBack={() => setShowAddHabit(false)} okCallBack={async () => {
+          fetchHabits()
         }} />
       </Modal>
     </SafeAreaView>
