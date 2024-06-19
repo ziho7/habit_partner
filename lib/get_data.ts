@@ -1,7 +1,8 @@
 import { getCalendars } from 'expo-localization';
 import { dateToDash } from './utils';
 import { getAllHabits } from './storage';
-import { Type, Expose } from 'class-transformer';
+import { Type, Expose, Transform, plainToClass } from 'class-transformer';
+import "reflect-metadata";
 
 export class Habit {
     id: string // uuid
@@ -13,9 +14,16 @@ export class Habit {
     everycount: number
     type: number // 0 daily 1 weekly 2 monthly
     showsDays: number[]
-    // @Type(() => Record)
+    
+    @Transform(value => {
+        let map = new Map<string, Record>();
+        for (let entry of Object.entries(value.value))
+          map.set(entry[0], plainToClass(Record, entry[1]));
+        return map;
+      }, { toClassOnly: true })
     records: Map<string, Record>
     createTime: Date
+
 }
 
 export class Record {
@@ -96,16 +104,6 @@ const habits: Habit[] = [
     }
 ]
 
-export const getTodayHabits1 = function () {
-    let habits: Habit[] = []
-    getAllHabits().then((res) => {
-        habits = res
-    })
-    let sortedHabits = sortHabits(habits)
-
-    return sortedHabits
-
-}
 
 export const getTodayHabits = async function () {
     let res = await getAllHabits();
@@ -150,8 +148,6 @@ const sortHabits = function (habits: Habit[]) {
         "title": "finished",
         "data": finishedList
     }]
-    console.log('res',res);
-    
 
     return res
 }

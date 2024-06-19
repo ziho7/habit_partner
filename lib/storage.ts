@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Habit } from './get_data';
 import uuid from 'react-native-uuid';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 
 // user to all habits key
-const userHabitsKey = 'userHabits2'
+const userHabitsKey = 'userHabits7'
 
 export const addHabit = function (habit: Habit) {
     let habitId = uuid.v4('string')
@@ -12,9 +13,11 @@ export const addHabit = function (habit: Habit) {
     }
     
     // 将habit存入单独的文件， key是habitId
-    let habitJson = JSON.stringify(habit)
-
+    // let habitJson = JSON.stringify(habit)
+    // console.log('habitJson', habitJson);
+    console.log('habit new json', JSON.stringify(instanceToPlain(habit)))
     
+    let habitJson = JSON.stringify(instanceToPlain(habit))
     setData(habit.id.toString(), habitJson)
 
     // 将habitId存入userHabits
@@ -28,9 +31,15 @@ export const addHabit = function (habit: Habit) {
     })
 }
 
-export const getHabit = function (habitId: string) {
+export const getHabit = async function (habitId: string) {
     return getData(habitId).then((habitJson) => {
-        let habit: Habit = JSON.parse(habitJson || "")    
+        // let habit: Habit = JSON.parse(habitJson || "")    
+        let jsonData  = JSON.parse(habitJson || "")
+        console.log('jsonData', jsonData);
+        let habit: Habit = plainToInstance(Habit, jsonData)
+        console.log('instance habit', habit);
+        
+        
         return habit
     }).catch((e) => {
         console.log(e);
