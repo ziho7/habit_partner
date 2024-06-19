@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import CustomIconButton from './CustomIconButton'
 import images from '@/constants/images'
 import { Record, Habit } from '@/lib/get_data'
-
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { dateTypeToDash } from '@/lib/utils'
+import DateModal from './DateModal'
+import { addHabit } from '@/lib/storage'
 
 
 
@@ -16,23 +16,29 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 }) => {
 
     const [habit, setHabit] = useState({
-        id: 100,
+        id: "",
         user_id: "",
         name: '',
         startDate: '2024-03-07',
         endDate: '2024-09-07',
-        creatorId: '1231239',
-        everycount: 0,
+        creatorId: '',
+        everycount: 1,
         type: 0,
         showsDays: [],
-        createTime: new Date(2024, 5, 7),
+        createTime: new Date(),
         records: new Map<string, Record>([
+            ["2024-03-07", { done: 0 }],
+            ["2024-03-08", { done: 12 }],
+            ["2024-03-09", { done: 11 }],
+            ["2024-06-16", { done: 11 }],
         ])
     } as Habit)
 
-    const [pickDate, setPickDate] = useState(new Date())
+    const [pickStartDate, setPickStartDate] = useState(new Date())
+    const [pickEndDate, setPickEndDate] = useState(new Date())
 
     const [showStartDatePicker, setShowStartDatePicker] = useState(false)
+    const [showEndDatePicker, setShowEndDatePicker] = useState(false)
 
 
     return (
@@ -51,7 +57,12 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </Text>
                     <CustomIconButton
                         image={images.ok}
-                        callBackFunction={okCallBack}
+                        callBackFunction={
+                            () => {
+                                addHabit(habit)
+                                okCallBack()
+                            }
+                        }
                         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
                         customStyle='w-[8px] h-[8px]'
                     />
@@ -86,18 +97,19 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </View>
 
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Goal</Text>
-                        <View className='flex-row items-center h-12 '>
-                            <Text className=' items-center justify-center'>
-                                7
-                            </Text>
-                            <CustomIconButton
-                                image={images.arrowRight}
-                                callBackFunction={() => { }}
-                                containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
-                            />
-                        </View>
+                        <Text>Times to Complete</Text>
+                        <TextInput
+                            className='h-12 border-2 border-mypurple-light bg-mypurple-light rounded-lg px-6'
+                            onChangeText={(text) => {
+                                let num = parseInt(text)
+                                if (text === '') {
+                                    num = 0
+                                }
+                                setHabit({ ...habit, everycount : num})
+                            }}
+                            value={habit.everycount === 0 ? '' : habit.everycount.toString()}
+                            placeholder='5'
+                        />
                     </View>
 
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
@@ -125,7 +137,9 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             </Text>
                             <CustomIconButton
                                 image={images.arrowRight}
-                                callBackFunction={() => { }}
+                                callBackFunction={() => {
+                                    setShowEndDatePicker(true)
+                                }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
                                 customStyle='w-[16px] h-[16px]'
                             />
@@ -147,35 +161,23 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         </View>
                     </View>
 
+                    <DateModal
+                        showDatePicker={showStartDatePicker}
+                        closeFunction={() => setShowStartDatePicker(false)}
+                        pickDate={pickStartDate}
+                        onChangeFunction={(selectedDate) => {
+                            setHabit({ ...habit, startDate: dateTypeToDash(selectedDate) })
+                        }}
+                    />
 
-                    <Modal
-                        visible={showStartDatePicker}
-                        onRequestClose={() => setShowStartDatePicker(false)}
-                        animationType='slide'
-                        
-                        presentationStyle='overFullScreen'
-                        transparent={true}
-                    >
-                        <TouchableOpacity
-                            className='h-1/4 flex-1 justify-end h-[200px]'
-                            onPressOut={() => {setShowStartDatePicker(false)}}
-                        >
-                            <View
-                                className=' bg-[#FFFFFF] p-4 rounded-xl my-4 space-y-6'
-                            >
-                                <DateTimePicker
-                                    mode='date'
-                                    value={pickDate}
-                                    display='spinner'
-                                    onChange={(event, selectedDate) => {
-                                        if (selectedDate) {
-                                            setHabit({ ...habit, startDate: dateTypeToDash(selectedDate)})
-                                        }
-                                    }}
-                                />
-                            </View>
-                        </TouchableOpacity>
-                    </Modal>
+                    <DateModal
+                        showDatePicker={showEndDatePicker}
+                        closeFunction={() => setShowEndDatePicker(false)}
+                        pickDate={pickEndDate}
+                        onChangeFunction={(selectedDate) => {
+                            setHabit({ ...habit, endDate: dateTypeToDash(selectedDate) })
+                        }}
+                    />
 
                 </View>
             </View>

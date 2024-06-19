@@ -16,5 +16,7 @@ export const dateTypeToSlash = (date: Date) => {
 }
 
 export const dateTypeToDash = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date).split('/').reverse().join('-')
+    let d = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date).split('/').reverse().join('-')
+    let dArry = d.split('-')
+    return dArry[0] + '-' + dArry[2] + '-' + dArry[1]
 }

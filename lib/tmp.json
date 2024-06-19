@@ -1,0 +1,53 @@
+jsonData {
+    "createTime": "2024-06-19T13:10:39.842Z",
+    "creatorId": "",
+    "endDate": "2024-09-07",
+    "everycount": 1,
+    "id": "27283df2-f5f7-4378-a9f2-189976e249ed",
+    "name": "X",
+    "records": {
+        "2024-03-07": {
+            "done": 0
+        },
+        "2024-03-08": {
+            "done": 12
+        },
+        "2024-03-09": {
+            "done": 11
+        },
+        "2024-06-16": {
+            "done": 11
+        }
+    },
+    "showsDays": [],
+    "startDate": "2024-03-07",
+    "type": 0,
+    "user_id": ""
+}
+ LOG  instance habit {
+    "createTime": "2024-06-19T13:10:39.842Z",
+    "creatorId": "",
+    "endDate": "2024-09-07",
+    "everycount": 1,
+    "id": "27283df2-f5f7-4378-a9f2-189976e249ed",
+    "name": "X",
+    "records": {
+        "2024-03-07": {
+            "done": 0
+        },
+        "2024-03-08": {
+            "done": 12
+        },
+        "2024-03-09": {
+            "done": 11
+        },
+        "2024-06-16": {
+            "done": 11
+        },
+        "done": undefined
+    },
+    "showsDays": [],
+    "startDate": "2024-03-07",
+    "type": 0,
+    "user_id": ""
+}

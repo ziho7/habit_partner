@@ -30,7 +30,9 @@ const HabitCard = ({
           </View>
           <Text className='text-[12px] text-mygray'>{beginDate}-{endDate}</Text>
           {/* <Text className='text-[12px] text-mygray'>每天一次</Text> */}
-          <Text className='text-[12px] text-mygray'>Completed: {totalCount}</Text>
+          <Text className='text-[12px] text-mygray'>Completed today: {totalCount}</Text>
+          <Text className='text-[12px] text-mygray'>Completed total: {totalCount}</Text>
+          
         </View>
   
         {/* <Donut /> */}
