@@ -22,8 +22,6 @@ const Home = () => {
 
   const fetchHabits = async () => {
     const todayHabits = await getTodayHabits()
-    console.log('todayHabits', todayHabits);
-    
     setShowHabits(todayHabits)
   }
 

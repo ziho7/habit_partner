@@ -22,7 +22,6 @@ export class Habit {
     }, { toClassOnly: true })
     records: Map<string, Record>
     createTime: Date
-
 }
 
 export class Record {
