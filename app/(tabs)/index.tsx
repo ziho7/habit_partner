@@ -23,6 +23,7 @@ const Home = () => {
 
   const fetchHabits = async () => {
     const todayHabits = await getTodayHabits()
+
     setShowHabits(todayHabits)
   }
 
@@ -52,7 +53,14 @@ const Home = () => {
         renderItem={({ item }: {
           item: Habit
         }) => {
-          return <HabitCard habitId={item.id} beginDate={dateToSlash(item.startDate)} endDate={dateToSlash(item.endDate)} totalCount={item.records.get(dateToSlash(item.startDate))?.done.toString() || '0'} name={item.name} />
+          return <HabitCard
+            habitId={item.id}
+            beginDate={dateToSlash(item.startDate)}
+            endDate={dateToSlash(item.endDate)}
+            doneCount={Number(item.records.get(dateToSlash(item.startDate))?.done.toString() || '0')}
+            everyCount={item.everyCount}
+            name={item.name}
+          />
         }}
         keyExtractor={(item) => item.id.toString()}
         renderSectionHeader={({ section }) => {

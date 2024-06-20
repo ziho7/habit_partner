@@ -5,12 +5,12 @@ import "reflect-metadata";
 
 export class Habit {
     id: string // uuid
-    user_id: string
+    userId: string
     name: string
     startDate: string
     endDate: string
     creatorId: string
-    everycount: number
+    everyCount: number
     type: number // 0 daily 1 weekly 2 monthly
     showsDays: number[]
 
@@ -30,7 +30,7 @@ export class Record {
 }
 
 // user to all habits key
-const userHabitsKey = 'userHabits10'
+const userHabitsKey = 'userHabits11'
 
 export const addHabit = async (habit: Habit) => {
     let habitId = uuid.v4('string')

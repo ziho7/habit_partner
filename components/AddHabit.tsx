@@ -17,12 +17,12 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 
     const [habit, setHabit] = useState({
         id: "",
-        user_id: "",
+        userId: "",
         name: '',
         startDate: '2024-03-07',
         endDate: '2024-09-07',
         creatorId: '',
-        everycount: 1,
+        everyCount: 1,
         type: 0,
         showsDays: [],
         createTime: new Date(),
@@ -106,9 +106,9 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                 if (text === '') {
                                     num = 0
                                 }
-                                setHabit({ ...habit, everycount : num})
+                                setHabit({ ...habit, everyCount: num })
                             }}
-                            value={habit.everycount === 0 ? '' : habit.everycount.toString()}
+                            value={habit.everyCount === 0 ? '' : habit.everyCount.toString()}
                             placeholder='5'
                         />
                     </View>

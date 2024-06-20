@@ -5,8 +5,10 @@ import { Habit, getAllHabits } from './storage';
 
 export const getTodayHabits = async () => {
     let res = await getAllHabits();
-    let habits: Habit[] = res;
+    let habits: Habit[] = res;    
     let sortedHabits = sortHabits(habits);
+    console.log('sortedHabits',sortedHabits);
+    
     return sortedHabits;
 }
 
@@ -35,7 +37,7 @@ const sortHabits = function (habits: Habit[]) {
             continue
         }
 
-        if ((habit.records.get(currentDate) ?? { done: 0 }).done < habit.everycount) {
+        if ((habit.records.get(currentDate) ?? { done: 0 }).done < habit.everyCount) {
             unfinishedList.push(habit)
         } else {
             finishedList.push(habit)

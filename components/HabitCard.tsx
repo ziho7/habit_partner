@@ -8,15 +8,17 @@ const HabitCard = ({
     beginDate,
     endDate,
     everyCount,
+    doneCount,
     name,
     habitId
   }: {
     beginDate: string,
     endDate: string,
-    everyCount: string,
+    everyCount: number,
+    doneCount: number,
     name: string,
     habitId: string
-  }) => {
+  }) => {    
     return <View className='mt-4'>
       <View className='flex-row justify-between items-center h-[160px] bg-mypurple-light rounded-xl px-4'>
         <View className='flex-col'>
@@ -39,7 +41,7 @@ const HabitCard = ({
   
         {/* <Donut /> */}
   
-        <Donut2 everyCount={Number(everyCount)}/>
+        <Donut2 everyCount={everyCount}/>
   
   
       </View>

@@ -10,6 +10,7 @@ const DonutChart = ({everyCount }: {
 }) => {
     const [clickCount, setClickCount] = useState(0);
     const progress = useSharedValue(0);
+    
 
     // 计算圆周长
     const radius = 40;
