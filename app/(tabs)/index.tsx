@@ -57,7 +57,7 @@ const Home = () => {
             habitId={item.id}
             beginDate={dateToSlash(item.startDate)}
             endDate={dateToSlash(item.endDate)}
-            doneCount={Number(item.records.get(dateToSlash(item.startDate))?.done.toString() || '0')}
+            clickCount={Number(item.records.get(dateToSlash(item.startDate))?.clickCount.toString() || '0')}
             everyCount={item.everyCount}
             name={item.name}
           />

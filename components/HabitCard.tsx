@@ -8,14 +8,14 @@ const HabitCard = ({
     beginDate,
     endDate,
     everyCount,
-    doneCount,
+    clickCount,
     name,
     habitId
   }: {
     beginDate: string,
     endDate: string,
     everyCount: number,
-    doneCount: number,
+    clickCount: number,
     name: string,
     habitId: string
   }) => {    
@@ -41,7 +41,7 @@ const HabitCard = ({
   
         {/* <Donut /> */}
   
-        <Donut2 everyCount={everyCount}/>
+        <Donut2 everyCount={everyCount} clickCount1={clickCount}/>
   
   
       </View>

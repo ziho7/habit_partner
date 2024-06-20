@@ -5,8 +5,10 @@ import Animated, { useSharedValue, useAnimatedProps, withTiming } from 'react-na
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-const DonutChart = ({everyCount }: {
-    everyCount: number
+const DonutChart = ({everyCount, habitId, clickCount1 }: {
+    everyCount: number,
+    habitId: string,
+    clickCount1: number
 }) => {
     const [clickCount, setClickCount] = useState(0);
     const progress = useSharedValue(0);

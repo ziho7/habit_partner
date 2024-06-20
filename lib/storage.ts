@@ -26,7 +26,7 @@ export class Habit {
 
 export class Record {
     @Expose()
-    done: number
+    clickCount: number
 }
 
 // user to all habits key
