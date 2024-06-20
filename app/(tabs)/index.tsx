@@ -10,6 +10,7 @@ import HabitCard from '@/components/HabitCard'
 import Header from '@/components/Header'
 import CustomIconButton from '@/components/CustomIconButton'
 import AddHabit from '@/components/AddHabit'
+import { Habit } from '@/lib/storage'
 
 
 
@@ -48,8 +49,10 @@ const Home = () => {
     <SafeAreaView className='mx-4'>
       <SectionList
         sections={showHabits}
-        renderItem={({ item }) => {
-          return <HabitCard beginDate={dateToSlash(item.startDate)} endDate={dateToSlash(item.endDate)} totalCount={item.records.get(dateToSlash(item.startDate))?.done.toString() || '0'} name={item.name} />
+        renderItem={({ item }: {
+          item: Habit
+        }) => {
+          return <HabitCard habitId={item.id} beginDate={dateToSlash(item.startDate)} endDate={dateToSlash(item.endDate)} totalCount={item.records.get(dateToSlash(item.startDate))?.done.toString() || '0'} name={item.name} />
         }}
         keyExtractor={(item) => item.id.toString()}
         renderSectionHeader={({ section }) => {
