@@ -4,7 +4,7 @@ import CustomButton from '@/components/CustomButton'
 import images from '@/constants/images'
 import { useGlobalContext } from '@/context/GlobalProvider'
 import { getCurrentDateAndDayOfWeekInTimeZone, getMonthHabits, getTodayHabits, getWeekHabits } from '@/lib/get_data'
-import { dateToSlash } from '@/lib/utils'
+import { dateToDash, dateToSlash } from '@/lib/utils'
 import SeperateLine from '@/components/SeperateLine'
 import HabitCard from '@/components/HabitCard'
 import Header from '@/components/Header'
@@ -54,12 +54,9 @@ const Home = () => {
           item: Habit
         }) => {
           return <HabitCard
-            habitId={item.id}
-            beginDate={dateToSlash(item.startDate)}
-            endDate={dateToSlash(item.endDate)}
-            clickCount={Number(item.records.get(dateToSlash(item.startDate))?.clickCount.toString() || '0')}
-            everyCount={item.everyCount}
-            name={item.name}
+            clickCount={Number(item.records.get(dateToDash(currentDate))?.clickCount.toString() || '0')}
+            habit={item}
+            doneCallBack={fetchHabits}
           />
         }}
         keyExtractor={(item) => item.id.toString()}

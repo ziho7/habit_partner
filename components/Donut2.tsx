@@ -2,23 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, Touchable, TouchableOpacity } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 import Animated, { useSharedValue, useAnimatedProps, withTiming } from 'react-native-reanimated';
+import { Habit, updateHabit } from '@/lib/storage';
+import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-const DonutChart = ({everyCount, habitId, clickCount1 }: {
-    everyCount: number,
-    habitId: string,
-    clickCount1: number
-}) => {
-    const [clickCount, setClickCount] = useState(0);
+const DonutChart = ({clickCount1, habit, doneCallBack }: {
+    clickCount1: number,
+    habit: Habit,
+    doneCallBack: () => void
+}) => {    
+    const [clickCount, setClickCount] = useState(clickCount1);
     const progress = useSharedValue(0);
+    const currentDate = getCurrentDateAndDayOfWeekInTimeZone().currentDate;
+
+
+    
     
 
     // 计算圆周长
     const radius = 40;
     const strokeWidth = 8;
     const circumference = 2 * Math.PI * radius;
-    const finished = clickCount === everyCount;
+    const finished = clickCount === habit.everyCount;
 
     // 动画路径属性
     const animatedProps = useAnimatedProps(() => ({
@@ -27,15 +33,18 @@ const DonutChart = ({everyCount, habitId, clickCount1 }: {
 
     useEffect(() => {
         // 点击时更新进度动画
-        progress.value = withTiming(clickCount / everyCount, { duration: 500 });
+        progress.value = withTiming(clickCount / habit.everyCount, { duration: 500 });
     }, [clickCount]);
 
-    const handleClick = () => {
-        if (clickCount < everyCount) {
+    const handleClick = async () => {
+        if (clickCount < habit.everyCount) {
+            habit.records.set(currentDate, { clickCount: clickCount + 1 });
+            await updateHabit(habit);
             setClickCount(clickCount + 1);
-        } else {
-            // todo 完成逻辑
-        }
+            if (clickCount + 1 === habit.everyCount) {
+                doneCallBack();
+            }
+        } 
     };
 
     return (
@@ -67,7 +76,7 @@ const DonutChart = ({everyCount, habitId, clickCount1 }: {
             >   
             {finished ? 
                 <Text className='text-[20px] font-semibold'>Done</Text> : 
-                <Text className='text-[20px] font-semibold'>{clickCount} / {everyCount}</Text>
+                <Text className='text-[20px] font-semibold'>{clickCount} / {habit.everyCount}</Text>
             }
             
             </TouchableOpacity>

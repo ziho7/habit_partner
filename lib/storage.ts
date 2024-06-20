@@ -30,7 +30,7 @@ export class Record {
 }
 
 // user to all habits key
-const userHabitsKey = 'userHabits11'
+const userHabitsKey = 'userHabits12'
 
 export const addHabit = async (habit: Habit) => {
     let habitId = uuid.v4('string')
@@ -78,6 +78,15 @@ export const getAllHabits = async function () {
     } catch (e) {
         console.log(e);
         throw e
+    }
+}
+
+export const updateHabit = async (habit: Habit) => {
+    try {
+        let habitJson = JSON.stringify(instanceToPlain(habit))
+        await setData(habit.id.toString(), habitJson)
+    } catch (error) {
+        throw error
     }
 }
 

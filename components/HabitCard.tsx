@@ -3,22 +3,17 @@ import React from 'react'
 
 import images from '@/constants/images'
 import Donut2 from '@/components/Donut2'
+import { Habit } from '@/lib/storage'
 
 const HabitCard = ({
-    beginDate,
-    endDate,
-    everyCount,
     clickCount,
-    name,
-    habitId
+    habit,
+    doneCallBack
   }: {
-    beginDate: string,
-    endDate: string,
-    everyCount: number,
     clickCount: number,
-    name: string,
-    habitId: string
-  }) => {    
+    habit: Habit,
+    doneCallBack: () => void
+  }) => {
     return <View className='mt-4'>
       <View className='flex-row justify-between items-center h-[160px] bg-mypurple-light rounded-xl px-4'>
         <View className='flex-col'>
@@ -30,18 +25,18 @@ const HabitCard = ({
                 resizeMode='contain'
               />
             </View>
-            <Text className='font-semibold text-[20px]'>{name}</Text>
+            <Text className='font-semibold text-[20px]'>{habit.name}</Text>
           </View>
-          <Text className='text-[12px] text-mygray'>{beginDate}-{endDate}</Text>
+          <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
           {/* <Text className='text-[12px] text-mygray'>每天一次</Text> */}
-          <Text className='text-[12px] text-mygray'>Completed today: {everyCount}</Text>
+          <Text className='text-[12px] text-mygray'>Completed today: {habit.everyCount}</Text>
           {/* <Text className='text-[12px] text-mygray'>Completed total: {totalCount}</Text> */}
           
         </View>
   
         {/* <Donut /> */}
   
-        <Donut2 everyCount={everyCount} clickCount1={clickCount}/>
+        <Donut2 clickCount1={clickCount} habit={habit} doneCallBack={doneCallBack}/>
   
   
       </View>
