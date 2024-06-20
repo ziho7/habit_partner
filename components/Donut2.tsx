@@ -5,16 +5,20 @@ import Animated, { useSharedValue, useAnimatedProps, withTiming } from 'react-na
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-const DonutChart = () => {
+const DonutChart = ({everyCount, habitId, clickCount1 }: {
+    everyCount: number,
+    habitId: string,
+    clickCount1: number
+}) => {
     const [clickCount, setClickCount] = useState(0);
-    const totalCount = 5;
     const progress = useSharedValue(0);
+    
 
     // 计算圆周长
     const radius = 40;
     const strokeWidth = 8;
     const circumference = 2 * Math.PI * radius;
-    const finished = clickCount === totalCount;
+    const finished = clickCount === everyCount;
 
     // 动画路径属性
     const animatedProps = useAnimatedProps(() => ({
@@ -23,11 +27,11 @@ const DonutChart = () => {
 
     useEffect(() => {
         // 点击时更新进度动画
-        progress.value = withTiming(clickCount / totalCount, { duration: 500 });
+        progress.value = withTiming(clickCount / everyCount, { duration: 500 });
     }, [clickCount]);
 
     const handleClick = () => {
-        if (clickCount < totalCount) {
+        if (clickCount < everyCount) {
             setClickCount(clickCount + 1);
         } else {
             // todo 完成逻辑
@@ -63,7 +67,7 @@ const DonutChart = () => {
             >   
             {finished ? 
                 <Text className='text-[20px] font-semibold'>Done</Text> : 
-                <Text className='text-[20px] font-semibold'>{clickCount} / {totalCount}</Text>
+                <Text className='text-[20px] font-semibold'>{clickCount} / {everyCount}</Text>
             }
             
             </TouchableOpacity>

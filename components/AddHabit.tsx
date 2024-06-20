@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, Modal } from 'react-native'
 import React, { useState } from 'react'
 import CustomIconButton from './CustomIconButton'
 import images from '@/constants/images'
-import { Record, Habit } from '@/lib/get_data'
+import { Record, Habit } from '@/lib/storage'
 import { dateTypeToDash } from '@/lib/utils'
 import DateModal from './DateModal'
 import { addHabit } from '@/lib/storage'
@@ -12,25 +12,25 @@ import { addHabit } from '@/lib/storage'
 
 const AddHabit = ({ closeCallBack, okCallBack }: {
     closeCallBack: () => void,
-    okCallBack: () => void
+    okCallBack: () => Promise<void>
 }) => {
 
     const [habit, setHabit] = useState({
         id: "",
-        user_id: "",
+        userId: "",
         name: '',
         startDate: '2024-03-07',
         endDate: '2024-09-07',
         creatorId: '',
-        everycount: 1,
+        everyCount: 1,
         type: 0,
         showsDays: [],
         createTime: new Date(),
         records: new Map<string, Record>([
-            ["2024-03-07", { done: 0 }],
-            ["2024-03-08", { done: 12 }],
-            ["2024-03-09", { done: 11 }],
-            ["2024-06-16", { done: 11 }],
+            ["2024-03-07", { clickCount: 0 }],
+            ["2024-03-08", { clickCount: 12 }],
+            ["2024-03-09", { clickCount: 11 }],
+            ["2024-06-16", { clickCount: 11 }],
         ])
     } as Habit)
 
@@ -58,9 +58,10 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     <CustomIconButton
                         image={images.ok}
                         callBackFunction={
-                            () => {
-                                addHabit(habit)
-                                okCallBack()
+                            async () => {
+                                await addHabit(habit)
+                                await okCallBack()
+                                closeCallBack()
                             }
                         }
                         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
@@ -105,9 +106,9 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                 if (text === '') {
                                     num = 0
                                 }
-                                setHabit({ ...habit, everycount : num})
+                                setHabit({ ...habit, everyCount: num })
                             }}
-                            value={habit.everycount === 0 ? '' : habit.everycount.toString()}
+                            value={habit.everyCount === 0 ? '' : habit.everyCount.toString()}
                             placeholder='5'
                         />
                     </View>

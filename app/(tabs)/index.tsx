@@ -10,6 +10,7 @@ import HabitCard from '@/components/HabitCard'
 import Header from '@/components/Header'
 import CustomIconButton from '@/components/CustomIconButton'
 import AddHabit from '@/components/AddHabit'
+import { Habit } from '@/lib/storage'
 
 
 
@@ -20,8 +21,9 @@ const Home = () => {
   const [showHabits, setShowHabits] = useState<any>([])
   const [showAddHabit, setShowAddHabit] = useState(false)
 
-  const handleTitlePress = async () => {
+  const fetchHabits = async () => {
     const todayHabits = await getTodayHabits()
+
     setShowHabits(todayHabits)
   }
 
@@ -30,9 +32,9 @@ const Home = () => {
       <Header dayOfWeek={dayOfWeek} currentDate={currentDate} />
       <View className='flex-row h-16 justify-between items-center'>
         <View className='flex-row justify-start space-x-2'>
-          <CustomButton title='Today' handlePress={handleTitlePress} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Week' handlePress={handleTitlePress} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Month' handlePress={handleTitlePress} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Today' handlePress={fetchHabits} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Week' handlePress={fetchHabits} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Month' handlePress={fetchHabits} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
         </View>
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
 
@@ -41,11 +43,6 @@ const Home = () => {
   }
 
   useEffect(() => {
-    const fetchHabits = async () => {
-      const resHabits = await getTodayHabits(); // Make sure this function resolves the promise
-      setShowHabits(resHabits);
-    };
-
     fetchHabits();
   }, []);
 
@@ -53,8 +50,17 @@ const Home = () => {
     <SafeAreaView className='mx-4'>
       <SectionList
         sections={showHabits}
-        renderItem={({ item }) => {
-          return <HabitCard beginDate={dateToSlash(item.startDate)} endDate={dateToSlash(item.endDate)} totalCount={item.records.get(dateToSlash(item.startDate))?.done.toString() || '0'} name={item.name} />
+        renderItem={({ item }: {
+          item: Habit
+        }) => {
+          return <HabitCard
+            habitId={item.id}
+            beginDate={dateToSlash(item.startDate)}
+            endDate={dateToSlash(item.endDate)}
+            clickCount={Number(item.records.get(dateToSlash(item.startDate))?.clickCount.toString() || '0')}
+            everyCount={item.everyCount}
+            name={item.name}
+          />
         }}
         keyExtractor={(item) => item.id.toString()}
         renderSectionHeader={({ section }) => {
@@ -65,6 +71,7 @@ const Home = () => {
         }}
 
         ListHeaderComponent={getHeader}
+        ListEmptyComponent={<Text>Empty Please, add a new habit first</Text>}
       />
 
       <Modal
@@ -74,8 +81,8 @@ const Home = () => {
         presentationStyle='overFullScreen'
         transparent={true}
       >
-        <AddHabit closeCallBack={() => setShowAddHabit(false)} okCallBack={() => {
-          setShowAddHabit(false)
+        <AddHabit closeCallBack={() => setShowAddHabit(false)} okCallBack={async () => {
+          fetchHabits()
         }} />
       </Modal>
     </SafeAreaView>

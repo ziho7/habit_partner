@@ -1,45 +1,63 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Habit } from './get_data';
 import uuid from 'react-native-uuid';
-import { instanceToPlain, plainToInstance } from 'class-transformer';
+import { Type, Expose, Transform, plainToClass, plainToInstance, instanceToPlain } from 'class-transformer';
+import "reflect-metadata";
+
+export class Habit {
+    id: string // uuid
+    userId: string
+    name: string
+    startDate: string
+    endDate: string
+    creatorId: string
+    everyCount: number
+    type: number // 0 daily 1 weekly 2 monthly
+    showsDays: number[]
+
+    @Transform(value => {
+        let map = new Map<string, Record>();
+        for (let entry of Object.entries(value.value))
+            map.set(entry[0], plainToClass(Record, entry[1]));
+        return map;
+    }, { toClassOnly: true })
+    records: Map<string, Record>
+    createTime: Date
+}
+
+export class Record {
+    @Expose()
+    clickCount: number
+}
 
 // user to all habits key
-const userHabitsKey = 'userHabits7'
+const userHabitsKey = 'userHabits11'
 
-export const addHabit = function (habit: Habit) {
+export const addHabit = async (habit: Habit) => {
     let habitId = uuid.v4('string')
     if (typeof habitId === 'string') {
         habit.id = habitId
     }
-    
-    // 将habit存入单独的文件， key是habitId
-    // let habitJson = JSON.stringify(habit)
-    // console.log('habitJson', habitJson);
-    console.log('habit new json', JSON.stringify(instanceToPlain(habit)))
-    
-    let habitJson = JSON.stringify(instanceToPlain(habit))
-    setData(habit.id.toString(), habitJson)
 
-    // 将habitId存入userHabits
-    getData(userHabitsKey).then((allhabitsId) => {
+    try {
+        // 将habit存入单独的文件， key是habitId
+        let habitJson = JSON.stringify(instanceToPlain(habit))
+        await setData(habit.id.toString(), habitJson)
+
+        // 将habitId存入userHabits
+        let allhabitsId = await getData(userHabitsKey)
         let userHabits = allhabitsId ? JSON.parse(allhabitsId) : []
         userHabits.push(habitId)
-        setData(userHabitsKey, JSON.stringify(userHabits))
-    }).catch((e) => {
-        console.log(e);
-        throw e
-    })
+        await setData(userHabitsKey, JSON.stringify(userHabits))
+    } catch (error) {
+        throw error
+    }
 }
 
 export const getHabit = async function (habitId: string) {
     return getData(habitId).then((habitJson) => {
-        // let habit: Habit = JSON.parse(habitJson || "")    
-        let jsonData  = JSON.parse(habitJson || "")
-        console.log('jsonData', jsonData);
+        let jsonData = JSON.parse(habitJson || "")
         let habit: Habit = plainToInstance(Habit, jsonData)
-        console.log('instance habit', habit);
-        
-        
+
         return habit
     }).catch((e) => {
         console.log(e);

@@ -7,14 +7,18 @@ import Donut2 from '@/components/Donut2'
 const HabitCard = ({
     beginDate,
     endDate,
-    totalCount,
+    everyCount,
+    clickCount,
     name,
+    habitId
   }: {
     beginDate: string,
     endDate: string,
-    totalCount: string,
-    name: string
-  }) => {
+    everyCount: number,
+    clickCount: number,
+    name: string,
+    habitId: string
+  }) => {    
     return <View className='mt-4'>
       <View className='flex-row justify-between items-center h-[160px] bg-mypurple-light rounded-xl px-4'>
         <View className='flex-col'>
@@ -30,14 +34,14 @@ const HabitCard = ({
           </View>
           <Text className='text-[12px] text-mygray'>{beginDate}-{endDate}</Text>
           {/* <Text className='text-[12px] text-mygray'>每天一次</Text> */}
-          <Text className='text-[12px] text-mygray'>Completed today: {totalCount}</Text>
-          <Text className='text-[12px] text-mygray'>Completed total: {totalCount}</Text>
+          <Text className='text-[12px] text-mygray'>Completed today: {everyCount}</Text>
+          {/* <Text className='text-[12px] text-mygray'>Completed total: {totalCount}</Text> */}
           
         </View>
   
         {/* <Donut /> */}
   
-        <Donut2 />
+        <Donut2 everyCount={everyCount} clickCount1={clickCount}/>
   
   
       </View>
