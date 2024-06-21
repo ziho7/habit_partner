@@ -107,3 +107,12 @@ const getData = async (key: string) => {
         throw e
     }
 };
+
+
+export const calculateCompletedDays = (habit: Habit) => {
+    if (habit.records === undefined) {
+        return 0
+    }
+    const recordArray = Array.from(habit.records.values());
+    return recordArray.filter((record) => record.clickCount > 0).length;
+}
