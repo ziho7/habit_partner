@@ -16,10 +16,6 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
     const progress = useSharedValue(0);
     const currentDate = getCurrentDateAndDayOfWeekInTimeZone().currentDate;
 
-
-    
-    
-
     // 计算圆周长
     const radius = 40;
     const strokeWidth = 8;
