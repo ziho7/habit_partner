@@ -68,7 +68,9 @@ const Home = () => {
         }}
 
         ListHeaderComponent={getHeader}
-        ListEmptyComponent={<Text>Empty Please, add a new habit first</Text>}
+        ListEmptyComponent={
+          <Text>Empty Please, add a new habit first</Text>
+        }
       />
 
       <Modal

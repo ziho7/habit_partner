@@ -14,6 +14,12 @@ const HabitCard = ({
     habit: Habit,
     doneCallBack: () => void
   }) => {
+
+    const calculateCompletedDays = (habit: Habit) => {
+      const recordArray = Array.from(habit.records.values());
+      return recordArray.filter((record) => record.clickCount > 0).length;
+    }
+
     return <View className='mt-4'>
       <View className='flex-row justify-between items-center h-[160px] bg-mypurple-light rounded-xl px-4'>
         <View className='flex-col'>
@@ -27,18 +33,14 @@ const HabitCard = ({
             </View>
             <Text className='font-semibold text-[20px]'>{habit.name}</Text>
           </View>
-          <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
-          {/* <Text className='text-[12px] text-mygray'>每天一次</Text> */}
-          <Text className='text-[12px] text-mygray'>Completed today: {habit.everyCount}</Text>
-          {/* <Text className='text-[12px] text-mygray'>Completed total: {totalCount}</Text> */}
+          <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>  
+          <Text className='text-[12px] text-mygray'>Completed days: {calculateCompletedDays(habit)}</Text>
           
         </View>
   
         {/* <Donut /> */}
   
         <Donut2 clickCount1={clickCount} habit={habit} doneCallBack={doneCallBack}/>
-  
-  
       </View>
     </View>
   }
