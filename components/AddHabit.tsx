@@ -8,6 +8,7 @@ import DateModal from './DateModal'
 import { addHabit } from '@/lib/storage'
 
 
+// todo days and +infinitive
 
 
 const AddHabit = ({ closeCallBack, okCallBack }: {

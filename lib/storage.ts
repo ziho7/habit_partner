@@ -116,3 +116,16 @@ export const calculateCompletedDays = (habit: Habit) => {
     const recordArray = Array.from(habit.records.values());
     return recordArray.filter((record) => record.clickCount > 0).length;
 }
+
+export const transRecordToCommitsData = (habit: Habit) => {
+    let data = []
+    if (habit.records === undefined) {
+        data.push({ date: '2024-06-08', count: 1 })
+        return data
+    }
+    for (let [key, value] of habit.records) {
+        data.push({ date: key, count: value.clickCount })
+    }
+    
+    return data
+}
