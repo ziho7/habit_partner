@@ -39,17 +39,25 @@ const Detail = () => {
             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
             customStyle='w-[8px] h-[8px]'
           />
-          {/* todo 完成变得更显眼 */}
           <View className='items-center'>
             <ImageAndTitle image={images.ball} name={habit.name} />
-            <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
 
-            <Image
-              source={images.laurelWreath}
-              className='w-[88px] h-[88px]'
-              resizeMode='contain'
-            />
-            {/* <Text className='text-[12px] text-mygray'>Completed: {calculateCompletedDays(habit)}</Text> */}
+            <View className='relative items-center justify-center'>
+              <Image
+                source={images.laurelWreath}
+                className='w-[98px] h-[98px]'
+                resizeMode='contain'
+              />
+              <View className='absolute items-center'>
+                <Text className='text-[32px]'>{calculateCompletedDays(habit)}</Text>
+                <Text className='text-[6px] text-mygray'>Done</Text>
+              </View>
+
+
+
+            </View>
+
+            <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
           </View>
 
 
