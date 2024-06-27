@@ -42,7 +42,7 @@ const Detail = () => {
         <View>
           <ImageAndTitle image={images.ball} name={habit.name} />
           <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
-          <Text className='text-[12px] text-mygray'>Completed days: {calculateCompletedDays(habit)}</Text>
+          <Text className='text-[12px] text-mygray'>Completed: {calculateCompletedDays(habit)}</Text>
         </View>
 
         <CustomIconButton
@@ -56,10 +56,10 @@ const Detail = () => {
       {/* 分块数据 */}
       <View className='mt-4 mx-2'>
         <View className='flex flex-row flex-wrap'>
-          <DataBlock title='Completed' count={habit.everyCount} />
+          <DataBlock title='Total click' count={habit.everyCount} />
           <DataBlock title='Days lefted' count={habit.everyCount} />
-          <DataBlock title='streaks' count={habit.everyCount} />
-          <DataBlock title='Best streaks' count={habit.everyCount} />
+          <DataBlock title='Current streak' count={habit.everyCount} />
+          <DataBlock title='Best streak' count={habit.everyCount} />
         </View>
       </View>
 
@@ -72,29 +72,31 @@ const Detail = () => {
         theme={{
           backgroundColor: '#F8F6F9',
           calendarBackground: '#F8F6F9',
-          textSectionTitleColor: '#b6c1cd',
+          textSectionTitleColor: '#A19C9C',
           textSectionTitleDisabledColor: '#d9e1e8',
-          selectedDayBackgroundColor: '#00adf5',
+          selectedDayBackgroundColor: '#CEBEE8',
           selectedDayTextColor: '#ffffff',
-          todayTextColor: '#00adf5',
+          todayTextColor: '#CEBEE8',
           dayTextColor: '#2d4150',
           textDisabledColor: '#d9e1e8',
           dotColor: '#00adf5',
           selectedDotColor: '#ffffff',
-          arrowColor: 'orange',
-          disabledArrowColor: '#d9e1e8',
-          monthTextColor: 'blue',
-          indicatorColor: 'blue',
+          arrowColor: 'black',
+          // disabledArrowColor: '#d9e1e8',
+          monthTextColor: 'black',
+          indicatorColor: 'black',
           textDayFontFamily: 'monospace',
           textMonthFontFamily: 'monospace',
           textDayHeaderFontFamily: 'monospace',
           textDayFontWeight: '300',
           textMonthFontWeight: 'bold',
           textDayHeaderFontWeight: '300',
-          textDayFontSize: 16,
-          textMonthFontSize: 16,
-          textDayHeaderFontSize: 16
+          textDayFontSize: 14,
+          textMonthFontSize: 14,
+          textDayHeaderFontSize: 14
         }}
+
+        hideExtraDays={true}
       />
 
 
