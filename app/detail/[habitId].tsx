@@ -7,8 +7,10 @@ import CustomIconButton from '@/components/CustomIconButton';
 import images from '@/constants/images';
 import ImageAndTitle from '@/components/ImageAndTitle';
 import { ContributionGraph } from 'react-native-chart-kit'
-import Data from '../(tabs)/data';
+
 import DataBlock from '@/components/DataBlock';
+
+import { ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar, Calendar } from 'react-native-calendars';
 
 const Detail = () => {
   const { habitId } = useLocalSearchParams()
@@ -37,7 +39,7 @@ const Detail = () => {
           customStyle='w-[8px] h-[8px]'
         />
         {/* todo 完成变得更显眼 */}
-        <View> 
+        <View>
           <ImageAndTitle image={images.ball} name={habit.name} />
           <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
           <Text className='text-[12px] text-mygray'>Completed days: {calculateCompletedDays(habit)}</Text>
@@ -52,24 +54,55 @@ const Detail = () => {
       </View>
 
       {/* 分块数据 */}
-      <View className='mt-4'>
+      <View className='mt-4 mx-2'>
         <View className='flex flex-row flex-wrap'>
           <DataBlock title='Completed' count={habit.everyCount} />
           <DataBlock title='Days lefted' count={habit.everyCount} />
-          <DataBlock title='consecutive completion' count={habit.everyCount} />
-          <DataBlock title='Longest consecutive completion' count={habit.everyCount} />
+          <DataBlock title='streaks' count={habit.everyCount} />
+          <DataBlock title='Best streaks' count={habit.everyCount} />
         </View>
       </View>
 
       {/* 日期进度条 */}
-      
+
       {/* 周数据分析 */}
-      
+      <Calendar
+        className='mx-4 mt-4 rounded-lg'
+        
+        theme={{
+          backgroundColor: '#F8F6F9',
+          calendarBackground: '#F8F6F9',
+          textSectionTitleColor: '#b6c1cd',
+          textSectionTitleDisabledColor: '#d9e1e8',
+          selectedDayBackgroundColor: '#00adf5',
+          selectedDayTextColor: '#ffffff',
+          todayTextColor: '#00adf5',
+          dayTextColor: '#2d4150',
+          textDisabledColor: '#d9e1e8',
+          dotColor: '#00adf5',
+          selectedDotColor: '#ffffff',
+          arrowColor: 'orange',
+          disabledArrowColor: '#d9e1e8',
+          monthTextColor: 'blue',
+          indicatorColor: 'blue',
+          textDayFontFamily: 'monospace',
+          textMonthFontFamily: 'monospace',
+          textDayHeaderFontFamily: 'monospace',
+          textDayFontWeight: '300',
+          textMonthFontWeight: 'bold',
+          textDayHeaderFontWeight: '300',
+          textDayFontSize: 16,
+          textMonthFontSize: 16,
+          textDayHeaderFontSize: 16
+        }}
+      />
+
+
 
       {/* 月数据分析 */}
 
       {/* 年数据分析 */}
-      <ScrollView horizontal={true} className='flex'>
+      <ScrollView horizontal={true} className='mt-4 mx-4 rounded-lg' showsHorizontalScrollIndicator={false}>
         <ContributionGraph
           values={transRecordToCommitsData(habit)}
           width={windowWidth * 2}
