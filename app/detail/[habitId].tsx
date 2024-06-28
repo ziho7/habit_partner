@@ -6,11 +6,44 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomIconButton from '@/components/CustomIconButton';
 import images from '@/constants/images';
 import ImageAndTitle from '@/components/ImageAndTitle';
-import { ContributionGraph } from 'react-native-chart-kit'
+// import { ContributionGraph } from 'react-native-chart-kit'
+
+
+
 
 import DataBlock from '@/components/DataBlock';
 
 import { ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar, Calendar } from 'react-native-calendars';
+import ContributionGraph from '@/components/ContributionGraph';
+
+
+type InputData = {
+  [date: string]: {
+    level: number;
+    data?: any;
+  };
+};
+
+const data: InputData[] = [
+  {
+    '2020-04-20': { level: 2 }
+  },
+  {
+    '2023-07-08': { level: 1 },
+  },
+  {
+    '2023-07-09': { level: 4, data: {} },
+  },
+  {
+    '2023-03-31': {
+      level: 3,
+      data: {
+        myKey: 'my data',
+      },
+    },
+  },
+];
+
 
 const Detail = () => {
   const { habitId } = useLocalSearchParams()
@@ -84,7 +117,6 @@ const Detail = () => {
         {/* 周数据分析 */}
         <Calendar
           className='mx-4 mt-4 rounded-lg'
-
           theme={{
             backgroundColor: '#F8F6F9',
             calendarBackground: '#F8F6F9',
@@ -117,12 +149,15 @@ const Detail = () => {
         {/* 月数据分析 */}
 
         {/* 年数据分析 */}
-        <View>
-          <ScrollView horizontal={true} className='mt-4 mx-4 rounded-lg' showsHorizontalScrollIndicator={false}>
+        <View className='mt-4 bg-mypurple-light mx-4 rounded-lg'>
+          {/* <View>
+            <Text>Title</Text>
+          </View>
+          <ScrollView horizontal={true} className='rounded-lg' showsHorizontalScrollIndicator={false}>
             <ContributionGraph
               values={transRecordToCommitsData(habit)}
-              width={windowWidth * 2}
-              height={120}
+              width={windowWidth }
+              height={300}
               tooltipDataAttrs={(value) => handleToolTip}
               numDays={365}
               chartConfig={{
@@ -130,13 +165,63 @@ const Detail = () => {
                 backgroundGradientTo: '#F8F6F9',
                 color: (opacity = 1) => `rgba(206, 190, 232, ${opacity})`,
               }}
-              squareSize={5.5}
+              squareSize={6}
               showOutOfRangeDays={true}
               showMonthLabels={true}
               endDate={new Date()}
-
+              
             />
-          </ScrollView>
+          </ScrollView> */}
+          <ContributionGraph
+            startDate='2024-05-01'
+            endDate='2024-06-31'
+            dataValues={[
+              {
+                date: '2024-05-01',
+                count: 1
+              },
+              {
+                date: '2024-05-02',
+                count: 3
+              },
+              {
+                date: '2024-05-03',
+                count: 3
+              },
+              {
+                date: '2024-05-04',
+                count: 3
+              },
+              {
+                date: '2024-05-05',
+                count: 3
+              },
+              {
+                date: '2024-05-06',
+                count: 3
+              },
+              {
+                date: '2024-05-07',
+                count: 3
+              },
+              {
+                date: '2024-05-08',
+                count: 3
+              },
+              {
+                date: '2024-05-09',
+                count: 3
+              },
+              {
+                date: '2024-05-10',
+                count: 5
+              },
+              {
+                date: '2024-05-11',
+                count: 3
+              }
+            ]}
+          />
         </View>
 
 
