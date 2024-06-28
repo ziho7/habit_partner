@@ -7,7 +7,6 @@ export const getTodayHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;    
     let sortedHabits = sortHabits(habits);
-    console.log('sortedHabits',sortedHabits);
     
     return sortedHabits;
 }
@@ -25,7 +24,7 @@ export const getMonthHabits =async () => {
     let sortedHabits = sortHabits(habits);
     return sortedHabits;
 }
-
+    
 const sortHabits = function (habits: Habit[]) {
     const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
     let unfinishedList: Habit[] = []
@@ -37,7 +36,7 @@ const sortHabits = function (habits: Habit[]) {
             continue
         }
 
-        if ((habit.records.get(currentDate) ?? { done: 0 }).done < habit.everyCount) {
+        if ((habit.records.get(currentDate) ?? { clickCount: 0 }).clickCount < habit.everyCount) {
             unfinishedList.push(habit)
         } else {
             finishedList.push(habit)

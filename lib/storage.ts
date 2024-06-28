@@ -30,7 +30,7 @@ export class Record {
 }
 
 // user to all habits key
-const userHabitsKey = 'userHabits11'
+const userHabitsKey = 'userHabits12'
 
 export const addHabit = async (habit: Habit) => {
     let habitId = uuid.v4('string')
@@ -81,6 +81,15 @@ export const getAllHabits = async function () {
     }
 }
 
+export const updateHabit = async (habit: Habit) => {
+    try {
+        let habitJson = JSON.stringify(instanceToPlain(habit))
+        await setData(habit.id.toString(), habitJson)
+    } catch (error) {
+        throw error
+    }
+}
+
 
 const setData = async (key: string, value: string) => {
     try {
@@ -98,3 +107,25 @@ const getData = async (key: string) => {
         throw e
     }
 };
+
+
+export const calculateCompletedDays = (habit: Habit) => {
+    if (habit.records === undefined) {
+        return 0
+    }
+    const recordArray = Array.from(habit.records.values());
+    return recordArray.filter((record) => record.clickCount > 0).length;
+}
+
+export const transRecordToCommitsData = (habit: Habit) => {
+    let data = []
+    if (habit.records === undefined) {
+        data.push({ date: '2024-06-08', count: 1 })
+        return data
+    }
+    for (let [key, value] of habit.records) {
+        data.push({ date: key, count: value.clickCount })
+    }
+    
+    return data
+}

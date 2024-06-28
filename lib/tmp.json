@@ -1,0 +1,29 @@
+habit {
+    "createTime": "2024-06-20T01:59:05.084Z",
+    "creatorId": "",
+    "endDate": "2024-09-07",
+    "everyCount": 1,
+    "id": "3d022d95-dfd9-45a6-9e9c-ccd2b5280f2d",
+    "name": "Habit2",
+    "records": Map {
+        "2024-03-07" => {
+            "clickCount": 0
+        },
+        "2024-03-08" => {
+            "clickCount": 12
+        },
+        "2024-03-09" => {
+            "clickCount": 11
+        },
+        "2024-06-16" => {
+            "clickCount": 11
+        },
+        "2024-06-20" => {
+            "clickCount": 1
+        }
+    },
+    "showsDays": [],
+    "startDate": "2024-03-07",
+    "type": 0,
+    "userId": ""
+}

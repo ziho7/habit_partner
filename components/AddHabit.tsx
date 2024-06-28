@@ -8,6 +8,7 @@ import DateModal from './DateModal'
 import { addHabit } from '@/lib/storage'
 
 
+// todo days and +infinitive
 
 
 const AddHabit = ({ closeCallBack, okCallBack }: {
@@ -27,10 +28,6 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
         showsDays: [],
         createTime: new Date(),
         records: new Map<string, Record>([
-            ["2024-03-07", { clickCount: 0 }],
-            ["2024-03-08", { clickCount: 12 }],
-            ["2024-03-09", { clickCount: 11 }],
-            ["2024-06-16", { clickCount: 11 }],
         ])
     } as Habit)
 
