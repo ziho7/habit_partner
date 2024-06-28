@@ -173,8 +173,7 @@ const Detail = () => {
             />
           </ScrollView> */}
           <ContributionGraph
-            startDate='2024-05-01'
-            endDate='2024-06-31'
+            year={2024}
             dataValues={[
               {
                 date: '2024-05-01',
