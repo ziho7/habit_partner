@@ -16,26 +16,28 @@ const ContributionGraph = ({ year, dataValues }: {
     const getCalenderGrid = (daysTotal: number) => {
         // 全年所有天数
         let calenderGrid = Array.from({ length: daysTotal }, (_, i) => {
-            const date = new Date('2024-01-01')    
+            const date = new Date('2024-01-01')
             date.setDate(startDate.getDate() + i)
-            
+
             return date.toISOString().slice(0, 10);
         })
 
         // 补全前面的空格
-        // const startDateDay = startDate.getDay()
-        // if (startDateDay != 0) {
-        //     for (let i = 0; i < startDateDay; i++) {
-        //         calenderGrid.unshift('')
-        //     }
-        // }
+        const startDateDay = startDate.getDay()
+        if (startDateDay > 1) {
+            for (let i = 0; i < startDateDay - 1; i++) {
+                calenderGrid.unshift('')
+            }
+        }
+        console.log('startDateDay', startDateDay);
+
 
         // 每隔7天补全空格
         let newCalenrerGrid: string[] = []
         let currentMonth = ""
         for (let i = 0; i < calenderGrid.length; i++) {
             newCalenrerGrid.push(calenderGrid[i])
-            if ((i+1) % 7 !== 0 || i === 0) {
+            if ((i + 1) % 7 !== 0 || i === 0) {
                 continue
             }
 
@@ -74,20 +76,18 @@ const ContributionGraph = ({ year, dataValues }: {
                 <View className='gap-1 flex-col flex-wrap h-[150px]' >
                     {
                         calenderGrid.map((day, index) => {
-                            console.log(day);
-                            
+
                             if (day === 'empty') {
-                                return <View className='rounded h-[14px] w-[14px] cursor-pointer bg-gray-400'></View>
+                                return <View className='rounded h-[14px] w-[14px] cursor-pointer'></View>
                             }
 
                             if (!day.includes('-')) {
-                                // return <View className='rounded h-[14px] w-[14px] cursor-pointer bg-gray-400'></View>    
                                 return <Text className='text-[7px]'>{day}</Text>
                             }
 
                             const color = getColor(day)
                             return <View
-                                className='rounded h-[14px] w-[14px] cursor-pointer border border-spacing-1 bg-gray-400'
+                                className='rounded h-[14px] w-[14px] cursor-pointer border border-mypurple'
                                 style={{ backgroundColor: String(color) }}
                                 key={index}
                             >
