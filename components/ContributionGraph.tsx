@@ -6,8 +6,8 @@ const ContributionGraph = ({ year, dataValues }: {
     year: number,
     dataValues: { date: string, count: number }[]
 }) => {
-    const startDate = new Date('2024-01-01')
-    const endingDate = new Date('2024-12-31')
+    const startDate = new Date(year + '-01-01')
+    const endingDate = new Date(year + '-12-31')
 
     const differenceInMilliseconds = endingDate.getTime() - startDate.getTime()
     const daysTotal = Math.ceil((differenceInMilliseconds / (1000 * 60 * 60 * 24))) + 1;
@@ -16,7 +16,7 @@ const ContributionGraph = ({ year, dataValues }: {
     const getCalenderGrid = (daysTotal: number) => {
         // 全年所有天数
         let calenderGrid = Array.from({ length: daysTotal }, (_, i) => {
-            const date = new Date('2024-01-01')
+            const date = new Date(year + '-01-01')
             date.setDate(startDate.getDate() + i)
 
             return date.toISOString().slice(0, 10);
@@ -24,12 +24,11 @@ const ContributionGraph = ({ year, dataValues }: {
 
         // 补全前面的空格
         const startDateDay = startDate.getDay()
-        if (startDateDay > 1) {
-            for (let i = 0; i < startDateDay - 1; i++) {
+        if (startDateDay != 7) {
+            for (let i = 0; i < startDateDay; i++) {
                 calenderGrid.unshift('')
             }
         }
-        console.log('startDateDay', startDateDay);
 
 
         // 每隔7天补全空格
@@ -63,14 +62,14 @@ const ContributionGraph = ({ year, dataValues }: {
     const getColor = (date: string) => {
         const activityCount = dataValues.find(item => item.date === date)?.count || 0
         const intensity = highestValue !== 0 ? Number(activityCount / highestValue) : 0
-        const colorCodes = ['#FFFFFF', '#FFCCCC', '#FFAAAA', '#FF8888', '#FF6666', '#FF4444']
+        const colorCodes = ['#F8F6F9', '#FFCCCC', '#FFAAAA', '#FF8888', '#FF6666', '#ac8bc9']
         const colorIndex = Math.min(Math.floor((intensity * colorCodes.length)), colorCodes.length - 1)
         return colorCodes[colorIndex]
     }
 
     return (
 
-        <ScrollView horizontal={true}>
+        <ScrollView horizontal={true} className=''>
             <View className=''>
                 {/* 方块 */}
                 <View className='gap-1 flex-col flex-wrap h-[150px]' >

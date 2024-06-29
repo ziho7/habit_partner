@@ -6,50 +6,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomIconButton from '@/components/CustomIconButton';
 import images from '@/constants/images';
 import ImageAndTitle from '@/components/ImageAndTitle';
-// import { ContributionGraph } from 'react-native-chart-kit'
-
-
-
-
 import DataBlock from '@/components/DataBlock';
 
-import { ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar, Calendar } from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import ContributionGraph from '@/components/ContributionGraph';
-
-
-type InputData = {
-  [date: string]: {
-    level: number;
-    data?: any;
-  };
-};
-
-const data: InputData[] = [
-  {
-    '2020-04-20': { level: 2 }
-  },
-  {
-    '2023-07-08': { level: 1 },
-  },
-  {
-    '2023-07-09': { level: 4, data: {} },
-  },
-  {
-    '2023-03-31': {
-      level: 3,
-      data: {
-        myKey: 'my data',
-      },
-    },
-  },
-];
 
 
 const Detail = () => {
   const { habitId } = useLocalSearchParams()
 
-  // const habit = getHabit(habitId as string)
   const [habit, setHabit] = useState<Habit>(new Habit())
+
+  const [year, setYear] = useState(new Date().getFullYear())
 
   useEffect(() => {
     getHabit(habitId as string).then((habit) => {
@@ -112,9 +80,9 @@ const Detail = () => {
           </View>
         </View>
 
-        {/* 日期进度条 */}
 
-        {/* 周数据分析 */}
+        {/* 月数据分析 */}
+        {/* todo 左右按钮对齐  */}
         <Calendar
           className='mx-4 mt-4 rounded-lg'
           theme={{
@@ -127,17 +95,13 @@ const Detail = () => {
             todayTextColor: '#CEBEE8',
             dayTextColor: '#2d4150',
             textDisabledColor: '#d9e1e8',
-            dotColor: '#00adf5',
-            selectedDotColor: '#ffffff',
-            arrowColor: 'black',
-            // disabledArrowColor: '#d9e1e8',
             monthTextColor: 'black',
             indicatorColor: 'black',
             textDayFontFamily: 'monospace',
             textMonthFontFamily: 'monospace',
             textDayHeaderFontFamily: 'monospace',
             textDayFontWeight: '300',
-            textMonthFontWeight: 'bold',
+            textMonthFontWeight: 'semibold',
             textDayHeaderFontWeight: '300',
             textDayFontSize: 14,
             textMonthFontSize: 14,
@@ -145,82 +109,53 @@ const Detail = () => {
           }}
 
           hideExtraDays={true}
+          renderArrow={(direction) => {
+            return <CustomIconButton
+              image={direction === 'left' ? images.arrowLeft : images.arrowRight}
+              callBackFunction={router.back}
+              containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
+              customStyle='w-[8px] h-[8px]'
+            />
+          }}
         />
-        {/* 月数据分析 */}
+
 
         {/* 年数据分析 */}
-        <View className='mt-4 bg-mypurple-light mx-4 rounded-lg'>
-          {/* <View>
-            <Text>Title</Text>
-          </View>
-          <ScrollView horizontal={true} className='rounded-lg' showsHorizontalScrollIndicator={false}>
-            <ContributionGraph
-              values={transRecordToCommitsData(habit)}
-              width={windowWidth }
-              height={300}
-              tooltipDataAttrs={(value) => handleToolTip}
-              numDays={365}
-              chartConfig={{
-                backgroundGradientFrom: '#F8F6F9',
-                backgroundGradientTo: '#F8F6F9',
-                color: (opacity = 1) => `rgba(206, 190, 232, ${opacity})`,
-              }}
-              squareSize={6}
-              showOutOfRangeDays={true}
-              showMonthLabels={true}
-              endDate={new Date()}
-              
+        <View className='mt-4 bg-mypurple-light mx-4 h-[260px] rounded-lg'>
+          <View className='flex-row justify-between items-center mt-2'>
+            <CustomIconButton
+              image={images.arrowLeft}
+              callBackFunction={() => { setYear(year - 1) }}
+              containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
+              customStyle='w-[8px] h-[8px]'
             />
-          </ScrollView> */}
-          <ContributionGraph
-            year={2024}
-            dataValues={[
-              {
-                date: '2024-05-01',
-                count: 1
-              },
-              {
-                date: '2024-05-02',
-                count: 3
-              },
-              {
-                date: '2024-05-03',
-                count: 3
-              },
-              {
-                date: '2024-05-04',
-                count: 3
-              },
-              {
-                date: '2024-05-05',
-                count: 3
-              },
-              {
-                date: '2024-05-06',
-                count: 3
-              },
-              {
-                date: '2024-05-07',
-                count: 3
-              },
-              {
-                date: '2024-05-08',
-                count: 3
-              },
-              {
-                date: '2024-05-09',
-                count: 3
-              },
-              {
-                date: '2024-05-10',
-                count: 5
-              },
-              {
-                date: '2024-05-11',
-                count: 3
-              }
-            ]}
-          />
+            <Text className='text-[14px]'>{year}</Text>
+            <CustomIconButton
+              image={images.arrowRight}
+              callBackFunction={() => { setYear(year + 1) }}
+              containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
+              customStyle='w-[8px] h-[8px]'
+            />
+          </View>
+
+          <View className='m-2 flex-row'>
+            <View className='flex w-[24px] h-full '>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Sun</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Mon</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Thu</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Wed</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Thu</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Fri</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Sat</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'></Text></View>
+            </View>
+            <ContributionGraph
+              year={year}
+              dataValues={transRecordToCommitsData(habit)}
+            />
+          </View>
+
+
         </View>
 
 
