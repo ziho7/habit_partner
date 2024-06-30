@@ -5,9 +5,9 @@ import { Habit, getAllHabits } from './storage';
 
 export const getTodayHabits = async () => {
     let res = await getAllHabits();
-    let habits: Habit[] = res;    
+    let habits: Habit[] = res;
     let sortedHabits = sortHabits(habits);
-    
+
     return sortedHabits;
 }
 
@@ -18,19 +18,19 @@ export const getWeekHabits = async () => {
     return sortedHabits;
 }
 
-export const getMonthHabits =async () => {
+export const getMonthHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
     let sortedHabits = sortHabits(habits);
     return sortedHabits;
 }
-    
+
 const sortHabits = function (habits: Habit[]) {
     const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
     let unfinishedList: Habit[] = []
     let finishedList: Habit[] = []
     for (let habit of habits) {
-        
+
         // 不在制定日期内的habit不显示
         if (habit.startDate > currentDate || habit.endDate < currentDate) {
             continue
@@ -99,21 +99,50 @@ export const calDaysLeft = (habit: Habit) => {
 }
 
 export const currentStreak = (habit: Habit) => {
-    const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
+    let { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
     let currentStreak = 0
     if (habit.records === undefined) {
         return 0
     }
 
-    for (let i = 0; i < 100; i++) {
-        const date = new Date(currentDate)
-        date.setDate(date.getDate() - i)
-        const dateStr = dateToDash(date.toLocaleDateString())
-        if (habit.records.get(dateStr)?.clickCount === 0) {
+    while (habit.records.has(dateToDash(currentDate))) {
+        if (isHabitDone(habit, currentDate)) {
+            currentStreak++
+        } else {
             break
         }
-        currentStreak++
+        const currentDateYesterDay = new Date(currentDate).setDate(new Date(currentDate).getDate() - 1)
+        currentDate = new Date(currentDateYesterDay).toISOString().slice(0, 10)
     }
 
     return currentStreak
+}
+
+export const bestStreak = (habit: Habit) => {
+    if (habit.records === undefined) {
+        return 0
+    }
+    let currentStrak = 0
+    let bestStreak = 0
+    let habitRecordsArray = Array.from(habit.records.keys());
+    for (let i = 0; i < habitRecordsArray.length; i++) {
+        if (isHabitDone(habit, habitRecordsArray[i])) {
+            currentStrak++
+        } else {
+            bestStreak = Math.max(currentStrak, bestStreak)
+            currentStrak = 0
+        }
+    }
+
+    bestStreak = Math.max(currentStrak, bestStreak)
+
+    return bestStreak
+}
+
+const isHabitDone = (habit: Habit, date: string) => {
+    if (habit.records === undefined) {
+        return false
+    }
+
+    return habit.records.get(date)?.clickCount === habit.everyCount
 }
