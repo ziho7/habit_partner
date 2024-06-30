@@ -25,10 +25,6 @@ const Detail = () => {
     })
   }, [])
 
-  const windowWidth = Dimensions.get('window').width
-  const handleToolTip: any = {}
-
-
   return (
     <SafeAreaView className=''>
       <ScrollView>
@@ -112,7 +108,7 @@ const Detail = () => {
           renderArrow={(direction) => {
             return <CustomIconButton
               image={direction === 'left' ? images.arrowLeft : images.arrowRight}
-              callBackFunction={router.back}
+              callBackFunction={() => { }}
               containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
               customStyle='w-[8px] h-[8px]'
             />
@@ -157,7 +153,6 @@ const Detail = () => {
 
 
         </View>
-
 
       </ScrollView>
     </SafeAreaView>

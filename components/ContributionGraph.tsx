@@ -1,5 +1,5 @@
-import { View, Text, ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView, Dimensions } from 'react-native'
+import React, { useEffect, useRef } from 'react'
 import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data'
 
 const ContributionGraph = ({ year, dataValues }: {
@@ -8,6 +8,8 @@ const ContributionGraph = ({ year, dataValues }: {
 }) => {
     const startDate = new Date(year + '-01-01')
     const endingDate = new Date(year + '-12-31')
+    const today = getCurrentDateAndDayOfWeekInTimeZone().currentDate
+    const scrollViewRef = useRef<ScrollView>(null);
 
     const differenceInMilliseconds = endingDate.getTime() - startDate.getTime()
     const daysTotal = Math.ceil((differenceInMilliseconds / (1000 * 60 * 60 * 24))) + 1;
@@ -54,10 +56,6 @@ const ContributionGraph = ({ year, dataValues }: {
 
     let calenderGrid = getCalenderGrid(daysTotal)
 
-
-
-
-
     const highestValue = dataValues?.reduce((a, b) => Math.max(a, b.count), -Infinity)
     const getColor = (date: string) => {
         const activityCount = dataValues.find(item => item.date === date)?.count || 0
@@ -67,26 +65,39 @@ const ContributionGraph = ({ year, dataValues }: {
         return colorCodes[colorIndex]
     }
 
-    return (
+    const getBorderColor = (date: string) => {
+        if (date === today) {
+            return 'border-red-300'
+        }
+        return 'border-mypurple'
+    }
 
-        <ScrollView horizontal={true} className=''>
+    useEffect(() => {
+        const date = new Date()
+        const todayIndexRate = date.getMonth() / 12
+        const windowWidth = Dimensions.get('window').width;    
+        scrollViewRef.current?.scrollTo({ x: (windowWidth) * todayIndexRate + 50, animated: true });
+      });
+
+    return (
+        <ScrollView horizontal={true} className='' ref={scrollViewRef} >
             <View className=''>
                 {/* 方块 */}
                 <View className='gap-1 flex-col flex-wrap h-[150px]' >
-                    {
+                    {   
                         calenderGrid.map((day, index) => {
-
+                            
                             if (day === 'empty') {
-                                return <View className='rounded h-[14px] w-[14px] cursor-pointer'></View>
+                                return <View className='rounded h-[14px] w-[14px] cursor-pointer' key={index}></View>
                             }
 
                             if (!day.includes('-')) {
-                                return <Text className='text-[7px]'>{day}</Text>
+                                return <Text className='text-[7px]' key={index}>{day}</Text>
                             }
 
                             const color = getColor(day)
                             return <View
-                                className='rounded h-[14px] w-[14px] cursor-pointer border border-mypurple'
+                                className={`rounded h-[14px] w-[14px] cursor-pointer border ${getBorderColor(day)} `}
                                 style={{ backgroundColor: String(color) }}
                                 key={index}
                             >
