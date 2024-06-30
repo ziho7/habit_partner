@@ -104,8 +104,9 @@ const Detail = () => {
             textSectionTitleColor: '#A19C9C',
             textSectionTitleDisabledColor: '#d9e1e8',
             selectedDayBackgroundColor: '#CEBEE8',
-            selectedDayTextColor: '#ffffff',
-            todayTextColor: '#CEBEE8',
+            selectedDayTextColor: '#ffffff',  // 选中的颜色
+            todayTextColor: '#ff3d57', // 今天颜色
+            todayBackgroundColor: '#CEBEE8',
             dayTextColor: '#2d4150',
             textDisabledColor: '#d9e1e8',
             monthTextColor: 'black',
