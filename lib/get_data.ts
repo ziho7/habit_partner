@@ -83,3 +83,37 @@ export const getTimeZone = () => {
 
 
 
+// 一些工具函数
+export const calTotalClickCount = (habit: Habit) => {
+    if (habit.records === undefined) {
+        return 0
+    }
+    const recordArray = Array.from(habit.records.values());
+    return recordArray.reduce((acc, record) => acc + record.clickCount, 0);
+}
+
+export const calDaysLeft = (habit: Habit) => {
+    const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
+    const days = (new Date(habit.endDate).getTime() - new Date(currentDate).getTime()) / (1000 * 60 * 60 * 24)
+    return Math.ceil(days)
+}
+
+export const currentStreak = (habit: Habit) => {
+    const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
+    let currentStreak = 0
+    if (habit.records === undefined) {
+        return 0
+    }
+
+    for (let i = 0; i < 100; i++) {
+        const date = new Date(currentDate)
+        date.setDate(date.getDate() - i)
+        const dateStr = dateToDash(date.toLocaleDateString())
+        if (habit.records.get(dateStr)?.clickCount === 0) {
+            break
+        }
+        currentStreak++
+    }
+
+    return currentStreak
+}

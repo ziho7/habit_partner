@@ -10,6 +10,7 @@ import DataBlock from '@/components/DataBlock';
 
 import { Calendar } from 'react-native-calendars';
 import ContributionGraph from '@/components/ContributionGraph';
+import { calDaysLeft, calTotalClickCount } from '@/lib/get_data';
 
 
 const Detail = () => {
@@ -69,8 +70,8 @@ const Detail = () => {
         {/* 分块数据 */}
         <View className='mt-4 mx-2'>
           <View className='flex flex-row flex-wrap'>
-            <DataBlock title='Total clicked' count={habit.everyCount} />
-            <DataBlock title='Days lefted' count={habit.everyCount} />
+            <DataBlock title='Total clicked' count={calTotalClickCount(habit)} />
+            <DataBlock title='Days lefted' count={calDaysLeft(habit)} />
             <DataBlock title='Current streak' count={habit.everyCount} />
             <DataBlock title='Best streak' count={habit.everyCount} />
           </View>

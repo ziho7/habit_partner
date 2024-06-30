@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 import { Type, Expose, Transform, plainToClass, plainToInstance, instanceToPlain } from 'class-transformer';
 import "reflect-metadata";
+import { getCurrentDateAndDayOfWeekInTimeZone } from './get_data';
 
 export class Habit {
     id: string // uuid
