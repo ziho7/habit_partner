@@ -139,7 +139,7 @@ export const bestStreak = (habit: Habit) => {
     return bestStreak
 }
 
-const isHabitDone = (habit: Habit, date: string) => {
+export const isHabitDone = (habit: Habit, date: string) => {
     if (habit.records === undefined) {
         return false
     }

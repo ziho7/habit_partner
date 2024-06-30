@@ -10,7 +10,7 @@ import DataBlock from '@/components/DataBlock';
 
 import { Calendar } from 'react-native-calendars';
 import ContributionGraph from '@/components/ContributionGraph';
-import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak } from '@/lib/get_data';
+import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitDone } from '@/lib/get_data';
 
 
 const Detail = () => {
@@ -19,6 +19,19 @@ const Detail = () => {
   const [habit, setHabit] = useState<Habit>(new Habit())
 
   const [year, setYear] = useState(new Date().getFullYear())
+
+  const markedDates = (habit: Habit) => {
+    let markedDates: { [key: string]: { selected: boolean, selectedColor: string } } = {}
+    if (habit.records === undefined) {
+      return markedDates
+    }
+    for (let [date, record] of habit.records) {
+      if (isHabitDone(habit, date)) {
+        markedDates[date] = { selected: true, selectedColor: '#CEBEE8' }
+      }
+    }
+    return markedDates
+  }
 
   useEffect(() => {
     getHabit(habitId as string).then((habit) => {
@@ -82,6 +95,9 @@ const Detail = () => {
         {/* todo 左右按钮对齐  */}
         <Calendar
           className='mx-4 mt-4 rounded-lg'
+          markedDates={
+            markedDates(habit)
+          }
           theme={{
             backgroundColor: '#F8F6F9',
             calendarBackground: '#F8F6F9',
