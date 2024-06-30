@@ -67,7 +67,7 @@ const ContributionGraph = ({ year, dataValues }: {
 
     const getBorderColor = (date: string) => {
         if (date === today) {
-            return 'border-red-300'
+            return 'border-[#ff3d57]' // red
         }
         return 'border-mypurple'
     }
@@ -75,18 +75,18 @@ const ContributionGraph = ({ year, dataValues }: {
     useEffect(() => {
         const date = new Date()
         const todayIndexRate = date.getMonth() / 12
-        const windowWidth = Dimensions.get('window').width;    
+        const windowWidth = Dimensions.get('window').width;
         scrollViewRef.current?.scrollTo({ x: (windowWidth) * todayIndexRate + 50, animated: true });
-      });
+    });
 
     return (
         <ScrollView horizontal={true} className='' ref={scrollViewRef} >
             <View className=''>
                 {/* 方块 */}
                 <View className='gap-1 flex-col flex-wrap h-[150px]' >
-                    {   
+                    {
                         calenderGrid.map((day, index) => {
-                            
+
                             if (day === 'empty') {
                                 return <View className='rounded h-[14px] w-[14px] cursor-pointer' key={index}></View>
                             }
@@ -96,12 +96,16 @@ const ContributionGraph = ({ year, dataValues }: {
                             }
 
                             const color = getColor(day)
-                            return <View
-                                className={`rounded h-[14px] w-[14px] cursor-pointer border ${getBorderColor(day)} `}
-                                style={{ backgroundColor: String(color) }}
-                                key={index}
-                            >
-                            </View>
+                            return (
+                                <View
+                                    className={`rounded h-[14px] w-[14px] cursor-pointer border items-center justify-center ${getBorderColor(day)} `}
+                                    style={{ backgroundColor: String(color) }}
+                                    key={index}
+                                >
+                                    <Text className='text-mypurple text-[7px]'>{dateContainsOne(day)? 1 : null}</Text>
+                                </View>
+                            )
+
                         })
                     }
                 </View>
@@ -109,6 +113,17 @@ const ContributionGraph = ({ year, dataValues }: {
             </View>
         </ScrollView>
     )
+}
+
+const dateContainsOne = (date: string) => {
+    const dateSplit = date.split('-')
+    if (dateSplit.length !== 3) {
+        return false
+    }
+    
+    if (dateSplit[2] === '01') {
+        return true
+    }
 }
 
 
