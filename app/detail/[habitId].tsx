@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, ScrollView, Image } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react'
 import { Habit, calculateCompletedDays, getHabit, transRecordToCommitsData } from '@/lib/storage';
@@ -11,7 +11,7 @@ import DataBlock from '@/components/DataBlock';
 import { Calendar } from 'react-native-calendars';
 import ContributionGraph from '@/components/ContributionGraph';
 import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitDone } from '@/lib/get_data';
-
+import { Theme } from 'react-native-calendars/src/types';
 
 const Detail = () => {
   const { habitId } = useLocalSearchParams()
@@ -19,6 +19,7 @@ const Detail = () => {
   const [habit, setHabit] = useState<Habit>(new Habit())
 
   const [year, setYear] = useState(new Date().getFullYear())
+  const [initialDate, setInitialDate] = useState(new Date())
 
   const markedDates = (habit: Habit) => {
     let markedDates: { [key: string]: { selected: boolean, selectedColor: string } } = {}
@@ -32,6 +33,24 @@ const Detail = () => {
     }
     return markedDates
   }
+
+  const CustomHeaderTitle = (
+    <View className='flex-row justify-between items-center mt-2 w-full '>
+      <CustomIconButton
+        image={images.arrowLeft}
+        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() - 1, 1)) }}
+        containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
+        customStyle='w-[8px] h-[8px]'
+      />
+      <Text className='text-[14px]'>{initialDate.toLocaleString('default', { month: 'long' })}</Text>
+      <CustomIconButton
+        image={images.arrowRight}
+        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() + 1, 1))}}
+        containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
+        customStyle='w-[8px] h-[8px]'
+      />
+    </View>
+  )
 
   useEffect(() => {
     getHabit(habitId as string).then((habit) => {
@@ -95,42 +114,23 @@ const Detail = () => {
         {/* todo 左右按钮对齐  */}
         <Calendar
           className='mx-4 mt-4 rounded-lg'
+          initialDate={initialDate.toISOString()}
           markedDates={
             markedDates(habit)
           }
-          theme={{
-            backgroundColor: '#F8F6F9',
-            calendarBackground: '#F8F6F9',
-            textSectionTitleColor: '#A19C9C',
-            textSectionTitleDisabledColor: '#d9e1e8',
-            selectedDayBackgroundColor: '#CEBEE8',
-            selectedDayTextColor: '#ffffff',  // 选中的颜色
-            todayTextColor: '#ff3d57', // 今天颜色
-            todayBackgroundColor: '#CEBEE8',
-            dayTextColor: '#2d4150',
-            textDisabledColor: '#d9e1e8',
-            monthTextColor: 'black',
-            indicatorColor: 'black',
-            textDayFontFamily: 'monospace',
-            textMonthFontFamily: 'monospace',
-            textDayHeaderFontFamily: 'monospace',
-            textDayFontWeight: '300',
-            textMonthFontWeight: 'semibold',
-            textDayHeaderFontWeight: '300',
-            textDayFontSize: 14,
-            textMonthFontSize: 14,
-            textDayHeaderFontSize: 14
-          }}
+          customHeaderTitle={CustomHeaderTitle}
+          hideArrows={true}
+          theme={mytheme as Theme}
 
           hideExtraDays={true}
-          renderArrow={(direction) => {
-            return <CustomIconButton
-              image={direction === 'left' ? images.arrowLeft : images.arrowRight}
-              callBackFunction={() => { }}
-              containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-              customStyle='w-[8px] h-[8px]'
-            />
-          }}
+          // renderArrow={(direction) => {
+          //   return <CustomIconButton
+          //     image={direction === 'left' ? images.arrowLeft : images.arrowRight}
+          //     callBackFunction={() => { }}
+          //     containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
+          //     customStyle='w-[8px] h-[8px]'
+          //   />
+          // }}
         />
 
 
@@ -179,3 +179,27 @@ const Detail = () => {
 }
 
 export default Detail
+
+const mytheme = {
+  backgroundColor: '#F8F6F9',
+  calendarBackground: '#F8F6F9',
+  textSectionTitleColor: '#A19C9C',
+  textSectionTitleDisabledColor: '#d9e1e8',
+  selectedDayBackgroundColor: '#CEBEE8',
+  selectedDayTextColor: '#ffffff',  // 选中的颜色
+  todayTextColor: '#ff3d57', // 今天颜色
+  todayBackgroundColor: '#CEBEE8', // 今天圆圈
+  dayTextColor: '#2d4150',
+  textDisabledColor: '#d9e1e8',
+  monthTextColor: 'black',
+  indicatorColor: 'black',
+  textDayFontFamily: 'monospace',
+  textMonthFontFamily: 'monospace',
+  textDayHeaderFontFamily: 'monospace',
+  textDayFontWeight: '300',
+  textMonthFontWeight: 'semibold',
+  textDayHeaderFontWeight: '300',
+  textDayFontSize: 14,
+  textMonthFontSize: 14,
+  textDayHeaderFontSize: 14
+}
