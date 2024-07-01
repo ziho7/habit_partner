@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Modal } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react'
 import { Habit, calculateCompletedDays, getHabit, transRecordToCommitsData } from '@/lib/storage';
@@ -12,6 +12,7 @@ import { Calendar } from 'react-native-calendars';
 import ContributionGraph from '@/components/ContributionGraph';
 import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitDone } from '@/lib/get_data';
 import { Theme } from 'react-native-calendars/src/types';
+import EditHabit from '@/components/EditHabit';
 
 const Detail = () => {
   const { habitId } = useLocalSearchParams()
@@ -20,6 +21,7 @@ const Detail = () => {
 
   const [year, setYear] = useState(new Date().getFullYear())
   const [initialDate, setInitialDate] = useState(new Date())
+  const [showEditHabit, setShowEditHabit] = useState(false)
 
   const markedDates = (habit: Habit) => {
     let markedDates: { [key: string]: { selected: boolean, selectedColor: string } } = {}
@@ -45,7 +47,7 @@ const Detail = () => {
       <Text className='text-[14px]'>{initialDate.toLocaleString('default', { month: 'long' })}</Text>
       <CustomIconButton
         image={images.arrowRight}
-        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() + 1, 1))}}
+        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() + 1, 1)) }}
         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
         customStyle='w-[8px] h-[8px]'
       />
@@ -82,18 +84,12 @@ const Detail = () => {
                 <Text className='text-[32px]'>{calculateCompletedDays(habit)}</Text>
                 <Text className='text-[6px] text-mygray'>Done</Text>
               </View>
-
-
-
             </View>
-
             <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
           </View>
-
-
           <CustomIconButton
             image={images.pen}
-            callBackFunction={router.back}
+            callBackFunction={() => {setShowEditHabit(!showEditHabit)}}
             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
             customStyle='w-[22px] h-[22px]'
           />
@@ -123,14 +119,14 @@ const Detail = () => {
           theme={mytheme as Theme}
 
           hideExtraDays={true}
-          // renderArrow={(direction) => {
-          //   return <CustomIconButton
-          //     image={direction === 'left' ? images.arrowLeft : images.arrowRight}
-          //     callBackFunction={() => { }}
-          //     containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-          //     customStyle='w-[8px] h-[8px]'
-          //   />
-          // }}
+        // renderArrow={(direction) => {
+        //   return <CustomIconButton
+        //     image={direction === 'left' ? images.arrowLeft : images.arrowRight}
+        //     callBackFunction={() => { }}
+        //     containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
+        //     customStyle='w-[8px] h-[8px]'
+        //   />
+        // }}
         />
 
 
@@ -173,6 +169,22 @@ const Detail = () => {
         </View>
 
       </ScrollView>
+
+      <Modal
+        visible={showEditHabit}
+        onRequestClose={() => setShowEditHabit(false)}
+        animationType='slide'
+        presentationStyle='overFullScreen'
+        transparent={true}
+      >
+        <EditHabit
+          closeCallBack={() => setShowEditHabit(false)}
+          okCallBack={async () => {
+            // fetchHabits(
+          }}
+          habitOriginal={habit}
+        />
+      </Modal>
     </SafeAreaView>
 
   )

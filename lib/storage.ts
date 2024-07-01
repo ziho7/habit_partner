@@ -54,6 +54,7 @@ export const addHabit = async (habit: Habit) => {
     }
 }
 
+
 export const getHabit = async function (habitId: string) {
     return getData(habitId).then((habitJson) => {
         let jsonData = JSON.parse(habitJson || "")
