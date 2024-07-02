@@ -11,26 +11,14 @@ import {  updateHabit } from '@/lib/storage'
 // todo days and +infinitive
 
 
-const EditHabit = ({ closeCallBack, okCallBack, habitOriginal }: {
+const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal }: {
     closeCallBack: () => void,
     okCallBack: () => Promise<void>,
-    habitOriginal: Habit
+    habitOriginal: Habit,
+    setHabitOriginal: (habit: Habit) => void
 }) => {
 
-    const [habit, setHabit] = useState({
-        id: "",
-        userId: "",
-        name: '',
-        startDate: '2024-03-07',
-        endDate: '2024-09-07',
-        creatorId: '',
-        everyCount: 1,
-        type: 0,
-        showsDays: [],
-        createTime: new Date(),
-        records: new Map<string, Record>([
-        ])
-    } as Habit)
+    const [habit, setHabit] = useState(habitOriginal)
 
     const [pickStartDate, setPickStartDate] = useState(new Date())
     const [pickEndDate, setPickEndDate] = useState(new Date())

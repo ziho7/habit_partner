@@ -58,7 +58,7 @@ const Detail = () => {
     getHabit(habitId as string).then((habit) => {
       setHabit(habit)
     })
-  }, [])
+  }, [])  // 
 
   return (
     <SafeAreaView className=''>
@@ -183,6 +183,7 @@ const Detail = () => {
             // fetchHabits(
           }}
           habitOriginal={habit}
+          setHabitOriginal={setHabit}
         />
       </Modal>
     </SafeAreaView>
