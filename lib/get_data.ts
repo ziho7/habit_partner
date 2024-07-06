@@ -1,7 +1,18 @@
 import { getCalendars } from 'expo-localization';
 import { dateToDash } from './utils';
-import { Habit, getAllHabits } from './storage';
+import { Habit, getAllHabits, HabitType } from './storage';
 
+export const getHabitsByHabitType = async (habitType: HabitType) => {
+    if (habitType === HabitType.Daily) {
+        return getTodayHabits();
+    }
+    if (habitType === HabitType.Weekly) {
+        return getWeekHabits();
+    }
+    if (habitType === HabitType.Monthly) {
+        return getMonthHabits();
+    }
+}
 
 export const getTodayHabits = async () => {
     let res = await getAllHabits();

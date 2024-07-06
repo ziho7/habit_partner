@@ -4,6 +4,12 @@ import { Type, Expose, Transform, plainToClass, plainToInstance, instanceToPlain
 import "reflect-metadata";
 import { getCurrentDateAndDayOfWeekInTimeZone } from './get_data';
 
+export enum HabitType {
+    Daily,
+    Weekly,
+    Monthly
+}
+
 export class Habit {
     id: string // uuid
     userId: string

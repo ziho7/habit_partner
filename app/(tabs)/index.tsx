@@ -3,14 +3,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import CustomButton from '@/components/CustomButton'
 import images from '@/constants/images'
 import { useGlobalContext } from '@/context/GlobalProvider'
-import { getCurrentDateAndDayOfWeekInTimeZone, getMonthHabits, getTodayHabits, getWeekHabits } from '@/lib/get_data'
+import { getCurrentDateAndDayOfWeekInTimeZone, getHabitsByHabitType, getMonthHabits, getTodayHabits, getWeekHabits } from '@/lib/get_data'
 import { dateToDash, dateToSlash } from '@/lib/utils'
 import SeperateLine from '@/components/SeperateLine'
 import HabitCard from '@/components/HabitCard'
 import Header from '@/components/Header'
 import CustomIconButton from '@/components/CustomIconButton'
 import AddHabit from '@/components/AddHabit'
-import { Habit } from '@/lib/storage'
+import { Habit, HabitType } from '@/lib/storage'
 
 
 
@@ -20,11 +20,16 @@ const Home = () => {
   const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
   const [showHabits, setShowHabits] = useState<any>([])
   const [showAddHabit, setShowAddHabit] = useState(false)
+  const [currentHabitType, setCurrentHabitType] = useState<HabitType>(HabitType.Daily)
 
   const fetchHabits = async () => {
-    const todayHabits = await getTodayHabits()
-
+    const todayHabits = await getHabitsByHabitType(currentHabitType)
     setShowHabits(todayHabits)
+  }
+
+  const changeCurrentHabitType = async (habitType: HabitType) => {
+    setCurrentHabitType(habitType)  
+    await fetchHabits()
   }
 
   const getHeader = () => {
@@ -32,9 +37,9 @@ const Home = () => {
       <Header dayOfWeek={dayOfWeek} currentDate={currentDate} />
       <View className='flex-row h-16 justify-between items-center'>
         <View className='flex-row justify-start space-x-2'>
-          <CustomButton title='Today' handlePress={fetchHabits} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Week' handlePress={fetchHabits} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Month' handlePress={fetchHabits} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Today' handlePress={async () => changeCurrentHabitType(HabitType.Daily)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Week' handlePress={async () => changeCurrentHabitType(HabitType.Weekly)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Month' handlePress={async () => changeCurrentHabitType(HabitType.Monthly)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
         </View>
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
 
