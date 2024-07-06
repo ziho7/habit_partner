@@ -10,6 +10,33 @@ export enum HabitType {
     Monthly
 }
 
+export const habitTypeIntToString = (type: number) => {
+    switch (type) {
+        case 0:
+            return 'Daily'
+        case 1:
+            return 'Weekly'
+        case 2:
+            return 'Monthly'
+        default:
+            return 'Daily'
+    }
+}
+
+export const habitTypeStringToInt = (type: string) => {
+    switch (type) {
+        case 'Daily':
+            return 0
+        case 'Weekly':
+            return 1
+        case 'Monthly':
+            return 2
+        default:
+            return 0
+    }
+
+}
+
 export class Habit {
     id: string // uuid
     userId: string
@@ -39,19 +66,7 @@ export class Record {
 // user to all habits key
 const userHabitsKey = 'userHabits12'
 
-export const habitTypeIntToString = (type: number) => {
-    switch (type) {
-        case 0:
-            return 'Daily'
-        case 1:
-            return 'Weekly'
-        case 2:
-            return 'Monthly'
-        default:
-            return 'Daily'
-    }
 
-}
 
 export const addHabit = async (habit: Habit) => {
     let habitId = uuid.v4('string')

@@ -222,8 +222,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     <PickerModal
                         showPicker={showHabitTypePicker}
                         closeFunction={() => { setShowHabitTypePicker(false) }}
-                        pickValue={habit.type}
-                        onChangeFunction={(selectedTimes) =>
+                        onChangeFunction={(selectedTimes: number) =>
                             setHabit({ ...habit, type: selectedTimes })
                         }
                     >

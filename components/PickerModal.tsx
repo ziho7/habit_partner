@@ -1,11 +1,14 @@
 import { View, Text, Modal, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { Picker } from '@react-native-picker/picker';
 
-const PickerModal = ({ showPicker ,closeFunction, onChangeFunction, pickValue }: {
+import { Picker, DatePicker } from 'react-native-wheel-pick';
+import { habitTypeStringToInt } from '@/lib/storage';
+
+
+
+const PickerModal = ({ showPicker, closeFunction, onChangeFunction }: {
     showPicker: boolean,
     closeFunction: () => void,
-    pickValue: string|number,
     onChangeFunction: (data: any) => void
 }) => {
     return <Modal
@@ -19,20 +22,23 @@ const PickerModal = ({ showPicker ,closeFunction, onChangeFunction, pickValue }:
         <TouchableOpacity
             className='h-1/4 flex-1 justify-end h-[200px]'
             onPressOut={closeFunction}
+            activeOpacity={1.0}
         >
-            <View
-                className=' bg-[#FFFFFF] p-4 rounded-xl my-4 space-y-6'
+            <TouchableOpacity
+                className=' bg-[#FFFFFF] p-4 rounded-xl my-4 space-y-6 justify-center items-center'
+                onPressOut={() => {}}
+                activeOpacity={1.0}
             >
                 <Picker
-                    selectedValue={pickValue}
-                    onValueChange={(itemValue, itemIndex) =>
-                        onChangeFunction(itemValue)
-                    }>
-                    <Picker.Item label="Daily" value={0} />
-                    <Picker.Item label="Weekly" value={1} />
-                    <Picker.Item label="Monthly" value={2} />
-                </Picker>
-            </View>
+                    style={{ backgroundColor: 'white', width: 300, height: 215 }}
+                    selectedValue='Daily'
+                    pickerData={['Daily', 'Weekly', 'Monthly']}
+                    onValueChange={(value: string) => {
+                        let habitTypeInt = habitTypeStringToInt(value)
+                        onChangeFunction(habitTypeInt)
+                    }}
+                />
+            </TouchableOpacity>
         </TouchableOpacity>
     </Modal>
 }
