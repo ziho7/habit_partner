@@ -28,8 +28,8 @@ const Home = () => {
   }
 
   const changeCurrentHabitType = async (habitType: HabitType) => {
-    setCurrentHabitType(habitType)  
     await fetchHabits()
+    setCurrentHabitType(habitType)
   }
 
   const getHeader = () => {
@@ -37,9 +37,9 @@ const Home = () => {
       <Header dayOfWeek={dayOfWeek} currentDate={currentDate} />
       <View className='flex-row h-16 justify-between items-center'>
         <View className='flex-row justify-start space-x-2'>
-          <CustomButton title='Daily' handlePress={async () => changeCurrentHabitType(HabitType.Daily)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Weekly' handlePress={async () => changeCurrentHabitType(HabitType.Weekly)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Monthly' handlePress={async () => changeCurrentHabitType(HabitType.Monthly)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Daily' handlePress={async () => changeCurrentHabitType(HabitType.Daily)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Daily? 'bg-mypurple': '' }`} textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Weekly' handlePress={async () => changeCurrentHabitType(HabitType.Weekly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Weekly? 'bg-mypurple': '' }`} textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Monthly' handlePress={async () => changeCurrentHabitType(HabitType.Monthly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Monthly? 'bg-mypurple': '' }`} textStyles="text-[12px]"></CustomButton>
         </View>
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
 
