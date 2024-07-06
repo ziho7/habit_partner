@@ -61,25 +61,29 @@ export const getTodayHabits = async () => {
 export const getWeekHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
-    let sortedHabits = sortHabits(habits);
+    let sortedHabits = sortHabits(habits, HabitType.Weekly);
     return sortedHabits;
 }
 
 export const getMonthHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
-    let sortedHabits = sortHabits(habits);
+    let sortedHabits = sortHabits(habits, HabitType.Monthly);
     return sortedHabits;
 }
 
-const sortHabits = function (habits: Habit[]) {
+const sortHabits = function (habits: Habit[], habitType: HabitType = HabitType.Daily) {
     const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
     let unfinishedList: Habit[] = []
     let finishedList: Habit[] = []
     for (let habit of habits) {
-
         // 不在制定日期内的habit不显示
         if (habit.startDate > currentDate || habit.endDate < currentDate) {
+            continue
+        }
+
+        // 不是这个类型的不显示
+        if (habit.type !== habitType) {
             continue
         }
 
