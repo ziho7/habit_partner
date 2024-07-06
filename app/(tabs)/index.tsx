@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import CustomButton from '@/components/CustomButton'
 import images from '@/constants/images'
 import { useGlobalContext } from '@/context/GlobalProvider'
-import { getCurrentDateAndDayOfWeekInTimeZone, getHabitsByHabitType, getMonthHabits, getTodayHabits, getWeekHabits } from '@/lib/get_data'
+import { getClickCount, getCurrentDateAndDayOfWeekInTimeZone, getHabitsByHabitType, getMonthHabits, getTodayHabits, getWeekHabits } from '@/lib/get_data'
 import { dateToDash, dateToSlash } from '@/lib/utils'
 import SeperateLine from '@/components/SeperateLine'
 import HabitCard from '@/components/HabitCard'
@@ -37,9 +37,9 @@ const Home = () => {
       <Header dayOfWeek={dayOfWeek} currentDate={currentDate} />
       <View className='flex-row h-16 justify-between items-center'>
         <View className='flex-row justify-start space-x-2'>
-          <CustomButton title='Today' handlePress={async () => changeCurrentHabitType(HabitType.Daily)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Week' handlePress={async () => changeCurrentHabitType(HabitType.Weekly)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Month' handlePress={async () => changeCurrentHabitType(HabitType.Monthly)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Daily' handlePress={async () => changeCurrentHabitType(HabitType.Daily)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Weekly' handlePress={async () => changeCurrentHabitType(HabitType.Weekly)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
+          <CustomButton title='Monthly' handlePress={async () => changeCurrentHabitType(HabitType.Monthly)} containerStyles="mr-6 w-[76px]" textStyles="text-[12px]"></CustomButton>
         </View>
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
 
@@ -59,7 +59,7 @@ const Home = () => {
           item: Habit
         }) => {
           return <HabitCard
-            clickCount={Number(item.records.get(dateToDash(currentDate))?.clickCount.toString() || '0')}
+            clickCount={getClickCount(item, currentDate)}
             habit={item}
             doneCallBack={fetchHabits}
           />

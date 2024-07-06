@@ -1,6 +1,42 @@
 import { getCalendars } from 'expo-localization';
-import { dateToDash } from './utils';
+import { dateToDash, getDatesOfMonth, getDatesOfWeek } from './utils';
 import { Habit, getAllHabits, HabitType } from './storage';
+
+
+export const getClickCount = (habit: Habit, currentDate: string) => {
+    if (habit.type === HabitType.Daily) {
+        return getClickCountDaily(habit, currentDate)
+    }
+    if (habit.type === HabitType.Weekly) {
+        return getClickCountWeekly(habit, currentDate)
+    }
+    if (habit.type === HabitType.Monthly) {
+        return getClickCountMonthly(habit, currentDate)
+    }
+
+    return 0
+}
+
+const getClickCountDaily = (habit: Habit, currentDate: string) => {
+    return Number(habit.records.get(dateToDash(currentDate))?.clickCount.toString() || '0')
+}
+
+const getClickCountWeekly = (habit: Habit, currentDate: string) => {
+    let clickCount = 0
+    getDatesOfWeek(currentDate).forEach((date: string) => {
+        clickCount += Number(habit.records.get(dateToDash(date))?.clickCount.toString() || '0')
+    })
+    return clickCount
+}
+
+const getClickCountMonthly = (habit: Habit, currentDate: string) => {
+    let clickCount = 0
+    getDatesOfMonth(currentDate).forEach((date: string) => {
+        clickCount += Number(habit.records.get(dateToDash(date))?.clickCount.toString() || '0')
+    })
+    return clickCount
+}
+
 
 export const getHabitsByHabitType = async (habitType: HabitType) => {
     if (habitType === HabitType.Daily) {
@@ -157,3 +193,4 @@ export const isHabitDone = (habit: Habit, date: string) => {
 
     return habit.records.get(date)?.clickCount === habit.everyCount
 }
+
