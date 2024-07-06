@@ -7,6 +7,7 @@ import { dateTypeToDash } from '@/lib/utils'
 import DateModal from './DateModal'
 import { addHabit } from '@/lib/storage'
 import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data'
+import { Picker } from '@react-native-picker/picker';
 
 
 const habits = ["Reading", "Gardening", "Photography", "Hiking", "Painting", "Cooking", "Woodworking", "Knitting", "Yoga", "Birdwatching", "Cycling", "Pottery", "Calligraphy", "Stargazing", "Creative writing", "Skateboarding", "Scrapbooking", "Fishing", "Archery", "Origami"]
@@ -18,6 +19,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 
     const today = getCurrentDateAndDayOfWeekInTimeZone().currentDate
 
+    const [selectedLanguage, setSelectedLanguage] = useState();
     const [habit, setHabit] = useState({
         id: "",
         userId: "",
@@ -80,7 +82,6 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             value={habit.name}
                         />
                     </View>
-
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
                         <Text>Habit Type</Text>
                         <View className='flex-row items-center h-12 '>
@@ -198,6 +199,8 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             setHabit({ ...habit, endDate: dateTypeToDash(selectedDate) })
                         }}
                     />
+
+
 
                 </View>
             </View>
