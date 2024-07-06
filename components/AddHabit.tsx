@@ -6,22 +6,24 @@ import { Record, Habit } from '@/lib/storage'
 import { dateTypeToDash } from '@/lib/utils'
 import DateModal from './DateModal'
 import { addHabit } from '@/lib/storage'
+import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data'
 
 
-// todo days and +infinitive
-
+const habits = ["Reading", "Gardening", "Photography", "Hiking", "Painting", "Cooking", "Woodworking", "Knitting", "Yoga", "Birdwatching", "Cycling", "Pottery", "Calligraphy", "Stargazing", "Creative writing", "Skateboarding", "Scrapbooking", "Fishing", "Archery", "Origami"]
 
 const AddHabit = ({ closeCallBack, okCallBack }: {
     closeCallBack: () => void,
     okCallBack: () => Promise<void>
 }) => {
 
+    const today = getCurrentDateAndDayOfWeekInTimeZone().currentDate
+    
     const [habit, setHabit] = useState({
         id: "",
         userId: "",
-        name: 'habit1',
-        startDate: '2024-03-07',
-        endDate: '2024-09-07',
+        name: habits[Math.floor(Math.random() * habits.length)],
+        startDate: today,
+        endDate: today,
         creatorId: '',
         everyCount: 1,
         type: 0,
@@ -36,6 +38,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 
     const [showStartDatePicker, setShowStartDatePicker] = useState(false)
     const [showEndDatePicker, setShowEndDatePicker] = useState(false)
+    
 
 
     return (
@@ -75,7 +78,6 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                 setHabit({ ...habit, name: text })
                             }}
                             value={habit.name}
-                            placeholder='Habit name'
                         />
                     </View>
 
