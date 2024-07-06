@@ -39,6 +39,20 @@ export class Record {
 // user to all habits key
 const userHabitsKey = 'userHabits12'
 
+export const habitTypeIntToString = (type: number) => {
+    switch (type) {
+        case 0:
+            return 'Daily'
+        case 1:
+            return 'Weekly'
+        case 2:
+            return 'Monthly'
+        default:
+            return 'Daily'
+    }
+
+}
+
 export const addHabit = async (habit: Habit) => {
     let habitId = uuid.v4('string')
     if (typeof habitId === 'string') {

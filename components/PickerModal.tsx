@@ -1,6 +1,5 @@
 import { View, Text, Modal, TouchableOpacity } from 'react-native'
 import React from 'react'
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 
 const PickerModal = ({ showPicker ,closeFunction, onChangeFunction, pickValue }: {
@@ -29,8 +28,9 @@ const PickerModal = ({ showPicker ,closeFunction, onChangeFunction, pickValue }:
                     onValueChange={(itemValue, itemIndex) =>
                         onChangeFunction(itemValue)
                     }>
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
+                    <Picker.Item label="Daily" value={0} />
+                    <Picker.Item label="Weekly" value={1} />
+                    <Picker.Item label="Monthly" value={2} />
                 </Picker>
             </View>
         </TouchableOpacity>

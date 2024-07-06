@@ -86,6 +86,7 @@ const Home = () => {
         transparent={true}
       >
         <AddHabit closeCallBack={() => setShowAddHabit(false)} okCallBack={async () => {
+          // todo check 下是否合法
           fetchHabits()
         }} />
       </Modal>
