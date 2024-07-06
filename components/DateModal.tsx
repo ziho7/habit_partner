@@ -27,6 +27,7 @@ const DateModal = ({showDatePicker, closeFunction, onChangeFunction, pickDate}: 
                     mode='date'
                     value={pickDate}
                     display='spinner'
+                    textColor='black'
                     onChange={(event, selectedDate) => {
                         if (selectedDate) {
                             onChangeFunction(selectedDate) 

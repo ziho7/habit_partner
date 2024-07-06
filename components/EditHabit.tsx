@@ -2,46 +2,29 @@ import { View, Text, TextInput, TouchableOpacity, Modal } from 'react-native'
 import React, { useState } from 'react'
 import CustomIconButton from './CustomIconButton'
 import images from '@/constants/images'
-import { Record, Habit, habitTypeIntToString } from '@/lib/storage'
+import { Record, Habit } from '@/lib/storage'
 import { dateTypeToDash } from '@/lib/utils'
 import DateModal from './DateModal'
-import { addHabit } from '@/lib/storage'
-import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data'
-import { Picker } from '@react-native-picker/picker';
-import PickerModal from './PickerModal'
+import {  updateHabit } from '@/lib/storage'
 
 
-const habits = ["Reading", "Gardening", "Photography", "Hiking", "Painting", "Cooking", "Woodworking", "Knitting", "Yoga", "Birdwatching", "Cycling", "Pottery", "Calligraphy", "Stargazing", "Creative writing", "Skateboarding", "Scrapbooking", "Fishing", "Archery", "Origami"]
+// todo days and +infinitive
 
-const AddHabit = ({ closeCallBack, okCallBack }: {
+
+const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal }: {
     closeCallBack: () => void,
-    okCallBack: () => Promise<void>
+    okCallBack: () => Promise<void>,
+    habitOriginal: Habit,
+    setHabitOriginal: (habit: Habit) => void
 }) => {
 
-    const today = getCurrentDateAndDayOfWeekInTimeZone().currentDate
-
-    const [habit, setHabit] = useState({
-        id: "",
-        userId: "",
-        name: habits[Math.floor(Math.random() * habits.length)],
-        startDate: today,
-        endDate: today,
-        creatorId: '',
-        everyCount: 1,
-        type: 0,
-        showsDays: [],
-        createTime: new Date(),
-        records: new Map<string, Record>([
-        ])
-    } as Habit)
+    const [habit, setHabit] = useState(habitOriginal)
 
     const [pickStartDate, setPickStartDate] = useState(new Date())
     const [pickEndDate, setPickEndDate] = useState(new Date())
 
     const [showStartDatePicker, setShowStartDatePicker] = useState(false)
     const [showEndDatePicker, setShowEndDatePicker] = useState(false)
-    const [showTimesPicker, setShowTimesPicker] = useState(false)
-    const [showHabitTypePicker, setShowHabitTypePicker] = useState(false)
 
 
     return (
@@ -56,13 +39,13 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         customStyle='w-[8px] h-[8px]'
                     />
                     <Text className='text-[24px]'>
-                        Add a new habit
+                        Edit your habit
                     </Text>
                     <CustomIconButton
                         image={images.ok}
                         callBackFunction={
                             async () => {
-                                await addHabit(habit)
+                                await updateHabit(habit)
                                 await okCallBack()
                                 closeCallBack()
                             }
@@ -81,36 +64,16 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                 setHabit({ ...habit, name: text })
                             }}
                             value={habit.name}
+                            placeholder='Habit name'
                         />
                     </View>
+
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
                         <Text>Habit Type</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
-                                {habitTypeIntToString(habit.type)}
+                                Daily habits
                             </Text>
-                            <CustomIconButton
-                                image={images.arrowRight}
-                                callBackFunction={() => {
-                                    setShowHabitTypePicker(true)
-                                }}
-                                containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
-                            />
-                        </View>
-                    </View>
-
-                    <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Icon</Text>
-                        <View className='flex-row items-center h-12 '>
-                            <View className=' items-center justify-center'>
-                                <CustomIconButton
-                                    image={images.ball}
-                                    callBackFunction={() => { }}
-                                    containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                    customStyle='w-[16px] h-[16px]'
-                                />
-                            </View>
                             <CustomIconButton
                                 image={images.arrowRight}
                                 callBackFunction={() => { }}
@@ -135,25 +98,9 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             placeholder='5'
                         />
                     </View>
-                    {/* <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Times to Complete</Text>
-                        <View className='flex-row items-center h-12'>
-                            <Text className=' items-center justify-center'>
-                                {habit.everyCount}
-                            </Text>
-                            <CustomIconButton
-                                image={images.arrowRight}
-                                callBackFunction={() => {
-                                    
-                                }}
-                                containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
-                            />
-                        </View>
-                    </View> */}
 
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Start Date</Text>
+                        <Text> Start Date</Text>
                         <View className='flex-row items-center h-12'>
                             <Text className=' items-center justify-center'>
                                 {habit.startDate}
@@ -170,7 +117,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </View>
 
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>End Date</Text>
+                        <Text> End Date</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
                                 {habit.endDate}
@@ -187,7 +134,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </View>
 
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Show Days </Text>
+                        <Text> Show Days </Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
                                 {habit.showsDays.join(',')}
@@ -200,6 +147,13 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             />
                         </View>
                     </View>
+
+                    {/* 删除， todo pause */}
+                    <TouchableOpacity className='items-center justify-center h-12 bg-mypurple-light rounded-lg'>
+                        <Text className=' items-center justify-center'>
+                            Delete the Habit
+                        </Text>
+                    </TouchableOpacity>
 
                     <DateModal
                         showDatePicker={showStartDatePicker}
@@ -219,22 +173,10 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         }}
                     />
 
-                    <PickerModal
-                        showPicker={showHabitTypePicker}
-                        closeFunction={() => { setShowHabitTypePicker(false) }}
-                        onChangeFunction={(selectedTimes: number) =>
-                            setHabit({ ...habit, type: selectedTimes })
-                        }
-                    >
-
-                    </PickerModal>
-
-
-
                 </View>
             </View>
         </View>
     )
 }
 
-export default AddHabit
+export default EditHabit

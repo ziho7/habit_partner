@@ -2,6 +2,40 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 import { Type, Expose, Transform, plainToClass, plainToInstance, instanceToPlain } from 'class-transformer';
 import "reflect-metadata";
+import { getCurrentDateAndDayOfWeekInTimeZone } from './get_data';
+
+export enum HabitType {
+    Daily,
+    Weekly,
+    Monthly
+}
+
+export const habitTypeIntToString = (type: number) => {
+    switch (type) {
+        case 0:
+            return 'Daily'
+        case 1:
+            return 'Weekly'
+        case 2:
+            return 'Monthly'
+        default:
+            return 'Daily'
+    }
+}
+
+export const habitTypeStringToInt = (type: string) => {
+    switch (type) {
+        case 'Daily':
+            return 0
+        case 'Weekly':
+            return 1
+        case 'Monthly':
+            return 2
+        default:
+            return 0
+    }
+
+}
 
 export class Habit {
     id: string // uuid
@@ -32,6 +66,8 @@ export class Record {
 // user to all habits key
 const userHabitsKey = 'userHabits12'
 
+
+
 export const addHabit = async (habit: Habit) => {
     let habitId = uuid.v4('string')
     if (typeof habitId === 'string') {
@@ -52,6 +88,7 @@ export const addHabit = async (habit: Habit) => {
         throw error
     }
 }
+
 
 export const getHabit = async function (habitId: string) {
     return getData(habitId).then((habitJson) => {

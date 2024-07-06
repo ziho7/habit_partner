@@ -6,7 +6,7 @@ import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }} >
       <Tabs.Screen
         name="index"
         options={{
@@ -20,6 +20,7 @@ export default function TabLayout() {
         options={{
           title: 'Data',
           headerShown: false,
+          href: null,
           tabBarIcon: ({ color }) => <AntDesign name="barschart" size={28} color={color} />,
         }}
       />
