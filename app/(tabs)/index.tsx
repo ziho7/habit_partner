@@ -22,13 +22,13 @@ const Home = () => {
   const [showAddHabit, setShowAddHabit] = useState(false)
   const [currentHabitType, setCurrentHabitType] = useState<HabitType>(HabitType.Daily)
 
-  const fetchHabits = async () => {
-    const todayHabits = await getHabitsByHabitType(currentHabitType)
+  const fetchHabits = async (habitType = currentHabitType) => {
+    const todayHabits = await getHabitsByHabitType(habitType)
     setShowHabits(todayHabits)
   }
 
   const changeCurrentHabitType = async (habitType: HabitType) => {
-    await fetchHabits()
+    await fetchHabits(habitType)
     setCurrentHabitType(habitType)
   }
 

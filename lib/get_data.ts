@@ -40,13 +40,16 @@ const getClickCountMonthly = (habit: Habit, currentDate: string) => {
 
 export const getHabitsByHabitType = async (habitType: HabitType) => {
     if (habitType === HabitType.Daily) {
-        return getTodayHabits();
+        let res =  await getTodayHabits();
+        return res
     }
     if (habitType === HabitType.Weekly) {
-        return getWeekHabits();
+        let res = await getWeekHabits();
+        return res
     }
     if (habitType === HabitType.Monthly) {
-        return getMonthHabits();
+        let res = await getMonthHabits();
+        return res
     }
 }
 
@@ -72,7 +75,8 @@ export const getMonthHabits = async () => {
     return sortedHabits;
 }
 
-const sortHabits = function (habits: Habit[], habitType: HabitType = HabitType.Daily) {
+const sortHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) => {
+    // console.log('habittypes', habitType);
     const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
     let unfinishedList: Habit[] = []
     let finishedList: Habit[] = []

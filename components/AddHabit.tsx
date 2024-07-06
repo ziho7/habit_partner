@@ -225,6 +225,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         onChangeFunction={(selectedTimes: number) =>
                             setHabit({ ...habit, type: selectedTimes })
                         }
+                        pickerData={["Daily", "Weekly", "Monthly"]}
                     >
 
                     </PickerModal>

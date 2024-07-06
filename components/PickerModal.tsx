@@ -6,10 +6,11 @@ import { habitTypeStringToInt } from '@/lib/storage';
 
 
 
-const PickerModal = ({ showPicker, closeFunction, onChangeFunction }: {
+const PickerModal = ({ showPicker, closeFunction, onChangeFunction, pickerData }: {
     showPicker: boolean,
     closeFunction: () => void,
-    onChangeFunction: (data: any) => void
+    onChangeFunction: (data: any) => void,
+    pickerData: string[]
 }) => {
     return <Modal
         visible={showPicker}
@@ -32,7 +33,7 @@ const PickerModal = ({ showPicker, closeFunction, onChangeFunction }: {
                 <Picker
                     style={{ backgroundColor: 'white', width: 300, height: 215 }}
                     selectedValue='Daily'
-                    pickerData={['Daily', 'Weekly', 'Monthly']}
+                    pickerData={pickerData}
                     onValueChange={(value: string) => {
                         let habitTypeInt = habitTypeStringToInt(value)
                         onChangeFunction(habitTypeInt)
