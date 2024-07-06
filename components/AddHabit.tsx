@@ -17,7 +17,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 }) => {
 
     const today = getCurrentDateAndDayOfWeekInTimeZone().currentDate
-    
+
     const [habit, setHabit] = useState({
         id: "",
         userId: "",
@@ -38,7 +38,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 
     const [showStartDatePicker, setShowStartDatePicker] = useState(false)
     const [showEndDatePicker, setShowEndDatePicker] = useState(false)
-    
+
 
 
     return (
@@ -87,6 +87,26 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             <Text className=' items-center justify-center'>
                                 Daily habits
                             </Text>
+                            <CustomIconButton
+                                image={images.arrowRight}
+                                callBackFunction={() => { }}
+                                containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
+                                customStyle='w-[16px] h-[16px]'
+                            />
+                        </View>
+                    </View>
+
+                    <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
+                        <Text>Icon</Text>
+                        <View className='flex-row items-center h-12 '>
+                            <View className=' items-center justify-center'>
+                                <CustomIconButton
+                                    image={images.ball}
+                                    callBackFunction={() => { }}
+                                    containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
+                                    customStyle='w-[16px] h-[16px]'
+                                />
+                            </View>
                             <CustomIconButton
                                 image={images.arrowRight}
                                 callBackFunction={() => { }}
