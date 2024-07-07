@@ -203,16 +203,22 @@ export const isHabitDone = (habit: Habit, date: string) => {
 }
 
 
-export const getShowdaysStr = (showsDays: number[]) => {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+export const getShowdaysStr = (showsDays: number[]) => {   
+    if (showsDays.length === 7) {
+        return 'Everyday'
+    }    
+    if (showsDays.length === 2 && showsDays.includes(0) && showsDays.includes(6)) {
+        return 'Weekends'
+    }
+    if (showsDays.length === 5 && !showsDays.includes(0) && !showsDays.includes(6)) {
+        return 'Weekdays'
+    }
+
     let res = ''
     for (let i = 0; i < showsDays.length; i++) {
         res += days[showsDays[i]] + ' '
     }
-
-    if (days.length === 7) {
-        return 'everyday'
-    }
-
     return res
 }

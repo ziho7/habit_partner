@@ -30,7 +30,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
         creatorId: '',
         everyCount: 1,
         type: 0,
-        showsDays: [0, 1, 2, 3, 4, 5, 6, 7],
+        showsDays: [0, 1, 2, 3, 4, 5, 6],
         createTime: new Date(),
         records: new Map<string, Record>([
         ])

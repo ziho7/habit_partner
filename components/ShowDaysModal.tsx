@@ -22,6 +22,9 @@ const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }
         } else {
             pickData.push(dayNumber)
         }
+
+        pickData.sort((a, b) => a - b)
+
         onChangeFunction(pickData)
     }
 
