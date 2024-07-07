@@ -56,7 +56,7 @@ export const getHabitsByHabitType = async (habitType: HabitType) => {
 export const getTodayHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
-    let sortedHabits = sortHabits(habits);
+    let sortedHabits = filterHabits(habits);
 
     return sortedHabits;
 }
@@ -64,20 +64,19 @@ export const getTodayHabits = async () => {
 export const getWeekHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
-    let sortedHabits = sortHabits(habits, HabitType.Weekly);
+    let sortedHabits = filterHabits(habits, HabitType.Weekly);
     return sortedHabits;
 }
 
 export const getMonthHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
-    let sortedHabits = sortHabits(habits, HabitType.Monthly);
-    return sortedHabits;
+    let filteredHabits = filterHabits(habits, HabitType.Monthly);
+    return filteredHabits;
 }
 
-const sortHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) => {
-    // console.log('habittypes', habitType);
-    const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
+const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) => {
+    const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
     let unfinishedList: Habit[] = []
     let finishedList: Habit[] = []
     for (let habit of habits) {
@@ -89,7 +88,13 @@ const sortHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) => 
         // 不是这个类型的不显示
         if (habit.type !== habitType) {
             continue
+        }  
+        
+        // 不显示的星期不显示
+        if (habit.showsDays.length !== 0 && !habit.showsDays.includes(dayStringToNumber(dayOfWeek))) {
+            continue
         }
+        
 
         if ((habit.records.get(currentDate) ?? { clickCount: 0 }).clickCount < habit.everyCount) {
             unfinishedList.push(habit)
@@ -205,6 +210,18 @@ export const isHabitDone = (habit: Habit, date: string) => {
 
 
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+export const dayStringToNumber = (daysString: string) => {
+    for (let i = 0; i < days.length; i++) {
+        if (daysString === days[i]) {
+            return i
+        }
+    }
+
+    console.log('error in dayStringToNumber daysString:', daysString);
+    return 7 // 兜底
+}
+
 export const getShowdaysStr = (showsDays: number[]) => {   
     if (showsDays.length === 7) {
         return 'Everyday'
