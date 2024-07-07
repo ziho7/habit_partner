@@ -202,3 +202,17 @@ export const isHabitDone = (habit: Habit, date: string) => {
     return habit.records.get(date)?.clickCount === habit.everyCount
 }
 
+
+export const getShowdaysStr = (showsDays: number[]) => {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    let res = ''
+    for (let i = 0; i < showsDays.length; i++) {
+        res += days[showsDays[i]] + ' '
+    }
+
+    if (days.length === 7) {
+        return 'everyday'
+    }
+
+    return res
+}

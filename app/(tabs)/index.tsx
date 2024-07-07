@@ -66,7 +66,7 @@ const Home = () => {
         }}
         keyExtractor={(item) => item.id.toString()}
         renderSectionHeader={({ section }) => {
-          if (section.title === 'finished') {
+          if (section.title === 'finished' && section.data.length > 0) {
             return <SeperateLine />
           }
           return null
