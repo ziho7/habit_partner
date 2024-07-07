@@ -40,20 +40,23 @@ const getClickCountMonthly = (habit: Habit, currentDate: string) => {
 
 export const getHabitsByHabitType = async (habitType: HabitType) => {
     if (habitType === HabitType.Daily) {
-        return getTodayHabits();
+        let res =  await getTodayHabits();
+        return res
     }
     if (habitType === HabitType.Weekly) {
-        return getWeekHabits();
+        let res = await getWeekHabits();
+        return res
     }
     if (habitType === HabitType.Monthly) {
-        return getMonthHabits();
+        let res = await getMonthHabits();
+        return res
     }
 }
 
 export const getTodayHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
-    let sortedHabits = sortHabits(habits);
+    let sortedHabits = filterHabits(habits);
 
     return sortedHabits;
 }
@@ -61,19 +64,19 @@ export const getTodayHabits = async () => {
 export const getWeekHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
-    let sortedHabits = sortHabits(habits, HabitType.Weekly);
+    let sortedHabits = filterHabits(habits, HabitType.Weekly);
     return sortedHabits;
 }
 
 export const getMonthHabits = async () => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
-    let sortedHabits = sortHabits(habits, HabitType.Monthly);
-    return sortedHabits;
+    let filteredHabits = filterHabits(habits, HabitType.Monthly);
+    return filteredHabits;
 }
 
-const sortHabits = function (habits: Habit[], habitType: HabitType = HabitType.Daily) {
-    const { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
+const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) => {
+    const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
     let unfinishedList: Habit[] = []
     let finishedList: Habit[] = []
     for (let habit of habits) {
@@ -85,7 +88,13 @@ const sortHabits = function (habits: Habit[], habitType: HabitType = HabitType.D
         // 不是这个类型的不显示
         if (habit.type !== habitType) {
             continue
+        }  
+        
+        // 不显示的星期不显示
+        if (habit.showsDays.length !== 0 && !habit.showsDays.includes(dayStringToNumber(dayOfWeek))) {
+            continue
         }
+        
 
         if ((habit.records.get(currentDate) ?? { clickCount: 0 }).clickCount < habit.everyCount) {
             unfinishedList.push(habit)
@@ -198,3 +207,35 @@ export const isHabitDone = (habit: Habit, date: string) => {
     return habit.records.get(date)?.clickCount === habit.everyCount
 }
 
+
+
+const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+export const dayStringToNumber = (daysString: string) => {
+    for (let i = 0; i < days.length; i++) {
+        if (daysString === days[i]) {
+            return i
+        }
+    }
+
+    console.log('error in dayStringToNumber daysString:', daysString);
+    return 7 // 兜底
+}
+
+export const getShowdaysStr = (showsDays: number[]) => {   
+    if (showsDays.length === 7) {
+        return 'Everyday'
+    }    
+    if (showsDays.length === 2 && showsDays.includes(0) && showsDays.includes(6)) {
+        return 'Weekends'
+    }
+    if (showsDays.length === 5 && !showsDays.includes(0) && !showsDays.includes(6)) {
+        return 'Weekdays'
+    }
+
+    let res = ''
+    for (let i = 0; i < showsDays.length; i++) {
+        res += days[showsDays[i]] + ' '
+    }
+    return res
+}

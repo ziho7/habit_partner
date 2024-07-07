@@ -46,7 +46,7 @@ export class Habit {
     creatorId: string
     everyCount: number
     type: number // 0 daily 1 weekly 2 monthly
-    showsDays: number[]
+    showsDays: number[] // 0 星期天 1 星期一 2 星期二 3 星期三 4 星期四 5 星期五 6 星期六
 
     @Transform(value => {
         let map = new Map<string, Record>();
@@ -69,6 +69,11 @@ const userHabitsKey = 'userHabits12'
 
 
 export const addHabit = async (habit: Habit) => {
+    if (habit.startDate > habit.endDate) {
+        throw new Error('startDate should be less than endDate')
+    }
+    
+
     let habitId = uuid.v4('string')
     if (typeof habitId === 'string') {
         habit.id = habitId

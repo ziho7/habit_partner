@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Modal } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Modal, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomIconButton from './CustomIconButton'
 import images from '@/constants/images'
@@ -6,9 +6,10 @@ import { Record, Habit, habitTypeIntToString } from '@/lib/storage'
 import { dateTypeToDash } from '@/lib/utils'
 import DateModal from './DateModal'
 import { addHabit } from '@/lib/storage'
-import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data'
+import { getCurrentDateAndDayOfWeekInTimeZone, getShowdaysStr } from '@/lib/get_data'
 import { Picker } from '@react-native-picker/picker';
 import PickerModal from './PickerModal'
+import ShowDaysModal from './ShowDaysModal'
 
 
 const habits = ["Reading", "Gardening", "Photography", "Hiking", "Painting", "Cooking", "Woodworking", "Knitting", "Yoga", "Birdwatching", "Cycling", "Pottery", "Calligraphy", "Stargazing", "Creative writing", "Skateboarding", "Scrapbooking", "Fishing", "Archery", "Origami"]
@@ -29,7 +30,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
         creatorId: '',
         everyCount: 1,
         type: 0,
-        showsDays: [],
+        showsDays: [0, 1, 2, 3, 4, 5, 6],
         createTime: new Date(),
         records: new Map<string, Record>([
         ])
@@ -42,6 +43,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
     const [showEndDatePicker, setShowEndDatePicker] = useState(false)
     const [showTimesPicker, setShowTimesPicker] = useState(false)
     const [showHabitTypePicker, setShowHabitTypePicker] = useState(false)
+    const [showDaysPicker, setShowDaysPicker] = useState(false)
 
 
     return (
@@ -62,7 +64,11 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         image={images.ok}
                         callBackFunction={
                             async () => {
-                                await addHabit(habit)
+                                try {
+                                    await addHabit(habit)
+                                } catch (e: any) {
+                                    Alert.alert('Error', 'Failed to add habit' + e)
+                                }
                                 await okCallBack()
                                 closeCallBack()
                             }
@@ -73,17 +79,18 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                 </View>
                 {/* form */}
                 <View className='space-y-6'>
-                    <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
+                    <TouchableOpacity className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
                         <Text>Habit Name</Text>
                         <TextInput
-                            className='h-12 border-2 border-mypurple-light bg-mypurple-light rounded-lg px-6'
+                            className='h-12 border-2 w-[300px] flex-1 text-right border-mypurple-light bg-mypurple-light rounded-lg px-6'
                             onChangeText={(text) => {
                                 setHabit({ ...habit, name: text })
                             }}
                             value={habit.name}
                         />
-                    </View>
-                    <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => setShowHabitTypePicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
                         <Text>Habit Type</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
@@ -92,13 +99,13 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             <CustomIconButton
                                 image={images.arrowRight}
                                 callBackFunction={() => {
-                                    setShowHabitTypePicker(true)
+                                    // setShowHabitTypePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
                                 customStyle='w-[16px] h-[16px]'
                             />
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
                         <Text>Icon</Text>
@@ -123,7 +130,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
                         <Text>Times to Complete</Text>
                         <TextInput
-                            className='h-12 border-2 border-mypurple-light bg-mypurple-light rounded-lg px-6'
+                            className='h-12 border-2 border-mypurple-light bg-mypurple-light rounded-lg px-6 flex-1 text-right'
                             onChangeText={(text) => {
                                 let num = parseInt(text)
                                 if (text === '') {
@@ -152,7 +159,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         </View>
                     </View> */}
 
-                    <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
+                    <TouchableOpacity onPress={() => setShowStartDatePicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
                         <Text>Start Date</Text>
                         <View className='flex-row items-center h-12'>
                             <Text className=' items-center justify-center'>
@@ -167,9 +174,9 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                 customStyle='w-[16px] h-[16px]'
                             />
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
+                    <TouchableOpacity onPress={() => setShowEndDatePicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
                         <Text>End Date</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
@@ -184,22 +191,24 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                 customStyle='w-[16px] h-[16px]'
                             />
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Show Days </Text>
+                    <TouchableOpacity onPress={() => setShowDaysPicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
+                        <Text>Show Policy</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
-                                {habit.showsDays.join(',')}
+                                {getShowdaysStr(habit.showsDays)}
                             </Text>
                             <CustomIconButton
                                 image={images.arrowRight}
-                                callBackFunction={() => { }}
+                                callBackFunction={() => {
+                                    setShowDaysPicker(true)
+                                }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
                                 customStyle='w-[16px] h-[16px]'
                             />
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
                     <DateModal
                         showDatePicker={showStartDatePicker}
@@ -225,9 +234,21 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         onChangeFunction={(selectedTimes: number) =>
                             setHabit({ ...habit, type: selectedTimes })
                         }
+                        pickerData={["Daily", "Weekly", "Monthly"]}
                     >
-
                     </PickerModal>
+
+                    <ShowDaysModal
+                        showPicker={showDaysPicker}
+                        closeFunction={() => {
+                            setShowDaysPicker(false)
+                        }}
+                        pickData={habit.showsDays}
+                        onChangeFunction={(selectedData) => {
+                            setHabit({ ...habit, showsDays: selectedData })
+                        }}
+                    >
+                    </ShowDaysModal>
 
 
 
