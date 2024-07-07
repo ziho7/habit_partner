@@ -111,6 +111,10 @@ const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) =
         "data": finishedList
     }]
 
+    if (unfinishedList.length === 0 && finishedList.length === 0) {
+        return []
+    }
+
     return res
 }
 

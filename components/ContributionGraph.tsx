@@ -80,7 +80,12 @@ const ContributionGraph = ({ year, dataValues }: {
     });
 
     return (
-        <ScrollView horizontal={true} className='' ref={scrollViewRef} >
+        <ScrollView 
+            horizontal={true}
+            className='' 
+            ref={scrollViewRef}
+            showsHorizontalScrollIndicator={false}
+        >
             <View className=''>
                 {/* 方块 */}
                 <View className='gap-1 flex-col flex-wrap h-[150px]' >
