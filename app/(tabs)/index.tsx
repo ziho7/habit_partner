@@ -78,7 +78,7 @@ const Home = () => {
         ListEmptyComponent={
           <View className='items-center m-4'>
             <Text className='my-2'>Empty!</Text>
-            <Text>Please, add a new habit first😊</Text>
+            <Text>Please add a new habit😊</Text>
           </View>
         }
       />

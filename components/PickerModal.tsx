@@ -1,7 +1,7 @@
 import { View, Text, Modal, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-import { Picker, DatePicker } from 'react-native-wheel-pick';
+import { Picker } from 'react-native-wheel-pick';
 import { habitTypeStringToInt } from '@/lib/storage';
 
 

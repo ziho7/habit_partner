@@ -55,7 +55,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 
 
     return (
-        <ScrollView keyboardShouldPersistTaps='handled'>
+        // <ScrollView keyboardShouldPersistTaps='handled' >
             <View className='flex-1 justify-end'>
                 <View className='h-3/4 bg-[#FFFFFF] p-4 rounded-xl my-4 space-y-6'>
                     {/* title */}
@@ -282,7 +282,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </View>
                 </View>
             </View >
-        </ScrollView>
+        // </ScrollView>
     )
 }
 

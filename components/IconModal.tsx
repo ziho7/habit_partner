@@ -21,7 +21,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
         className='border-1'
     >
         <TouchableOpacity
-            className='h-1/4 flex-1 justify-end bg-black broder-1 border-black'
+            className='h-1/4 flex-1 justify-end bg-black broder-1 border-black bg-[#FFFFFF]' // todo remove
             activeOpacity={1.0}
             onPressOut={closeFunction}
         >
