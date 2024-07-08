@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Habit, calculateCompletedDays, getHabit, transRecordToCommitsData } from '@/lib/storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomIconButton from '@/components/CustomIconButton';
-import images from '@/constants/images';
+import images, { getHabitIcons } from '@/constants/images';
 import ImageAndTitle from '@/components/ImageAndTitle';
 import DataBlock from '@/components/DataBlock';
 
@@ -72,7 +72,7 @@ const Detail = () => {
             customStyle='w-[8px] h-[8px]'
           />
           <View className='items-center'>
-            <ImageAndTitle image={images.ball} name={habit.name} />
+            <ImageAndTitle image={getHabitIcons(habit.icon)} name={habit.name} />
 
             <View className='relative items-center justify-center'>
               <Image

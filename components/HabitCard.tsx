@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-import images from '@/constants/images'
+import images, { getHabitIcons } from '@/constants/images'
 import Donut2 from '@/components/Donut2'
 import { Habit, calculateCompletedDays } from '@/lib/storage'
 import { router } from 'expo-router'
@@ -27,7 +27,7 @@ const HabitCard = ({
     }}>
     <View className='flex-row justify-between items-center h-[160px] bg-mypurple-light rounded-xl px-4'>
       <View className='flex-col'>
-        <ImageAndTitle image={images.ball} name={habit.name} />
+        <ImageAndTitle image={getHabitIcons(habit.icon)} name={habit.name} />
         <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
         <Text className='text-[12px] text-mygray'>Completed days: {calculateCompletedDays(habit)}</Text>
 

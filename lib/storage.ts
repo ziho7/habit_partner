@@ -56,6 +56,7 @@ export class Habit {
     }, { toClassOnly: true })
     records: Map<string, Record>
     createTime: Date
+    icon: string
 }
 
 export class Record {
