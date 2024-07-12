@@ -20,12 +20,14 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
         className='border-1'
     >
         <TouchableOpacity
-            className='h-1/4 flex-1 justify-end bg-black broder-1 border-black' // todo remove
+            className='h-1/4 flex-1 justify-end bg-black broder-1 border-black'
             activeOpacity={1.0}
             onPressOut={closeFunction}
         >
-            <View
+            <TouchableOpacity
                 className=' bg-[#FFFFFF] p-4 rounded-xl my-4 space-y-6 h-[300px]'
+                activeOpacity={1.0}
+                onPressOut={() => {}}
             >
                 <View className='justify-center items-center my-2'>
                     <Text className='text-[20px]'>
@@ -137,9 +139,9 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
                         onPress={() => { }}
                     >
                         <CustomIconButton
-                            image={images.ball}
+                            image={getHabitIcons(habitList[7])}
                             callBackFunction={() => {
-
+                                onChangeFunction(habitList[7])
                             }}
                             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-sm'
                             customStyle='w-[16px] h-[16px]'
@@ -151,9 +153,9 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
                         onPress={() => { }}
                     >
                         <CustomIconButton
-                            image={images.ball}
+                            image={getHabitIcons(habitList[8])}
                             callBackFunction={() => {
-
+                                onChangeFunction(habitList[8])
                             }}
                             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-sm'
                             customStyle='w-[16px] h-[16px]'
@@ -165,9 +167,9 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
                         onPress={() => { }}
                     >
                         <CustomIconButton
-                            image={images.ball}
+                            image={getHabitIcons(habitList[9])}
                             callBackFunction={() => {
-
+                                onChangeFunction(habitList[9])
                             }}
                             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-sm'
                             customStyle='w-[16px] h-[16px]'
@@ -179,9 +181,9 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
                         onPress={() => { }}
                     >
                         <CustomIconButton
-                            image={images.ball}
+                            image={getHabitIcons(habitList[10])}
                             callBackFunction={() => {
-
+                                onChangeFunction(habitList[10])
                             }}
                             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-sm'
                             customStyle='w-[16px] h-[16px]'
@@ -193,9 +195,9 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
                         onPress={() => { }}
                     >
                         <CustomIconButton
-                            image={images.ball}
+                            image={getHabitIcons(habitList[11])}
                             callBackFunction={() => {
-
+                                onChangeFunction(habitList[11])
                             }}
                             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-sm'
                             customStyle='w-[16px] h-[16px]'
@@ -207,9 +209,9 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
                         onPress={() => { }}
                     >
                         <CustomIconButton
-                            image={images.ball}
+                            image={getHabitIcons(habitList[12])}
                             callBackFunction={() => {
-
+                                onChangeFunction(habitList[12])
                             }}
                             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-sm'
                             customStyle='w-[16px] h-[16px]'
@@ -221,9 +223,9 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
                         onPress={() => { }}
                     >
                         <CustomIconButton
-                            image={images.ball}
+                            image={getHabitIcons(habitList[13])}
                             callBackFunction={() => {
-
+                                onChangeFunction(habitList[13])
                             }}
                             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-sm'
                             customStyle='w-[16px] h-[16px]'
@@ -236,7 +238,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
                     <Text>choose from album</Text>
                 </View> */}
 
-            </View>
+            </TouchableOpacity>
         </TouchableOpacity>
     </Modal>
 }

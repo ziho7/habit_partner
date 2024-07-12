@@ -122,7 +122,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     <CustomIconButton
                                         image={getHabitIcons(habit.icon)}
                                         callBackFunction={() => {
-
+                                            setShowIconPicker(true)
                                         }}
                                         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
                                         customStyle='w-[16px] h-[16px]'

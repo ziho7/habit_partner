@@ -30,9 +30,10 @@ const habitIcons: { [key: string]: string } = {
   tourism: require('../assets/images/habits/tourism.png'),
   walkTheDog: require('../assets/images/habits/walk-the-pet.png'),
   waterGlass: require('../assets/images/habits/water-glass.png'),
+  meditation: require('../assets/images/habits/meditation.png'),
 }
 
-export const habitList = ["ball", "game", "money", "baseball", "cooking", "noSmoking", "speed", "study", "swimming", "tennis", "tourism", "walkTheDog", "waterGlass"]
+export const habitList = ["ball", "game", "money", "baseball", "cooking", "noSmoking", "speed", "study", "swimming", "tennis", "tourism", "walkTheDog", "waterGlass", "meditation"]
 
 export const getHabitIcons = (habitIconName: string) => {
   if (habitIcons.hasOwnProperty(habitIconName)) {
