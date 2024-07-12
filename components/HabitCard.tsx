@@ -6,6 +6,8 @@ import Donut2 from '@/components/Donut2'
 import { Habit, calculateCompletedDays } from '@/lib/storage'
 import { router } from 'expo-router'
 import ImageAndTitle from './ImageAndTitle'
+import { dateToDash, dateToSlash } from '@/lib/utils'
+import { getShowdaysStr } from '@/lib/get_data'
 
 const HabitCard = ({
   clickCount,
@@ -28,8 +30,14 @@ const HabitCard = ({
     <View className='flex-row justify-between items-center h-[160px] bg-mypurple-light rounded-xl px-4'>
       <View className='flex-col'>
         <ImageAndTitle image={getHabitIcons(habit.icon)} name={habit.name} />
-        <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
-        <Text className='text-[12px] text-mygray'>Completed days: {calculateCompletedDays(habit)}</Text>
+        <Text className='text-[11px] text-mygray'>{dateToSlash(habit.startDate)}-{dateToSlash(habit.endDate)}</Text>
+        <View className='flex-row'>
+          <Text className='text-[11px] text-mygray'>Completed days: </Text> 
+          <Text className='text-[11px] font-semibold'>{calculateCompletedDays(habit)}</Text>
+        </View>
+        
+        <Text className='text-[11px] text-mygray'>{getShowdaysStr(habit.showsDays)}</Text>
+      
 
       </View>
 

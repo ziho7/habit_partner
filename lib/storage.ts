@@ -73,6 +73,21 @@ export const addHabit = async (habit: Habit) => {
     if (habit.startDate > habit.endDate) {
         throw new Error('startDate should be less than endDate')
     }
+    if (habit.name === '' || habit.name === undefined) {
+        throw new Error('name should not be empty')
+    }
+    if (habit.everyCount <= 0) {
+        throw new Error('everyCount should be greater than 0')
+    }
+    if (habit.showsDays.length > 7) {
+        throw new Error('showsDays should be less than 7')
+    }
+    if (habit.type < 0 || habit.type > 2) {
+        throw new Error('type should be 0, 1 or 2')
+    }
+    if (habit.icon === '' || habit.icon === undefined) {
+        throw new Error('icon should not be empty')
+    }
     
 
     let habitId = uuid.v4('string')

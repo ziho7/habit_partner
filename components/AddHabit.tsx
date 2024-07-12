@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import CustomIconButton from './CustomIconButton'
 import images, { getHabitIcons } from '@/constants/images'
 import { Record, Habit, habitTypeIntToString } from '@/lib/storage'
-import { dateTypeToDash } from '@/lib/utils'
+import { dateToDash, dateToSlash, dateTypeToDash } from '@/lib/utils'
 import DateModal from './DateModal'
 import { addHabit } from '@/lib/storage'
 import { getCurrentDateAndDayOfWeekInTimeZone, getShowdaysStr } from '@/lib/get_data'
@@ -40,7 +40,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
         createTime: new Date(),
         records: new Map<string, Record>([
         ]),
-        icon: ''
+        icon: 'ball'
     } as Habit)
 
     const [pickStartDate, setPickStartDate] = useState(new Date())
@@ -48,7 +48,6 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 
     const [showStartDatePicker, setShowStartDatePicker] = useState(false)
     const [showEndDatePicker, setShowEndDatePicker] = useState(false)
-    const [showTimesPicker, setShowTimesPicker] = useState(false)
     const [showHabitTypePicker, setShowHabitTypePicker] = useState(false)
     const [showDaysPicker, setShowDaysPicker] = useState(false)
     const [showIconPicker, setShowIconPicker] = useState(false)
@@ -178,7 +177,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             <Text>Start Date</Text>
                             <View className='flex-row items-center h-12'>
                                 <Text className=' items-center justify-center'>
-                                    {habit.startDate}
+                                    {dateToSlash(habit.startDate)}
                                 </Text>
                                 <CustomIconButton
                                     image={images.arrowRight}
@@ -195,7 +194,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             <Text>End Date</Text>
                             <View className='flex-row items-center h-12 '>
                                 <Text className=' items-center justify-center'>
-                                    {habit.endDate}
+                                    {dateToSlash(habit.endDate)}
                                 </Text>
                                 <CustomIconButton
                                     image={images.arrowRight}

@@ -14,7 +14,12 @@ const ImageAndTitle = ({ image, name }: {
     />
   )
   if (image === '' || image === undefined) {
-    centerImage = <Text className='text-white text-[7px] font-light text-ellipsis'>{name}</Text>
+    if (name === '' || name === undefined) {
+      centerImage = <Text className='text-white text-[7px] font-light text-ellipsis'>no icon</Text>
+    } else {
+      centerImage = <Text className='text-white text-[7px] font-light text-ellipsis'>{name.length <= 8 ? name: name.substring(0, 7) + '...'}</Text>
+    }
+    
   }
   return (
     <View className='flex-row items-center space-x-4 mb-2'>
