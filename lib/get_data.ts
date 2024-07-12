@@ -93,8 +93,7 @@ const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) =
         // 不显示的星期不显示
         if (habit.showsDays.length !== 0 && !habit.showsDays.includes(dayStringToNumber(dayOfWeek))) {
             continue
-        }
-        
+        }        
 
         if ((habit.records.get(currentDate) ?? { clickCount: 0 }).clickCount < habit.everyCount) {
             unfinishedList.push(habit)
@@ -102,6 +101,9 @@ const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) =
             finishedList.push(habit)
         }
     }
+    
+
+
     let res = [{
         "title": "unfinished",
         "data": unfinishedList,

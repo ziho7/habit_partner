@@ -132,6 +132,12 @@ export const getAllHabits = async function () {
             let habit = await getHabit(habitId)
             habits.push(habit)
         }
+
+        // sort
+        habits.sort((a, b) => {
+            return a.createTime > b.createTime ? 1 : -1
+        })
+
         return habits
     } catch (e) {
         console.log(e);
