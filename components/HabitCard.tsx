@@ -23,7 +23,7 @@ const HabitCard = ({
     className='mt-4'
     onPress={() => {
       router.push({
-        pathname: "/detail/[habitId]",
+        pathname: "/detail/dataPanel",
         params: { habitId: habit.id }
       })
     }}>

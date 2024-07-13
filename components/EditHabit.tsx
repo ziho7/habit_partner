@@ -11,10 +11,6 @@ import PickerModal from './PickerModal'
 import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
 
-
-// todo days and +infinitive
-
-
 const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal }: {
     closeCallBack: () => void,
     okCallBack: () => Promise<void>,
@@ -272,10 +268,3 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal 
 }
 
 export default EditHabit
-
-
-{/* <TouchableOpacity className='items-center justify-center h-12 bg-mypurple-light rounded-lg'>
-                        <Text className=' items-center justify-center'>
-                            Delete the Habit
-                        </Text>
-                    </TouchableOpacity> */}
