@@ -13,9 +13,6 @@ import IconModal from './IconModal'
 
 
 // todo 是否添加成功
-// todo 空白取消键盘
-
-
 const habits = ["Reading", "Gardening", "Photography", "Hiking", "Painting", "Cooking", "Woodworking", "Knitting", "Yoga", "Birdwatching", "Cycling", "Pottery", "Calligraphy", "Stargazing", "Creative writing", "Skateboarding", "Scrapbooking", "Fishing", "Archery", "Origami"]
 
 const AddHabit = ({ closeCallBack, okCallBack }: {
@@ -38,7 +35,8 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
         createTime: new Date(),
         records: new Map<string, Record>([
         ]),
-        icon: 'ball'
+        icon: 'ball',
+        states: 0
     } as Habit)
 
     const [pickStartDate, setPickStartDate] = useState(new Date())

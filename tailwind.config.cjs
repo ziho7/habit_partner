@@ -8,7 +8,8 @@ module.exports = {
       "mypurple-light": "#F8F6F9",
       "mypurple": "#CEBEE8",
       "mygreen": "#BEF1D8",
-      "mygray": "#A19C9C"
+      "mygray": "#A19C9C",
+      "myred": "#F5A9A9",
     }
   },
   plugins: [],

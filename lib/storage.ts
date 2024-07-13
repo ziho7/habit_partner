@@ -57,6 +57,7 @@ export class Habit {
     records: Map<string, Record>
     createTime: Date
     icon: string
+    states: number // 0 active 1 inactive 2 pause
 }
 
 export class Record {
@@ -68,8 +69,7 @@ export class Record {
 const userHabitsKey = 'userHabits12'
 
 
-
-export const addHabit = async (habit: Habit) => {
+const habitCheck = (habit: Habit) => {
     if (habit.startDate > habit.endDate) {
         throw new Error('startDate should be less than endDate')
     }
@@ -88,6 +88,10 @@ export const addHabit = async (habit: Habit) => {
     if (habit.icon === '' || habit.icon === undefined) {
         throw new Error('icon should not be empty')
     }
+}
+
+export const addHabit = async (habit: Habit) => {
+    habitCheck(habit)
     
 
     let habitId = uuid.v4('string')
@@ -146,6 +150,7 @@ export const getAllHabits = async function () {
 }
 
 export const updateHabit = async (habit: Habit) => {
+    habitCheck(habit)
     try {
         let habitJson = JSON.stringify(instanceToPlain(habit))
         await setData(habit.id.toString(), habitJson)
