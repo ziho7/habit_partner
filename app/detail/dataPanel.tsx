@@ -22,6 +22,12 @@ const DataPanel = () => {
   const [year, setYear] = useState(new Date().getFullYear())
   const [initialDate, setInitialDate] = useState(new Date())
   const [showEditHabit, setShowEditHabit] = useState(false)
+  const [refreshCount, setRefreshCount] = useState(0)
+
+  const refresh = () => {
+    setRefreshCount(refreshCount + 1)
+  }
+
 
   const markedDates = (habit: Habit) => {
     let markedDates: { [key: string]: { selected: boolean, selectedColor: string } } = {}
@@ -58,7 +64,7 @@ const DataPanel = () => {
     getHabit(habitId as string).then((habit) => {
       setHabit(habit)
     })
-  }, [])  // 
+  }, [refreshCount])
 
   return (
     <SafeAreaView className=''>
@@ -90,7 +96,7 @@ const DataPanel = () => {
           </View>
           <CustomIconButton
             image={images.pen}
-            callBackFunction={() => {setShowEditHabit(!showEditHabit)}}
+            callBackFunction={() => { setShowEditHabit(!showEditHabit) }}
             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
             customStyle='w-[22px] h-[22px]'
           />
@@ -180,9 +186,7 @@ const DataPanel = () => {
       >
         <EditHabit
           closeCallBack={() => setShowEditHabit(false)}
-          okCallBack={async () => {
-            // fetchHabits(
-          }}
+          okCallBack={refresh}
           habitOriginal={habit}
           setHabitOriginal={setHabit}
         />

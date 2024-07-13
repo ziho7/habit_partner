@@ -3,6 +3,7 @@ import uuid from 'react-native-uuid';
 import { Type, Expose, Transform, plainToClass, plainToInstance, instanceToPlain } from 'class-transformer';
 import "reflect-metadata";
 import { getCurrentDateAndDayOfWeekInTimeZone } from './get_data';
+import { Alert } from 'react-native';
 
 export enum HabitType {
     Daily,
@@ -91,15 +92,15 @@ const habitCheck = (habit: Habit) => {
 }
 
 export const addHabit = async (habit: Habit) => {
-    habitCheck(habit)
-    
-
-    let habitId = uuid.v4('string')
-    if (typeof habitId === 'string') {
-        habit.id = habitId
-    }
 
     try {
+        habitCheck(habit)
+
+        let habitId = uuid.v4('string')
+        if (typeof habitId === 'string') {
+            habit.id = habitId
+        }
+
         // 将habit存入单独的文件， key是habitId
         let habitJson = JSON.stringify(instanceToPlain(habit))
         await setData(habit.id.toString(), habitJson)
@@ -110,7 +111,7 @@ export const addHabit = async (habit: Habit) => {
         userHabits.push(habitId)
         await setData(userHabitsKey, JSON.stringify(userHabits))
     } catch (error) {
-        throw error
+        Alert.alert('Error', 'Failed to add habit' + error)
     }
 }
 
@@ -150,12 +151,12 @@ export const getAllHabits = async function () {
 }
 
 export const updateHabit = async (habit: Habit) => {
-    habitCheck(habit)
     try {
+        habitCheck(habit)
         let habitJson = JSON.stringify(instanceToPlain(habit))
         await setData(habit.id.toString(), habitJson)
     } catch (error) {
-        throw error
+        Alert.alert('Error', 'Failed to update habit' + error)
     }
 }
 
@@ -195,6 +196,6 @@ export const transRecordToCommitsData = (habit: Habit) => {
     for (let [key, value] of habit.records) {
         data.push({ date: key, count: value.clickCount })
     }
-    
+
     return data
 }

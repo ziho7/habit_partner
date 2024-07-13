@@ -51,11 +51,11 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 
     return (
         // <ScrollView keyboardShouldPersistTaps='handled' >
-        <TouchableOpacity 
+        <TouchableOpacity
             className='flex-1 justify-end'
             activeOpacity={1.0}
             onPress={() => Keyboard.dismiss()}
-            >
+        >
 
             <View className='h-3/4 bg-[#FFFFFF] p-4 rounded-xl my-4 space-y-6'>
                 {/* title */}
@@ -73,11 +73,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         image={images.ok}
                         callBackFunction={
                             async () => {
-                                try {
-                                    await addHabit(habit)
-                                } catch (e: any) {
-                                    Alert.alert('Error', 'Failed to add habit' + e)
-                                }
+                                await addHabit(habit)
                                 await okCallBack()
                                 closeCallBack()
                             }

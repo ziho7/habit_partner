@@ -13,7 +13,7 @@ import IconModal from './IconModal'
 
 const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal }: {
     closeCallBack: () => void,
-    okCallBack: () => Promise<void>,
+    okCallBack: () => void,
     habitOriginal: Habit,
     setHabitOriginal: (habit: Habit) => void
 }) => {
@@ -49,7 +49,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal 
                         callBackFunction={
                             async () => {
                                 await updateHabit(habit)
-                                await okCallBack()
+                                okCallBack()
                                 closeCallBack()
                             }
                         }
@@ -182,7 +182,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal 
                     </TouchableOpacity>
 
                     {/* 删除， todo pause */}
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         className='items-center justify-center h-12 bg-myred rounded-lg'
                         onPress={() => {
                             Alert.alert("Are you sure to delete the habit?", "This action cannot be undone", [
@@ -195,7 +195,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal 
                                     text: "Delete", onPress: async () => {
                                         setHabitOriginal(habit)
                                         await updateHabit(habit)
-                                        await okCallBack()
+                                        okCallBack()
                                         closeCallBack()
                                     }
                                 }

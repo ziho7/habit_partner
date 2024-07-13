@@ -15,6 +15,7 @@ const GlobalProvider = ({ children }: {
   const [loading, setLoading] = useState(true);
   const timeZone = getTimeZone()
 
+
 //   useEffect(() => {
 //     getCurrentUser()
 //       .then((res) => {
