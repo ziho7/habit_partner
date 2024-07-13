@@ -15,7 +15,8 @@ import { Habit, HabitType } from '@/lib/storage'
 
 
 const Home = () => {
-  const { loading, isLogged, timeZone } = useGlobalContext()
+  const { refreshHomeCount } = useGlobalContext()
+  // todo 这里好像有重复刷新的问题
 
   const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
   const [showHabits, setShowHabits] = useState<any>([])
@@ -49,7 +50,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchHabits();
-  }, []);
+  }, [refreshHomeCount]);
 
   return (
     <SafeAreaView className='mx-4'>

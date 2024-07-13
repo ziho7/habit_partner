@@ -15,6 +15,10 @@ const GlobalProvider = ({ children }: {
   const [loading, setLoading] = useState(true);
   const timeZone = getTimeZone()
 
+  const [refreshHomeCount, setRefreshHomeCount] = useState(0)
+  const refreshHome = () => {
+    setRefreshHomeCount(refreshHomeCount + 1)
+  }
 
 //   useEffect(() => {
 //     getCurrentUser()
@@ -43,7 +47,9 @@ const GlobalProvider = ({ children }: {
         user,
         setUser,
         loading,
-        timeZone
+        timeZone,
+        refreshHomeCount,
+        refreshHome
       }}
     >
       {children}

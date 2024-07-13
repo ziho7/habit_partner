@@ -13,9 +13,11 @@ import ContributionGraph from '@/components/ContributionGraph';
 import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitDone } from '@/lib/get_data';
 import { Theme } from 'react-native-calendars/src/types';
 import EditHabit from '@/components/EditHabit';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
 const DataPanel = () => {
   const { habitId } = useLocalSearchParams()
+  const { refreshHome } = useGlobalContext()
 
   const [habit, setHabit] = useState<Habit>(new Habit())
 
@@ -74,7 +76,11 @@ const DataPanel = () => {
           <CustomIconButton
             image={images.arrowLeft}
             // callBackFunction={() => router.push('/')}
-            callBackFunction={router.back}
+            callBackFunction={ () => {
+              refreshHome() 
+              router.back()
+            }
+            }
             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
             customStyle='w-[8px] h-[8px]'
           />
