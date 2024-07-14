@@ -8,7 +8,6 @@ export default function RootLayout() {
     <GlobalProvider>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="detail/[habitId]" options={{ headerShown: false }} />
         <Stack.Screen name="detail/dataPanel" options={{ headerShown: false }} />
       </Stack>
 

@@ -6,7 +6,7 @@ import { useGlobalContext } from '@/context/GlobalProvider'
 const NotificationModal = () => {
     const {showNotification, notificationMessage, notifyLevel, setShowNotification} = useGlobalContext()
 
-    const color = notifyLevel === 'error' ? 'bg-red-500' : 'bg-mygreen'
+    const color = notifyLevel === 'error' ? 'bg-myred' : 'bg-mygreen'
 
     return (
         <View>

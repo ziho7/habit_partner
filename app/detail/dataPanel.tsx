@@ -68,6 +68,11 @@ const DataPanel = () => {
     })
   }, [refreshCount])
 
+  const goTohomePage = () => {
+      refreshHome() 
+      router.back()
+  }
+
   return (
     <SafeAreaView className=''>
       <ScrollView>
@@ -75,12 +80,7 @@ const DataPanel = () => {
         <View className='flex-row justify-between mx-4 mt-4'>
           <CustomIconButton
             image={images.arrowLeft}
-            // callBackFunction={() => router.push('/')}
-            callBackFunction={ () => {
-              refreshHome() 
-              router.back()
-            }
-            }
+            callBackFunction={goTohomePage}
             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
             customStyle='w-[8px] h-[8px]'
           />
@@ -194,6 +194,7 @@ const DataPanel = () => {
           closeCallBack={() => setShowEditHabit(false)}
           okCallBack={refresh}
           habitOriginal={habit}
+          goTohomePage={goTohomePage}
         />
       </Modal>
     </SafeAreaView>

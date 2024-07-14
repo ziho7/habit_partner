@@ -12,10 +12,11 @@ import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
 import { useGlobalContext } from '@/context/GlobalProvider'
 
-const EditHabit = ({ closeCallBack, okCallBack, habitOriginal }: {
+const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
     closeCallBack: () => void,
     okCallBack: () => void,
-    habitOriginal: Habit
+    habitOriginal: Habit,
+    goTohomePage: () => void
 }) => {
 
     const [habit, setHabit] = useState(habitOriginal)
@@ -227,7 +228,8 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal }: {
                                                 await updateHabit(habit)
                                                 okCallBack()
                                                 closeCallBack()
-                                                notify("habit deleted", "info", 1)
+                                                notify("habit deleted", "error", 1)
+                                                goTohomePage()
                                             }
                                         }
                                     ])
