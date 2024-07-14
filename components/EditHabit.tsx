@@ -10,6 +10,7 @@ import { getShowdaysStr } from '@/lib/get_data'
 import PickerModal from './PickerModal'
 import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal }: {
     closeCallBack: () => void,
@@ -28,6 +29,8 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal 
     const [showHabitTypePicker, setShowHabitTypePicker] = useState(false)
     const [showDaysPicker, setShowDaysPicker] = useState(false)
     const [showIconPicker, setShowIconPicker] = useState(false)
+
+    const {notify} = useGlobalContext()
 
 
     return (
@@ -50,6 +53,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal 
                             async () => {
                                 await updateHabit(habit)
                                 okCallBack()
+                                notify('Habit updated', 'info', 1)
                                 closeCallBack()
                             }
                         }

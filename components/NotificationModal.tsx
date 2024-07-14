@@ -1,19 +1,26 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import Modal from "react-native-modal"
 import React from 'react'
 import { useGlobalContext } from '@/context/GlobalProvider'
 
 const NotificationModal = () => {
-    const {showNotification, notificationMessage} = useGlobalContext()
+    const {showNotification, notificationMessage, notifyLevel, setShowNotification} = useGlobalContext()
+
+    const color = notifyLevel === 'error' ? 'bg-red-500' : 'bg-mygreen'
+
     return (
         <View>
             <Modal 
                 isVisible={showNotification}
                 animationIn="slideInDown"
                 animationOut="slideOutUp"
+                className='h-[100px] bg-black w-full justify-start m-0'
+                backdropOpacity={0}
+                swipeDirection={['up']}
+                onSwipeMove={() => setShowNotification(false)}
             >
-                <View style={{ flex: 1 }}>
-                    <Text>{notificationMessage}</Text>
+                <View className= {`h-[100px] justify-end items-center ${color}`}>
+                    <Text className='mb-4'>{notificationMessage}</Text>
                 </View>
             </Modal>
         </View>
