@@ -10,6 +10,7 @@ import { getCurrentDateAndDayOfWeekInTimeZone, getShowdaysStr } from '@/lib/get_
 import PickerModal from './PickerModal'
 import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 
 // todo 是否添加成功
@@ -19,6 +20,8 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
     closeCallBack: () => void,
     okCallBack: () => Promise<void>
 }) => {
+
+    const {notify} = useGlobalContext()
 
     const today = getCurrentDateAndDayOfWeekInTimeZone().currentDate
 
@@ -48,7 +51,6 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
     const [showDaysPicker, setShowDaysPicker] = useState(false)
     const [showIconPicker, setShowIconPicker] = useState(false)
 
-
     return (
         // <ScrollView keyboardShouldPersistTaps='handled' >
         <TouchableOpacity
@@ -75,6 +77,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             async () => {
                                 await addHabit(habit)
                                 await okCallBack()
+                                notify('Add habit successfully','info', 1)
                                 closeCallBack()
                             }
                         }
@@ -258,6 +261,10 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     >
 
                     </IconModal>
+
+                    
+
+                
 
 
                 </View>

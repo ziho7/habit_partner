@@ -20,6 +20,17 @@ const GlobalProvider = ({ children }: {
     setRefreshHomeCount(refreshHomeCount + 1)
   }
 
+  const [showNotification, setShowNotification] = useState(false)
+  const [notificationMessage, setNotificationMessage] = useState('')
+  
+  const notify = (message: string, level: 'error'| 'info', seconds: number) => {
+    setNotificationMessage(message)
+    setShowNotification(true)
+    setTimeout(() => {
+      setShowNotification(false)
+    }, seconds * 1000)
+  }
+
 //   useEffect(() => {
 //     getCurrentUser()
 //       .then((res) => {
@@ -49,7 +60,10 @@ const GlobalProvider = ({ children }: {
         loading,
         timeZone,
         refreshHomeCount,
-        refreshHome
+        refreshHome,
+        notify,
+        showNotification,
+        notificationMessage
       }}
     >
       {children}
