@@ -1,8 +1,9 @@
-import { View, Text, SafeAreaView, TextInput } from 'react-native'
+import { View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomIconButton from '@/components/CustomIconButton'
 import images from '@/constants/images'
 import DateModal from '@/components/DateModal'
+import { router } from 'expo-router'
 
 const Settings = () => {
   return (
@@ -43,9 +44,14 @@ const Settings = () => {
                         </View>
                     </View>
 
-                    <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
+                    <TouchableOpacity 
+                        className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'
+                        onPress={() => {
+                            router.push('pages/contactUs')
+                        }}
+                    >
                         <Text>Contact us</Text>
-                        <View className='flex-row items-center h-12 '>
+                        <View className='flex-row items-center h-12'>
                             <Text className=' items-center justify-center'>
                                 {}
                             </Text>
@@ -57,7 +63,7 @@ const Settings = () => {
                                 customStyle='w-[16px] h-[16px]'
                             />
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
                     {/* <DateModal
                         showDatePicker={showStartDatePicker}

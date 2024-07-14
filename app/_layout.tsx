@@ -9,6 +9,8 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="detail/dataPanel" options={{ headerShown: false }} />
+        <Stack.Screen name="pages/contactUs" options={{ headerShown: false }} />
+        
       </Stack>
 
       <NotificationModal />
