@@ -95,6 +95,12 @@ const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) =
             continue
         }        
 
+        // 不活跃的不显示
+        if (habit.states != 0) {
+            continue
+        }
+
+
         if ((habit.records.get(currentDate) ?? { clickCount: 0 }).clickCount < habit.everyCount) {
             unfinishedList.push(habit)
         } else {

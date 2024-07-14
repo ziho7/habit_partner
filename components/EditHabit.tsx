@@ -12,11 +12,10 @@ import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
 import { useGlobalContext } from '@/context/GlobalProvider'
 
-const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal }: {
+const EditHabit = ({ closeCallBack, okCallBack, habitOriginal }: {
     closeCallBack: () => void,
     okCallBack: () => void,
-    habitOriginal: Habit,
-    setHabitOriginal: (habit: Habit) => void
+    habitOriginal: Habit
 }) => {
 
     const [habit, setHabit] = useState(habitOriginal)
@@ -30,7 +29,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal 
     const [showDaysPicker, setShowDaysPicker] = useState(false)
     const [showIconPicker, setShowIconPicker] = useState(false)
 
-    const {notify} = useGlobalContext()
+    const { notify } = useGlobalContext()
 
 
     return (
@@ -186,7 +185,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal 
                     </TouchableOpacity>
 
                     {/* 删除， todo pause */}
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         className='items-center justify-center h-12 bg-myred rounded-lg'
                         onPress={() => {
                             Alert.alert("Are you sure to delete the habit?", "This action cannot be undone", [
@@ -209,7 +208,36 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, setHabitOriginal 
                         <Text className=' items-center justify-center'>
                             Delete the Habit
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+
+                    <View className='flex-row justify-end'>
+                        <CustomIconButton
+                            image={images.delete}
+                            callBackFunction={
+                                () => {
+                                    Alert.alert("Are you sure to delete this habit?", "This action cannot be undone", [
+                                        {
+                                            text: "Cancel",
+                                            onPress: () => console.log("Cancel Pressed"),
+                                            style: "cancel"
+                                        },
+                                        {
+                                            text: "Delete", onPress: async () => {
+                                                habit.states = 1
+                                                await updateHabit(habit)
+                                                okCallBack()
+                                                closeCallBack()
+                                                notify("habit deleted", "info", 1)
+                                            }
+                                        }
+                                    ])
+                                }
+                            }
+                            containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
+                            customStyle='w-[13px] h-[13px]'
+                        />
+                    </View>
+
 
                     <DateModal
                         showDatePicker={showStartDatePicker}

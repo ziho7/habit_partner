@@ -194,7 +194,6 @@ const DataPanel = () => {
           closeCallBack={() => setShowEditHabit(false)}
           okCallBack={refresh}
           habitOriginal={habit}
-          setHabitOriginal={setHabit}
         />
       </Modal>
     </SafeAreaView>

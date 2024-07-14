@@ -13,6 +13,7 @@ const images = {
     arrowLeft: require('../assets/images/buttons/arrow-left.png'),
     pen: require('../assets/images/buttons/pen.png'),
     laurelWreath: require('../assets/images/laurel_wreath.png'),
+    delete: require('../assets/images/buttons/delete.png'),
     // other images...
 };
 
