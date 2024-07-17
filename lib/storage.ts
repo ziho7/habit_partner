@@ -4,6 +4,7 @@ import { Type, Expose, Transform, plainToClass, plainToInstance, instanceToPlain
 import "reflect-metadata";
 import { getCurrentDateAndDayOfWeekInTimeZone } from './get_data';
 import { Alert } from 'react-native';
+import { getLanguageCode } from './locales/languageHandler';
 
 export enum HabitType {
     Daily,
@@ -164,18 +165,20 @@ export const updateHabit = async (habit: Habit) => {
 const settingKey = 'setting1'
 
 export class Setting {
-    timeZone: string
     language: string
-}
-
-const defaultSetting = {
-    timeZone: 'UTC',
-    lanugage: 'en'
 }
 
 export const getSetting = async () => {
     try {
         let settingJson = await getData(settingKey)
+
+        if (settingJson === null) {
+            let setting = new Setting()
+            setting.language = getLanguageCode('English')
+            await updateSetting(setting)
+            return setting
+        }
+
         let setting: Setting = plainToInstance(Setting, JSON.parse(settingJson || ""))
         return setting
     } catch (e) {
@@ -184,10 +187,31 @@ export const getSetting = async () => {
     }
 }
 
+export const getSettingLanguageTwoLetter = async () => {
+    try {
+        const setting = await getSetting();
+        return setting.language;
+    } catch (e) {
+        console.log(e);
+        throw e;
+    }
+}
+
 export const updateSetting = async (setting: Setting) => {
     try {
         let settingJson = JSON.stringify(instanceToPlain(setting))
         await setData(settingKey, settingJson)
+    } catch (e) {
+        console.log(e)
+        throw e
+    }
+}
+
+export const updateSettingLanguage = async (language: string) => {
+    try {
+        let setting = await getSetting()
+        setting.language = language
+        await updateSetting(setting)
     } catch (e) {
         console.log(e)
         throw e

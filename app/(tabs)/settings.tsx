@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import CustomIconButton from '@/components/CustomIconButton'
 import images from '@/constants/images'
 import DateModal from '@/components/DateModal'
@@ -7,9 +7,16 @@ import { router } from 'expo-router'
 import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data'
 import i18n from '@/lib/i18n'
 import { useTranslation } from 'react-i18next'
+import PickerModal from '@/components/PickerModal'
+import { getLanguageList, getLanguageCode } from '@/lib/locales/languageHandler'
+import { updateSettingLanguage } from '@/lib/storage'
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry'
 
 const Settings = () => {
 
+    const {t} = useTranslation()
+
+    const [showLanguagePicker, setShowLanguagePicker] = useState(false)
 
     return (
         <SafeAreaView className=''>
@@ -17,11 +24,16 @@ const Settings = () => {
                 <View className='h-3/4 p-4 my-4 space-y-6'>
                     {/* form */}
                     <View className='space-y-6'>
-                        <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                            <Text>{i18n.t('language')}</Text>
+                        <TouchableOpacity
+                            className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'
+                            onPress={() => {
+                                setShowLanguagePicker(true)
+                            }}
+                        >
+                            <Text>{t('language')}</Text>
                             <View className='flex-row items-center h-12 '>
                                 <Text className=' items-center justify-center'>
-                                    {i18n.t('currentLanguage')}
+                                    {t('currentLanguage')}
                                 </Text>
                                 <CustomIconButton
                                     image={images.arrowRight}
@@ -30,7 +42,7 @@ const Settings = () => {
                                     customStyle='w-[16px] h-[16px]'
                                 />
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
                         {/* todo 时区切换 */}
                         {/* <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
@@ -80,6 +92,20 @@ const Settings = () => {
                         }}
                     /> */}
 
+                        <PickerModal
+                            showPicker={showLanguagePicker}
+                            closeFunction={() => { setShowLanguagePicker(false) }}
+                            onChangeFunction={ async (selectedLanguage: string) => {
+                                let languageTowLetter = getLanguageCode(selectedLanguage)
+                                await updateSettingLanguage(languageTowLetter)
+                                i18n.changeLanguage(languageTowLetter)
+                                setShowLanguagePicker(false)
+                                
+                                
+                            }}
+                            pickerData={getLanguageList()}
+                        >
+                        </PickerModal>
 
                     </View>
                 </View>

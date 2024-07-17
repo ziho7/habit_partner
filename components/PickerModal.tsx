@@ -9,7 +9,7 @@ import { habitTypeStringToInt } from '@/lib/storage';
 const PickerModal = ({ showPicker, closeFunction, onChangeFunction, pickerData }: {
     showPicker: boolean,
     closeFunction: () => void,
-    onChangeFunction: (data: any) => void,
+    onChangeFunction: (data: string) => void,
     pickerData: string[]
 }) => {
     return <Modal
@@ -32,11 +32,10 @@ const PickerModal = ({ showPicker, closeFunction, onChangeFunction, pickerData }
             >
                 <Picker
                     style={{ backgroundColor: 'white', width: 300, height: 215 }}
-                    selectedValue='Daily'
+                    // selectedValue='Daily'
                     pickerData={pickerData}
                     onValueChange={(value: string) => {
-                        let habitTypeInt = habitTypeStringToInt(value)
-                        onChangeFunction(habitTypeInt)
+                        onChangeFunction(value)
                     }}
                 />
             </TouchableOpacity>

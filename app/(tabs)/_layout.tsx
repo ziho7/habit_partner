@@ -2,16 +2,21 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Tabs } from 'expo-router';
 import i18n from '@/lib/i18n';
+import { useTranslation } from 'react-i18next';
+
 
 
 export default function TabLayout() {
+
+  const {t} = useTranslation()
+
   return (
     
       <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }} >
         <Tabs.Screen
           name="index"
           options={{
-            title: i18n.t('home'),
+            title: t('home'),
             headerShown: false,
             tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
           }}
@@ -28,7 +33,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="settings"
           options={{
-            title: i18n.t('settings'),
+            title: t('settings'),
             headerShown: false,
             tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
           }}

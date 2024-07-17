@@ -1,14 +1,14 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import en from './locales/en.json'
-import zh from './locales/zh.json'
+import zh_CN from './locales/zh_CN.json'
 
 type LanguageResourceType = {
     en: {
         translation: typeof en
     },
-    zh: {
-        translation: typeof zh
+    zh_CN: {
+        translation: typeof zh_CN
     }
 }
 
@@ -17,27 +17,14 @@ export const languageResource: LanguageResourceType = {
     en: {
         translation: en
     },
-    zh: {
-        translation: zh
+    zh_CN: {
+        translation: zh_CN
     }
 };
 
 i18n.use(initReactI18next).init({
     compatibilityJSON: 'v3',
     resources: languageResource,
-    // resources: {
-    //     en: {
-    //         translation: {
-    //           hello_world: "Hello, World!",
-    //         },
-    //       },
-    //       // Arabic
-    //       asdf: {
-    //         translation: {
-    //           hello_world: "مرحباً بالعالم!",
-    //         },
-    //       },
-    // },
     lng: 'en',
     fallbackLng: 'en',
     interpolation: {

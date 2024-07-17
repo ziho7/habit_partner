@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, Modal, Alert, ScrollView, Touc
 import React, { useState } from 'react'
 import CustomIconButton from './CustomIconButton'
 import images, { getHabitIcons } from '@/constants/images'
-import { Record, Habit, habitTypeIntToString } from '@/lib/storage'
+import { Record, Habit, habitTypeIntToString, habitTypeStringToInt } from '@/lib/storage'
 import { dateToDash, dateToSlash, dateTypeToDash } from '@/lib/utils'
 import DateModal from './DateModal'
 import { addHabit } from '@/lib/storage'
@@ -231,9 +231,10 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     <PickerModal
                         showPicker={showHabitTypePicker}
                         closeFunction={() => { setShowHabitTypePicker(false) }}
-                        onChangeFunction={(selectedTimes: number) =>
-                            setHabit({ ...habit, type: selectedTimes })
-                        }
+                        onChangeFunction={(selectedTimes: string) => {
+                            let habitTypeInt = habitTypeStringToInt(selectedTimes)
+                            setHabit({ ...habit, type: habitTypeInt })
+                        }}
                         pickerData={["Daily", "Weekly", "Monthly"]}
                     >
                     </PickerModal>
