@@ -11,6 +11,7 @@ import PickerModal from './PickerModal'
 import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
 import { useGlobalContext } from '@/context/GlobalProvider'
+import i18n from '@/lib/i18n'
 
 const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
     closeCallBack: () => void,
@@ -45,7 +46,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                         customStyle='w-[8px] h-[8px]'
                     />
                     <Text className='text-[24px]'>
-                        Edit your habit
+                        {i18n.t('editYourHabit')}
                     </Text>
                     <CustomIconButton
                         image={images.ok}
@@ -64,7 +65,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                 {/* form */}
                 <View className='space-y-6'>
                     <TouchableOpacity className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Habit Name</Text>
+                        <Text>{i18n.t('habitName')}</Text>
                         <TextInput
                             className='h-12 border-2 w-[300px] flex-1 text-right border-mypurple-light bg-mypurple-light rounded-lg px-6'
                             onChangeText={(text) => {
@@ -76,7 +77,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => setShowHabitTypePicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Habit Type</Text>
+                        <Text>{i18n.t('habitType')}</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
                                 {habitTypeIntToString(habit.type)}
@@ -93,7 +94,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => setShowIconPicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Icon</Text>
+                        <Text>{i18n.t('icon')}</Text>
                         <View className='flex-row items-center h-12'>
                             <View className=' items-center justify-center'>
                                 <CustomIconButton
@@ -117,7 +118,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                     </TouchableOpacity>
 
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Times to Complete</Text>
+                        <Text>{i18n.t('timesToComplete')}</Text>
                         <TextInput
                             keyboardType='number-pad'
                             className='h-12 border-2 border-mypurple-light bg-mypurple-light rounded-lg px-6 flex-1 text-right mr-2'
@@ -135,7 +136,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                     </View>
 
                     <TouchableOpacity onPress={() => setShowStartDatePicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Start Date</Text>
+                        <Text>{i18n.t('startDate')}</Text>
                         <View className='flex-row items-center h-12'>
                             <Text className=' items-center justify-center'>
                                 {dateToSlash(habit.startDate)}
@@ -152,7 +153,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => setShowEndDatePicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>End Date</Text>
+                        <Text>{i18n.t('endDate')}</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
                                 {dateToSlash(habit.endDate)}
@@ -169,7 +170,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => setShowDaysPicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Show Policy</Text>
+                        <Text>{i18n.t('showPolicy')}</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
                                 {getShowdaysStr(habit.showsDays)}
@@ -216,14 +217,14 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                             image={images.delete}
                             callBackFunction={
                                 () => {
-                                    Alert.alert("Are you sure to delete this habit?", "This action cannot be undone", [
+                                    Alert.alert(i18n.t('deleteAlert1'), i18n.t('deleteAlert1'), [
                                         {
-                                            text: "Cancel",
+                                            text: i18n.t('cancel'),
                                             onPress: () => console.log("Cancel Pressed"),
                                             style: "cancel"
                                         },
                                         {
-                                            text: "Delete", onPress: async () => {
+                                            text: i18n.t('delete'), onPress: async () => {
                                                 habit.states = 1
                                                 await updateHabit(habit)
                                                 okCallBack()

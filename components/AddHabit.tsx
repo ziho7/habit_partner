@@ -11,6 +11,7 @@ import PickerModal from './PickerModal'
 import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
 import { useGlobalContext } from '@/context/GlobalProvider'
+import i18n from '@/lib/i18n'
 
 
 // todo 是否添加成功
@@ -69,7 +70,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         customStyle='w-[8px] h-[8px]'
                     />
                     <Text className='text-[24px]'>
-                        Add a new habit
+                        {i18n.t('addANewHabit')}
                     </Text>
                     <CustomIconButton
                         image={images.ok}
@@ -88,7 +89,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                 {/* form */}
                 <View className='space-y-6'>
                     <TouchableOpacity className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Habit Name</Text>
+                        <Text>{i18n.t('habitName')}</Text>
                         <TextInput
                             className='h-12 border-2 w-[300px] flex-1 text-right border-mypurple-light bg-mypurple-light rounded-lg px-6'
                             onChangeText={(text) => {
@@ -100,7 +101,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => setShowHabitTypePicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Habit Type</Text>
+                        <Text>{i18n.t('habitType')}</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
                                 {habitTypeIntToString(habit.type)}
@@ -117,7 +118,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => setShowIconPicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Icon</Text>
+                        <Text>{i18n.t('icon')}</Text>
                         <View className='flex-row items-center h-12'>
                             <View className=' items-center justify-center'>
                                 <CustomIconButton
@@ -141,7 +142,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </TouchableOpacity>
 
                     <View className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Times to Complete</Text>
+                        <Text>{i18n.t('timesToComplete')}</Text>
                         <TextInput
                             keyboardType='number-pad'
                             className='h-12 border-2 border-mypurple-light bg-mypurple-light rounded-lg px-6 flex-1 text-right mr-2'
@@ -159,7 +160,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </View>
 
                     <TouchableOpacity onPress={() => setShowStartDatePicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Start Date</Text>
+                        <Text>{i18n.t('startDate')}</Text>
                         <View className='flex-row items-center h-12'>
                             <Text className=' items-center justify-center'>
                                 {dateToSlash(habit.startDate)}
@@ -176,7 +177,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => setShowEndDatePicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>End Date</Text>
+                        <Text>{i18n.t('endDate')}</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
                                 {dateToSlash(habit.endDate)}
@@ -193,7 +194,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => setShowDaysPicker(true)} className='flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'>
-                        <Text>Show Policy</Text>
+                        <Text>{i18n.t('showPolicy')}</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
                                 {getShowdaysStr(habit.showsDays)}

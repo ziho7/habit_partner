@@ -146,7 +146,7 @@ export const getCurrentDateAndDayOfWeekInTimeZone = () => {
     const currentDate = dateToDash(formattedDate[1]);
 
     return { currentDate, dayOfWeek };
-};
+}
 
 
 export const getTimeZone = () => {

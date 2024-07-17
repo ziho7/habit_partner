@@ -8,6 +8,7 @@ import { router } from 'expo-router'
 import ImageAndTitle from './ImageAndTitle'
 import { dateToDash, dateToSlash } from '@/lib/utils'
 import { getShowdaysStr } from '@/lib/get_data'
+import i18n from '@/lib/i18n'
 
 const HabitCard = ({
   clickCount,
@@ -32,13 +33,11 @@ const HabitCard = ({
         <ImageAndTitle image={getHabitIcons(habit.icon)} name={habit.name} />
         <Text className='text-[11px] text-mygray'>{dateToSlash(habit.startDate)}-{dateToSlash(habit.endDate)}</Text>
         <View className='flex-row'>
-          <Text className='text-[11px] text-mygray'>Completed days: </Text> 
+          <Text className='text-[11px] text-mygray'>{i18n.t('completedDays')}: </Text> 
           <Text className='text-[11px] font-semibold'>{calculateCompletedDays(habit)}</Text>
         </View>
         
         <Text className='text-[11px] text-mygray'>{getShowdaysStr(habit.showsDays)}</Text>
-      
-
       </View>
 
       {/* <Donut /> */}

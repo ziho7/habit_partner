@@ -14,6 +14,7 @@ import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitDone
 import { Theme } from 'react-native-calendars/src/types';
 import EditHabit from '@/components/EditHabit';
 import { useGlobalContext } from '@/context/GlobalProvider';
+import i18n from '@/lib/i18n';
 
 const DataPanel = () => {
   const { habitId } = useLocalSearchParams()
@@ -111,10 +112,10 @@ const DataPanel = () => {
         {/* 分块数据 */}
         <View className='mt-4 mx-2'>
           <View className='flex flex-row flex-wrap'>
-            <DataBlock title='Total clicked' count={calTotalClickCount(habit)} />
-            <DataBlock title='Days lefted' count={calDaysLeft(habit)} />
-            <DataBlock title='Current streak' count={currentStreak(habit)} />
-            <DataBlock title='Best streak' count={bestStreak(habit)} />
+            <DataBlock title={i18n.t('totalClicked')} count={calTotalClickCount(habit)} />
+            <DataBlock title={i18n.t('daysLefted')} count={calDaysLeft(habit)} />
+            <DataBlock title={i18n.t('currentStreak')} count={currentStreak(habit)} />
+            <DataBlock title={i18n.t('bestStreak')} count={bestStreak(habit)} />
           </View>
         </View>
 

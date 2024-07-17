@@ -11,6 +11,7 @@ import Header from '@/components/Header'
 import CustomIconButton from '@/components/CustomIconButton'
 import AddHabit from '@/components/AddHabit'
 import { Habit, HabitType } from '@/lib/storage'
+import i18n from '@/lib/i18n'
 
 
 
@@ -38,9 +39,9 @@ const Home = () => {
       <Header dayOfWeek={dayOfWeek} currentDate={currentDate} />
       <View className='flex-row h-16 justify-between items-center'>
         <View className='flex-row justify-start space-x-2'>
-          <CustomButton title='Daily' handlePress={async () => changeCurrentHabitType(HabitType.Daily)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Daily ? 'bg-mypurple' : ''}`} textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Weekly' handlePress={async () => changeCurrentHabitType(HabitType.Weekly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Weekly ? 'bg-mypurple' : ''}`} textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Monthly' handlePress={async () => changeCurrentHabitType(HabitType.Monthly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Monthly ? 'bg-mypurple' : ''}`} textStyles="text-[12px]"></CustomButton>
+          <CustomButton title={i18n.t('daily')} handlePress={async () => changeCurrentHabitType(HabitType.Daily)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Daily ? 'bg-mypurple' : ''}`} textStyles="text-[12px]"></CustomButton>
+          <CustomButton title={i18n.t('Weekly')} handlePress={async () => changeCurrentHabitType(HabitType.Weekly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Weekly ? 'bg-mypurple' : ''}`} textStyles="text-[12px]"></CustomButton>
+          <CustomButton title={i18n.t('Monthly')} handlePress={async () => changeCurrentHabitType(HabitType.Monthly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Monthly ? 'bg-mypurple' : ''}`} textStyles="text-[12px]"></CustomButton>
         </View>
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
 
@@ -78,8 +79,8 @@ const Home = () => {
         ListHeaderComponent={getHeader}
         ListEmptyComponent={
           <View className='items-center m-4'>
-            <Text className='my-2'>Empty!</Text>
-            <Text>Please add a new habit😊</Text>
+            <Text className='my-2'>{i18n.t('empty')}!</Text>
+            <Text>{i18n.t("addAHabit")}</Text>
           </View>
         }
       />

@@ -4,6 +4,7 @@ import CustomIconButton from '@/components/CustomIconButton'
 
 import images, { getHabitIcons } from '@/constants/images';
 import { router } from 'expo-router';
+import i18n from '@/lib/i18n';
 
 const contactUs = () => {
     return (
@@ -18,7 +19,7 @@ const contactUs = () => {
                         customStyle='w-[8px] h-[8px]'
                     />
                     <Text className='items-center text-[18px] pr-2'>
-                        Contact us
+                        {i18n.t('contactUs')}
                     </Text>
 
                     <View className='items-center'>

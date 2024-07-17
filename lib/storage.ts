@@ -160,6 +160,41 @@ export const updateHabit = async (habit: Habit) => {
     }
 }
 
+// setting
+const settingKey = 'setting1'
+
+export class Setting {
+    timeZone: string
+    language: string
+}
+
+const defaultSetting = {
+    timeZone: 'UTC',
+    lanugage: 'en'
+}
+
+export const getSetting = async () => {
+    try {
+        let settingJson = await getData(settingKey)
+        let setting: Setting = plainToInstance(Setting, JSON.parse(settingJson || ""))
+        return setting
+    } catch (e) {
+        console.log(e);
+        throw e
+    }
+}
+
+export const updateSetting = async (setting: Setting) => {
+    try {
+        let settingJson = JSON.stringify(instanceToPlain(setting))
+        await setData(settingKey, settingJson)
+    } catch (e) {
+        console.log(e)
+        throw e
+    }
+}
+
+
 
 const setData = async (key: string, value: string) => {
     try {
