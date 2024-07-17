@@ -2,6 +2,7 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import en from './locales/en.json'
 import zh_CN from './locales/zh_CN.json'
+import { getSettingLanguageCode } from './storage'
 
 type LanguageResourceType = {
     en: {
@@ -20,7 +21,8 @@ export const languageResource: LanguageResourceType = {
     zh_CN: {
         translation: zh_CN
     }
-};
+}
+
 
 i18n.use(initReactI18next).init({
     compatibilityJSON: 'v3',
@@ -30,6 +32,10 @@ i18n.use(initReactI18next).init({
     interpolation: {
         escapeValue: false
     }
+})
+
+getSettingLanguageCode().then((language) => {
+    i18n.changeLanguage(language)
 })
 
 export default i18n

@@ -2,15 +2,12 @@ import { View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-nat
 import React, { useState } from 'react'
 import CustomIconButton from '@/components/CustomIconButton'
 import images from '@/constants/images'
-import DateModal from '@/components/DateModal'
 import { router } from 'expo-router'
-import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data'
 import i18n from '@/lib/i18n'
 import { useTranslation } from 'react-i18next'
 import PickerModal from '@/components/PickerModal'
 import { getLanguageList, getLanguageCode } from '@/lib/locales/languageHandler'
 import { updateSettingLanguage } from '@/lib/storage'
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry'
 
 const Settings = () => {
 
@@ -99,11 +96,10 @@ const Settings = () => {
                                 let languageTowLetter = getLanguageCode(selectedLanguage)
                                 await updateSettingLanguage(languageTowLetter)
                                 i18n.changeLanguage(languageTowLetter)
-                                setShowLanguagePicker(false)
-                                
-                                
+                                // setShowLanguagePicker(false)
                             }}
                             pickerData={getLanguageList()}
+                            selectedValue={i18n.t('currentLanguage')}
                         >
                         </PickerModal>
 

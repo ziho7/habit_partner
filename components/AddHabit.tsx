@@ -236,6 +236,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             setHabit({ ...habit, type: habitTypeInt })
                         }}
                         pickerData={["Daily", "Weekly", "Monthly"]}
+                        selectedValue={habitTypeIntToString(habit.type)}
                     >
                     </PickerModal>
 

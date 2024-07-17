@@ -187,13 +187,13 @@ export const getSetting = async () => {
     }
 }
 
-export const getSettingLanguageTwoLetter = async () => {
+export const getSettingLanguageCode = async () => {
     try {
         const setting = await getSetting();
-        return setting.language;
+        return setting.language
     } catch (e) {
         console.log(e);
-        throw e;
+        return 'en'
     }
 }
 
