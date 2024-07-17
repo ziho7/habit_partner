@@ -3,6 +3,8 @@ import uuid from 'react-native-uuid';
 import { Type, Expose, Transform, plainToClass, plainToInstance, instanceToPlain } from 'class-transformer';
 import "reflect-metadata";
 import { getCurrentDateAndDayOfWeekInTimeZone } from './get_data';
+import { Alert } from 'react-native';
+import { getLanguageCode } from './locales/languageHandler';
 
 export enum HabitType {
     Daily,
@@ -56,6 +58,8 @@ export class Habit {
     }, { toClassOnly: true })
     records: Map<string, Record>
     createTime: Date
+    icon: string
+    states: number // 0 active 1 inactive 2 pause
 }
 
 export class Record {
@@ -67,19 +71,37 @@ export class Record {
 const userHabitsKey = 'userHabits12'
 
 
-
-export const addHabit = async (habit: Habit) => {
+const habitCheck = (habit: Habit) => {
     if (habit.startDate > habit.endDate) {
         throw new Error('startDate should be less than endDate')
     }
-    
-
-    let habitId = uuid.v4('string')
-    if (typeof habitId === 'string') {
-        habit.id = habitId
+    if (habit.name === '' || habit.name === undefined) {
+        throw new Error('name should not be empty')
     }
+    if (habit.everyCount <= 0) {
+        throw new Error('everyCount should be greater than 0')
+    }
+    if (habit.showsDays.length > 7) {
+        throw new Error('showsDays should be less than 7')
+    }
+    if (habit.type < 0 || habit.type > 2) {
+        throw new Error('type should be 0, 1 or 2')
+    }
+    if (habit.icon === '' || habit.icon === undefined) {
+        throw new Error('icon should not be empty')
+    }
+}
+
+export const addHabit = async (habit: Habit) => {
 
     try {
+        habitCheck(habit)
+
+        let habitId = uuid.v4('string')
+        if (typeof habitId === 'string') {
+            habit.id = habitId
+        }
+
         // 将habit存入单独的文件， key是habitId
         let habitJson = JSON.stringify(instanceToPlain(habit))
         await setData(habit.id.toString(), habitJson)
@@ -90,7 +112,7 @@ export const addHabit = async (habit: Habit) => {
         userHabits.push(habitId)
         await setData(userHabitsKey, JSON.stringify(userHabits))
     } catch (error) {
-        throw error
+        Alert.alert('Error', 'Failed to add habit' + error)
     }
 }
 
@@ -116,6 +138,12 @@ export const getAllHabits = async function () {
             let habit = await getHabit(habitId)
             habits.push(habit)
         }
+
+        // sort
+        habits.sort((a, b) => {
+            return a.createTime > b.createTime ? 1 : -1
+        })
+
         return habits
     } catch (e) {
         console.log(e);
@@ -125,12 +153,71 @@ export const getAllHabits = async function () {
 
 export const updateHabit = async (habit: Habit) => {
     try {
+        habitCheck(habit)
         let habitJson = JSON.stringify(instanceToPlain(habit))
         await setData(habit.id.toString(), habitJson)
     } catch (error) {
-        throw error
+        Alert.alert('Error', 'Failed to update habit' + error)
     }
 }
+
+// setting
+const settingKey = 'setting1'
+
+export class Setting {
+    language: string
+}
+
+export const getSetting = async () => {
+    try {
+        let settingJson = await getData(settingKey)
+
+        if (settingJson === null) {
+            let setting = new Setting()
+            setting.language = getLanguageCode('English')
+            await updateSetting(setting)
+            return setting
+        }
+
+        let setting: Setting = plainToInstance(Setting, JSON.parse(settingJson || ""))
+        return setting
+    } catch (e) {
+        console.log(e);
+        throw e
+    }
+}
+
+export const getSettingLanguageCode = async () => {
+    try {
+        const setting = await getSetting();
+        return setting.language
+    } catch (e) {
+        console.log(e);
+        return 'en'
+    }
+}
+
+export const updateSetting = async (setting: Setting) => {
+    try {
+        let settingJson = JSON.stringify(instanceToPlain(setting))
+        await setData(settingKey, settingJson)
+    } catch (e) {
+        console.log(e)
+        throw e
+    }
+}
+
+export const updateSettingLanguage = async (language: string) => {
+    try {
+        let setting = await getSetting()
+        setting.language = language
+        await updateSetting(setting)
+    } catch (e) {
+        console.log(e)
+        throw e
+    }
+}
+
 
 
 const setData = async (key: string, value: string) => {
@@ -168,6 +255,6 @@ export const transRecordToCommitsData = (habit: Habit) => {
     for (let [key, value] of habit.records) {
         data.push({ date: key, count: value.clickCount })
     }
-    
+
     return data
 }

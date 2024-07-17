@@ -15,6 +15,28 @@ const GlobalProvider = ({ children }: {
   const [loading, setLoading] = useState(true);
   const timeZone = getTimeZone()
 
+  const [refreshHomeCount, setRefreshHomeCount] = useState(0)
+  const refreshHome = () => {
+    setRefreshHomeCount(refreshHomeCount + 1)
+  }
+
+  const [showNotification, setShowNotification] = useState(false)
+  const [notificationMessage, setNotificationMessage] = useState('')
+  const [notifyLevel, setNotifyLevel] = useState('info')
+  
+  const notify = (message: string, level: 'error'| 'info', seconds: number) => {
+    setNotificationMessage(message)
+    setShowNotification(true)
+    if (level === 'error') {
+      setNotifyLevel('error')
+    } else {
+      setNotifyLevel('info')
+    }
+    setTimeout(() => {
+      setShowNotification(false)
+    }, seconds * 1000)
+  }
+
 //   useEffect(() => {
 //     getCurrentUser()
 //       .then((res) => {
@@ -42,7 +64,14 @@ const GlobalProvider = ({ children }: {
         user,
         setUser,
         loading,
-        timeZone
+        timeZone,
+        refreshHomeCount,
+        refreshHome,
+        notify,
+        showNotification,
+        notificationMessage,
+        notifyLevel,
+        setShowNotification
       }}
     >
       {children}

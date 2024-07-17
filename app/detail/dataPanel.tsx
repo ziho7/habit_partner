@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Habit, calculateCompletedDays, getHabit, transRecordToCommitsData } from '@/lib/storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomIconButton from '@/components/CustomIconButton';
-import images from '@/constants/images';
+import images, { getHabitIcons } from '@/constants/images';
 import ImageAndTitle from '@/components/ImageAndTitle';
 import DataBlock from '@/components/DataBlock';
 
@@ -13,15 +13,24 @@ import ContributionGraph from '@/components/ContributionGraph';
 import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitDone } from '@/lib/get_data';
 import { Theme } from 'react-native-calendars/src/types';
 import EditHabit from '@/components/EditHabit';
+import { useGlobalContext } from '@/context/GlobalProvider';
+import i18n from '@/lib/i18n';
 
-const Detail = () => {
+const DataPanel = () => {
   const { habitId } = useLocalSearchParams()
+  const { refreshHome } = useGlobalContext()
 
   const [habit, setHabit] = useState<Habit>(new Habit())
 
   const [year, setYear] = useState(new Date().getFullYear())
   const [initialDate, setInitialDate] = useState(new Date())
   const [showEditHabit, setShowEditHabit] = useState(false)
+  const [refreshCount, setRefreshCount] = useState(0)
+
+  const refresh = () => {
+    setRefreshCount(refreshCount + 1)
+  }
+
 
   const markedDates = (habit: Habit) => {
     let markedDates: { [key: string]: { selected: boolean, selectedColor: string } } = {}
@@ -58,7 +67,12 @@ const Detail = () => {
     getHabit(habitId as string).then((habit) => {
       setHabit(habit)
     })
-  }, [])  // 
+  }, [refreshCount])
+
+  const goTohomePage = () => {
+      refreshHome() 
+      router.back()
+  }
 
   return (
     <SafeAreaView className=''>
@@ -67,12 +81,12 @@ const Detail = () => {
         <View className='flex-row justify-between mx-4 mt-4'>
           <CustomIconButton
             image={images.arrowLeft}
-            callBackFunction={router.back}
+            callBackFunction={goTohomePage}
             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
             customStyle='w-[8px] h-[8px]'
           />
           <View className='items-center'>
-            <ImageAndTitle image={images.ball} name={habit.name} />
+            <ImageAndTitle image={getHabitIcons(habit.icon)} name={habit.name} />
 
             <View className='relative items-center justify-center'>
               <Image
@@ -89,7 +103,7 @@ const Detail = () => {
           </View>
           <CustomIconButton
             image={images.pen}
-            callBackFunction={() => {setShowEditHabit(!showEditHabit)}}
+            callBackFunction={() => { setShowEditHabit(!showEditHabit) }}
             containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
             customStyle='w-[22px] h-[22px]'
           />
@@ -98,10 +112,10 @@ const Detail = () => {
         {/* 分块数据 */}
         <View className='mt-4 mx-2'>
           <View className='flex flex-row flex-wrap'>
-            <DataBlock title='Total clicked' count={calTotalClickCount(habit)} />
-            <DataBlock title='Days lefted' count={calDaysLeft(habit)} />
-            <DataBlock title='Current streak' count={currentStreak(habit)} />
-            <DataBlock title='Best streak' count={bestStreak(habit)} />
+            <DataBlock title={i18n.t('totalClicked')} count={calTotalClickCount(habit)} />
+            <DataBlock title={i18n.t('daysLefted')} count={calDaysLeft(habit)} />
+            <DataBlock title={i18n.t('currentStreak')} count={currentStreak(habit)} />
+            <DataBlock title={i18n.t('bestStreak')} count={bestStreak(habit)} />
           </View>
         </View>
 
@@ -179,11 +193,9 @@ const Detail = () => {
       >
         <EditHabit
           closeCallBack={() => setShowEditHabit(false)}
-          okCallBack={async () => {
-            // fetchHabits(
-          }}
+          okCallBack={refresh}
           habitOriginal={habit}
-          setHabitOriginal={setHabit}
+          goTohomePage={goTohomePage}
         />
       </Modal>
     </SafeAreaView>
@@ -191,7 +203,7 @@ const Detail = () => {
   )
 }
 
-export default Detail
+export default DataPanel
 
 const mytheme = {
   backgroundColor: '#F8F6F9',

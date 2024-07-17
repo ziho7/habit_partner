@@ -1,16 +1,17 @@
 import { View, Text, Modal, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-import { Picker, DatePicker } from 'react-native-wheel-pick';
+import { Picker } from 'react-native-wheel-pick';
 import { habitTypeStringToInt } from '@/lib/storage';
 
 
 
-const PickerModal = ({ showPicker, closeFunction, onChangeFunction, pickerData }: {
+const PickerModal = ({ showPicker, closeFunction, onChangeFunction, pickerData, selectedValue }: {
     showPicker: boolean,
     closeFunction: () => void,
-    onChangeFunction: (data: any) => void,
-    pickerData: string[]
+    onChangeFunction: (data: string) => void,
+    pickerData: string[],
+    selectedValue: string
 }) => {
     return <Modal
         visible={showPicker}
@@ -32,11 +33,10 @@ const PickerModal = ({ showPicker, closeFunction, onChangeFunction, pickerData }
             >
                 <Picker
                     style={{ backgroundColor: 'white', width: 300, height: 215 }}
-                    selectedValue='Daily'
+                    selectedValue={selectedValue}
                     pickerData={pickerData}
                     onValueChange={(value: string) => {
-                        let habitTypeInt = habitTypeStringToInt(value)
-                        onChangeFunction(habitTypeInt)
+                        onChangeFunction(value)
                     }}
                 />
             </TouchableOpacity>

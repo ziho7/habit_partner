@@ -1,4 +1,4 @@
-export const dateToSlash = function (dateStr: string) {
+export const dateToSlash = (dateStr: string) =>  {
     if (!dateStr.includes("-")) {
         return dateStr
     }
@@ -6,7 +6,7 @@ export const dateToSlash = function (dateStr: string) {
     return dArr[2] + "/" + dArr[1] + "/" + dArr[0]; //ex output: "18/01/2010"
 }
 
-export const dateToDash = function (dateStr: string) {
+export const dateToDash = (dateStr: string) => {
     if (!dateStr.includes("/")) {
         return dateStr
     }

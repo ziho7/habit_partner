@@ -41,7 +41,16 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
                 doneCallBack();
             }
         } 
-    };
+    }
+
+    const handleLongClick = async () => {    
+        habit.records.set(currentDate, { clickCount: 0 })
+        await updateHabit(habit)
+        setClickCount(0)
+        doneCallBack()
+    }
+
+
 
     return (
         <View>
@@ -67,6 +76,7 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
 
             <TouchableOpacity 
                 onPress={handleClick}
+                onLongPress={handleLongClick}
                 style={[StyleSheet.absoluteFillObject, { alignItems: 'center', justifyContent: 'center' }]}
                 className='text-[12px] text-mygray'
             >   

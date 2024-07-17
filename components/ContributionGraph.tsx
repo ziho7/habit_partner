@@ -60,7 +60,7 @@ const ContributionGraph = ({ year, dataValues }: {
     const getColor = (date: string) => {
         const activityCount = dataValues.find(item => item.date === date)?.count || 0
         const intensity = highestValue !== 0 ? Number(activityCount / highestValue) : 0
-        const colorCodes = ['#F8F6F9', '#FFCCCC', '#FFAAAA', '#FF8888', '#FF6666', '#ac8bc9']
+        const colorCodes = ['#f6f2f9', '#ede5f3', '#e3d8ed', '#dacbe7', '#c8b2db', '#b598cf'] // https://photokit.com/colors/color-gradient/?lang=zh
         const colorIndex = Math.min(Math.floor((intensity * colorCodes.length)), colorCodes.length - 1)
         return colorCodes[colorIndex]
     }
@@ -80,7 +80,12 @@ const ContributionGraph = ({ year, dataValues }: {
     });
 
     return (
-        <ScrollView horizontal={true} className='' ref={scrollViewRef} >
+        <ScrollView 
+            horizontal={true}
+            className='' 
+            ref={scrollViewRef}
+            showsHorizontalScrollIndicator={false}
+        >
             <View className=''>
                 {/* 方块 */}
                 <View className='gap-1 flex-col flex-wrap h-[150px]' >

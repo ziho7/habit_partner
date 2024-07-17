@@ -11,11 +11,16 @@ import Header from '@/components/Header'
 import CustomIconButton from '@/components/CustomIconButton'
 import AddHabit from '@/components/AddHabit'
 import { Habit, HabitType } from '@/lib/storage'
+import i18n from '@/lib/i18n'
+import { useTranslation } from 'react-i18next'
 
 
 
 const Home = () => {
-  const { loading, isLogged, timeZone } = useGlobalContext()
+  const { refreshHomeCount } = useGlobalContext()
+  // todo 这里好像有重复刷新的问题
+
+  const {t} = useTranslation()
 
   const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
   const [showHabits, setShowHabits] = useState<any>([])
@@ -37,9 +42,9 @@ const Home = () => {
       <Header dayOfWeek={dayOfWeek} currentDate={currentDate} />
       <View className='flex-row h-16 justify-between items-center'>
         <View className='flex-row justify-start space-x-2'>
-          <CustomButton title='Daily' handlePress={async () => changeCurrentHabitType(HabitType.Daily)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Daily? 'bg-mypurple': '' }`} textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Weekly' handlePress={async () => changeCurrentHabitType(HabitType.Weekly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Weekly? 'bg-mypurple': '' }`} textStyles="text-[12px]"></CustomButton>
-          <CustomButton title='Monthly' handlePress={async () => changeCurrentHabitType(HabitType.Monthly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Monthly? 'bg-mypurple': '' }`} textStyles="text-[12px]"></CustomButton>
+          <CustomButton title={t('daily')} handlePress={async () => changeCurrentHabitType(HabitType.Daily)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Daily ? 'bg-mypurple' : ''}`} textStyles="text-[12px]"></CustomButton>
+          <CustomButton title={t('weekly')} handlePress={async () => changeCurrentHabitType(HabitType.Weekly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Weekly ? 'bg-mypurple' : ''}`} textStyles="text-[12px]"></CustomButton>
+          <CustomButton title={t('monthly')} handlePress={async () => changeCurrentHabitType(HabitType.Monthly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Monthly ? 'bg-mypurple' : ''}`} textStyles="text-[12px]"></CustomButton>
         </View>
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
 
@@ -49,11 +54,13 @@ const Home = () => {
 
   useEffect(() => {
     fetchHabits();
-  }, []);
+  }, [refreshHomeCount]);
 
   return (
     <SafeAreaView className='mx-4'>
       <SectionList
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         sections={showHabits}
         renderItem={({ item }: {
           item: Habit
@@ -74,7 +81,10 @@ const Home = () => {
 
         ListHeaderComponent={getHeader}
         ListEmptyComponent={
-          <Text>Empty Please, add a new habit first</Text>
+          <View className='items-center m-4'>
+            <Text className='my-2'>{t('empty')}!</Text>
+            <Text>{t("addAHabit")}</Text>
+          </View>
         }
       />
 
@@ -86,7 +96,6 @@ const Home = () => {
         transparent={true}
       >
         <AddHabit closeCallBack={() => setShowAddHabit(false)} okCallBack={async () => {
-          // todo check 下是否合法
           fetchHabits()
         }} />
       </Modal>
