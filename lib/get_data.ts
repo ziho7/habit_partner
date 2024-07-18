@@ -222,11 +222,12 @@ export const isHabitDone = (habit: Habit, date: string) => {
 
 
 
-const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const daysUpper = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const daysLower = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
 
 export const dayStringToNumber = (daysString: string) => {
-    for (let i = 0; i < days.length; i++) {
-        if (daysString === days[i]) {
+    for (let i = 0; i < daysUpper.length; i++) {
+        if (daysString === daysUpper[i]) {
             return i
         }
     }
@@ -248,7 +249,7 @@ export const getShowdaysStr = (showsDays: number[]) => {
 
     let res = ''
     for (let i = 0; i < showsDays.length; i++) {
-        res += days[showsDays[i]] + ' '
+        res += i18n.t(daysLower[showsDays[i]]) + ' '
     }
     return res
 }
