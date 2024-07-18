@@ -28,5 +28,11 @@
     "totalClicked": "Total clicked",
     "daysLefted": "Days lefted",
     "currentStreak": "Current streak",
-    "bestStreak": "Best streak"
+    "bestStreak": "Best streak",
+    "everyday": "Everyday",
+    "weekends": "Weekends",
+    "weekdays": "Weekdays",
+    "selectShowDaysEveryWeek" : "Select show days every week",
+    "sun": "Sun", "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat"
+    
 }

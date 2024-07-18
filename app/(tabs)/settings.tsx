@@ -6,7 +6,7 @@ import { router } from 'expo-router'
 import i18n from '@/lib/i18n'
 import { useTranslation } from 'react-i18next'
 import PickerModal from '@/components/PickerModal'
-import { getLanguageList, getLanguageCode } from '@/lib/locales/languageHandler'
+import { getLanguageList, getLanguageCode } from '@/lib/languageHandler'
 import { updateSettingLanguage } from '@/lib/storage'
 
 const Settings = () => {
@@ -36,7 +36,7 @@ const Settings = () => {
                                     image={images.arrowRight}
                                     callBackFunction={() => { }}
                                     containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                    customStyle='w-[16px] h-[16px]'
+                                    customStyle='w-[8px] h-[8px]'
                                 />
                             </View>
                         </TouchableOpacity>
@@ -75,7 +75,7 @@ const Settings = () => {
                                     callBackFunction={() => {
                                     }}
                                     containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                    customStyle='w-[16px] h-[16px]'
+                                    customStyle='w-[8px] h-[8px]'
                                 />
                             </View>
                         </TouchableOpacity>

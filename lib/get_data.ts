@@ -1,6 +1,7 @@
 import { getCalendars } from 'expo-localization';
 import { dateToDash, getDatesOfMonth, getDatesOfWeek } from './utils';
 import { Habit, getAllHabits, HabitType } from './storage';
+import i18n from './i18n';
 
 
 export const getClickCount = (habit: Habit, currentDate: string) => {
@@ -54,9 +55,9 @@ export const getHabitsByHabitType = async (habitType: HabitType) => {
 }
 
 export const getTodayHabits = async () => {
-    let res = await getAllHabits();
-    let habits: Habit[] = res;
-    let sortedHabits = filterHabits(habits);
+    let res = await getAllHabits()    
+    let habits: Habit[] = res
+    let sortedHabits = filterHabits(habits)
 
     return sortedHabits;
 }
@@ -221,11 +222,12 @@ export const isHabitDone = (habit: Habit, date: string) => {
 
 
 
-const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const daysUpper = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const daysLower = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
 
 export const dayStringToNumber = (daysString: string) => {
-    for (let i = 0; i < days.length; i++) {
-        if (daysString === days[i]) {
+    for (let i = 0; i < daysUpper.length; i++) {
+        if (daysString === daysUpper[i]) {
             return i
         }
     }
@@ -236,18 +238,18 @@ export const dayStringToNumber = (daysString: string) => {
 
 export const getShowdaysStr = (showsDays: number[]) => {   
     if (showsDays.length === 7) {
-        return 'Everyday'
+        return i18n.t('everyday')
     }    
     if (showsDays.length === 2 && showsDays.includes(0) && showsDays.includes(6)) {
-        return 'Weekends'
+        return i18n.t('weekends')
     }
     if (showsDays.length === 5 && !showsDays.includes(0) && !showsDays.includes(6)) {
-        return 'Weekdays'
+        return i18n.t('weekdays')
     }
 
     let res = ''
     for (let i = 0; i < showsDays.length; i++) {
-        res += days[showsDays[i]] + ' '
+        res += i18n.t(daysLower[showsDays[i]]) + ' '
     }
     return res
 }

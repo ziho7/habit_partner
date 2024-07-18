@@ -1,5 +1,6 @@
 import { View, Text, Modal, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }: {
     showPicker: boolean,
@@ -7,6 +8,8 @@ const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }
     pickData: number[],
     onChangeFunction: (data: any) => void
 }) => {
+
+    const {t} = useTranslation()
 
     const getColor = (dayNumber: number) => {
         if (pickData.includes(dayNumber)) {
@@ -42,12 +45,14 @@ const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }
             activeOpacity={1.0}
         onPressOut={closeFunction}
         >
-            <View
+            <TouchableOpacity
                 className=' bg-[#FFFFFF] p-4 rounded-xl my-4 space-y-6 h-[200px]'
+                activeOpacity={1.0}
+                onPressOut={e => e.preventDefault}
             >
                 <View className='justify-center items-center my-2'>
                     <Text className='text-[20px]'>
-                        Select show days every week
+                        {t('selectShowDaysEveryWeek')}
                     </Text>
                 </View>
 
@@ -57,7 +62,7 @@ const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }
                         onPress={() => onPressBlock(0)}
                     >
                         <Text className='text-[12px] font-light'>
-                            Sun
+                            {t('sun')}
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -65,7 +70,7 @@ const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }
                         onPress={() => onPressBlock(1)}
                     >
                         <Text className='text-[12px] font-light'>
-                            Mon
+                            {t('mon')}
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -73,7 +78,7 @@ const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }
                         onPress={() => onPressBlock(2)}
                     >
                         <Text className='text-[12px] font-light'>
-                            Tue
+                           {t('tue')}
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -81,7 +86,7 @@ const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }
                         onPress={() => onPressBlock(3)}
                     >
                         <Text className='text-[12px] font-light'>
-                            Wed
+                            {t('wed')}
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -89,7 +94,7 @@ const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }
                         onPress={() => onPressBlock(4)}
                     >
                         <Text className='text-[12px] font-light'>
-                            Thu
+                            {t('thu')}
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -97,7 +102,7 @@ const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }
                         onPress={() => onPressBlock(5)}
                     >
                         <Text className='text-[12px] font-light'>
-                            Fri
+                            {t('fri')}
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -105,12 +110,12 @@ const ShowDaysModal = ({ showPicker, closeFunction, onChangeFunction, pickData }
                         onPress={() => onPressBlock(6)}
                     >
                         <Text className='text-[12px] font-light'>
-                            Sat
+                            {t('sat')}
                         </Text>
                     </TouchableOpacity>
                 </View>
 
-            </View>
+            </TouchableOpacity>
         </TouchableOpacity>
     </Modal>
 }

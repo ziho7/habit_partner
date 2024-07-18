@@ -12,6 +12,7 @@ import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
 import { useGlobalContext } from '@/context/GlobalProvider'
 import i18n from '@/lib/i18n'
+import { useTranslation } from 'react-i18next'
 
 
 // todo 是否添加成功
@@ -23,6 +24,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
 }) => {
 
     const {notify} = useGlobalContext()
+    const {t} = useTranslation()
 
     const today = getCurrentDateAndDayOfWeekInTimeZone().currentDate
 
@@ -78,7 +80,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             async () => {
                                 await addHabit(habit)
                                 await okCallBack()
-                                notify('Add habit successfully','info', 1)
+                                notify('Add habit successfully','info', 2)
                                 closeCallBack()
                             }
                         }
@@ -104,7 +106,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         <Text>{i18n.t('habitType')}</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
-                                {habitTypeIntToString(habit.type)}
+                                {t(habitTypeIntToString(habit.type))}
                             </Text>
                             <CustomIconButton
                                 image={images.arrowRight}
@@ -112,7 +114,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     setShowHabitTypePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -136,7 +138,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     setShowIconPicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -171,7 +173,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     setShowStartDatePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -188,7 +190,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     setShowEndDatePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -205,7 +207,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     setShowDaysPicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -231,11 +233,17 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     <PickerModal
                         showPicker={showHabitTypePicker}
                         closeFunction={() => { setShowHabitTypePicker(false) }}
-                        onChangeFunction={(selectedTimes: string) => {
-                            let habitTypeInt = habitTypeStringToInt(selectedTimes)
+                        onChangeFunction={(selectedValue: string) => {
+                            let habitTypeInt = habitTypeStringToInt(selectedValue)
                             setHabit({ ...habit, type: habitTypeInt })
                         }}
-                        pickerData={["Daily", "Weekly", "Monthly"]}
+                        
+                        pickerData={[
+                            { value : 'daily', label : t('daily') },
+                            { value : 'weekly', label : t('weekly') },
+                            { value : 'monthly', label : t('monthly') },
+                        ]}
+
                         selectedValue={habitTypeIntToString(habit.type)}
                     >
                     </PickerModal>
@@ -257,7 +265,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         closeFunction={() => {
                             setShowIconPicker(false)
                         }}
-                        pickData={habit.icon}
+                        selectedIcon={habit.icon}
                         onChangeFunction={(selectedData) => {
                             setHabit({ ...habit, icon: selectedData })
                         }}

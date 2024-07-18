@@ -12,6 +12,7 @@ import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
 import { useGlobalContext } from '@/context/GlobalProvider'
 import i18n from '@/lib/i18n'
+import { useTranslation } from 'react-i18next'
 
 const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
     closeCallBack: () => void,
@@ -19,6 +20,8 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
     habitOriginal: Habit,
     goTohomePage: () => void
 }) => {
+
+    const {t} = useTranslation()
 
     const [habit, setHabit] = useState(habitOriginal)
 
@@ -54,7 +57,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                             async () => {
                                 await updateHabit(habit)
                                 okCallBack()
-                                notify('Habit updated', 'info', 1)
+                                notify('Habit updated', 'info', 2)
                                 closeCallBack()
                             }
                         }
@@ -80,7 +83,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                         <Text>{i18n.t('habitType')}</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
-                                {habitTypeIntToString(habit.type)}
+                                {t(habitTypeIntToString(habit.type))}
                             </Text>
                             <CustomIconButton
                                 image={images.arrowRight}
@@ -88,7 +91,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                                     setShowHabitTypePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -112,7 +115,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                                     setShowIconPicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -147,7 +150,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                                     setShowStartDatePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -164,7 +167,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                                     setShowEndDatePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -181,43 +184,17 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                                     setShowDaysPicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
-
-                    {/* 删除， todo pause */}
-                    {/* <TouchableOpacity
-                        className='items-center justify-center h-12 bg-myred rounded-lg'
-                        onPress={() => {
-                            Alert.alert("Are you sure to delete the habit?", "This action cannot be undone", [
-                                {
-                                    text: "Cancel",
-                                    onPress: () => console.log("Cancel Pressed"),
-                                    style: "cancel"
-                                },
-                                {
-                                    text: "Delete", onPress: async () => {
-                                        setHabitOriginal(habit)
-                                        await updateHabit(habit)
-                                        okCallBack()
-                                        closeCallBack()
-                                    }
-                                }
-                            ])
-                        }}
-                    >
-                        <Text className=' items-center justify-center'>
-                            Delete the Habit
-                        </Text>
-                    </TouchableOpacity> */}
 
                     <View className='flex-row justify-end'>
                         <CustomIconButton
                             image={images.delete}
                             callBackFunction={
                                 () => {
-                                    Alert.alert(i18n.t('deleteAlert1'), i18n.t('deleteAlert1'), [
+                                    Alert.alert(i18n.t('deleteAlert1'), i18n.t('deleteAlert2'), [
                                         {
                                             text: i18n.t('cancel'),
                                             onPress: () => console.log("Cancel Pressed"),
@@ -229,7 +206,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                                                 await updateHabit(habit)
                                                 okCallBack()
                                                 closeCallBack()
-                                                notify("habit deleted", "error", 1)
+                                                notify("habit deleted", "error", 2)
                                                 goTohomePage()
                                             }
                                         }
@@ -263,12 +240,16 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                     <PickerModal
                         showPicker={showHabitTypePicker}
                         closeFunction={() => { setShowHabitTypePicker(false) }}
-                        onChangeFunction={(selectedTimes: string) => {
-                            let habitTypeInt = habitTypeStringToInt(selectedTimes)
+                        onChangeFunction={(selectedValue: string) => {
+                            let habitTypeInt = habitTypeStringToInt(selectedValue)
                             setHabit({ ...habit, type: habitTypeInt })
                         }}
-                        pickerData={["Daily", "Weekly", "Monthly"]}
-                        selectedValue={habitTypeIntToString(habit.type)}
+                        pickerData={[
+                            { value : 'daily', label : t('daily') },
+                            { value : 'weekly', label : t('weekly') },
+                            { value : 'monthly', label : t('monthly') },
+                        ]}
+                        selectedValue={t(habitTypeIntToString(habit.type))}
                     >
                     </PickerModal>
 
@@ -289,7 +270,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                         closeFunction={() => {
                             setShowIconPicker(false)
                         }}
-                        pickData={habit.icon}
+                        selectedIcon={habit.icon}
                         onChangeFunction={(selectedData) => {
                             setHabit({ ...habit, icon: selectedData })
                         }}

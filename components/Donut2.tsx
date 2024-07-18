@@ -10,7 +10,7 @@ const AnimatedPath = Animated.createAnimatedComponent(Path);
 const DonutChart = ({clickCount1, habit, doneCallBack }: {
     clickCount1: number,
     habit: Habit,
-    doneCallBack: () => void
+    doneCallBack: () => Promise<void>
 }) => {    
     const [clickCount, setClickCount] = useState(clickCount1);
     const progress = useSharedValue(0);
@@ -38,7 +38,7 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
             await updateHabit(habit);
             setClickCount(clickCount + 1);
             if (clickCount + 1 === habit.everyCount) {
-                doneCallBack();
+                await doneCallBack();
             }
         } 
     }
@@ -47,7 +47,7 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
         habit.records.set(currentDate, { clickCount: 0 })
         await updateHabit(habit)
         setClickCount(0)
-        doneCallBack()
+        await doneCallBack()
     }
 
 

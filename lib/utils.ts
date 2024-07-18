@@ -1,4 +1,7 @@
 export const dateToSlash = (dateStr: string) =>  {
+    if (dateStr === null || dateStr === undefined || dateStr === "") {
+        return ""
+    }
     if (!dateStr.includes("-")) {
         return dateStr
     }
@@ -7,6 +10,9 @@ export const dateToSlash = (dateStr: string) =>  {
 }
 
 export const dateToDash = (dateStr: string) => {
+    if (dateStr === null || dateStr === undefined || dateStr === "") {
+        return ""
+    }
     if (!dateStr.includes("/")) {
         return dateStr
     }

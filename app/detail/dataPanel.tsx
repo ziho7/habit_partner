@@ -8,17 +8,20 @@ import images, { getHabitIcons } from '@/constants/images';
 import ImageAndTitle from '@/components/ImageAndTitle';
 import DataBlock from '@/components/DataBlock';
 
-import { Calendar } from 'react-native-calendars';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
 import ContributionGraph from '@/components/ContributionGraph';
 import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitDone } from '@/lib/get_data';
 import { Theme } from 'react-native-calendars/src/types';
 import EditHabit from '@/components/EditHabit';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import i18n from '@/lib/i18n';
+import { useTranslation } from 'react-i18next';
+import { dateToSlash } from '@/lib/utils';
 
 const DataPanel = () => {
   const { habitId } = useLocalSearchParams()
   const { refreshHome } = useGlobalContext()
+  const {t} = useTranslation()
 
   const [habit, setHabit] = useState<Habit>(new Habit())
 
@@ -53,7 +56,7 @@ const DataPanel = () => {
         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
         customStyle='w-[8px] h-[8px]'
       />
-      <Text className='text-[14px]'>{initialDate.toLocaleString('default', { month: 'long' })}</Text>
+      <Text className='text-[14px]'>{t(initialDate.toLocaleString('default', { month: 'long' }))}</Text>
       <CustomIconButton
         image={images.arrowRight}
         callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() + 1, 1)) }}
@@ -99,7 +102,7 @@ const DataPanel = () => {
                 <Text className='text-[6px] text-mygray'>Done</Text>
               </View>
             </View>
-            <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
+            <Text className='text-[12px] text-mygray'>{dateToSlash(habit.startDate)} - {dateToSlash(habit.endDate)}</Text>
           </View>
           <CustomIconButton
             image={images.pen}
@@ -121,7 +124,6 @@ const DataPanel = () => {
 
 
         {/* 月数据分析 */}
-        {/* todo 左右按钮对齐  */}
         <Calendar
           className='mx-4 mt-4 rounded-lg'
           initialDate={initialDate.toISOString()}
@@ -131,16 +133,8 @@ const DataPanel = () => {
           customHeaderTitle={CustomHeaderTitle}
           hideArrows={true}
           theme={mytheme as Theme}
-
           hideExtraDays={true}
-        // renderArrow={(direction) => {
-        //   return <CustomIconButton
-        //     image={direction === 'left' ? images.arrowLeft : images.arrowRight}
-        //     callBackFunction={() => { }}
-        //     containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-        //     customStyle='w-[8px] h-[8px]'
-        //   />
-        // }}
+          
         />
 
 
@@ -164,13 +158,13 @@ const DataPanel = () => {
 
           <View className='m-2 flex-row'>
             <View className='flex w-[24px] h-full '>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Sun</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Mon</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Thu</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Wed</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Thu</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Fri</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Sat</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('sun')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('mon')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('tue')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('wed')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('thu')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('fri')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('sat')}</Text></View>
               <View className='h-[17.5px] justify-center'><Text className='text-[7px]'></Text></View>
             </View>
             <ContributionGraph
