@@ -57,7 +57,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                             async () => {
                                 await updateHabit(habit)
                                 okCallBack()
-                                notify('Habit updated', 'info', 1)
+                                notify('Habit updated', 'info', 2)
                                 closeCallBack()
                             }
                         }
@@ -206,7 +206,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                                                 await updateHabit(habit)
                                                 okCallBack()
                                                 closeCallBack()
-                                                notify("habit deleted", "error", 1)
+                                                notify("habit deleted", "error", 2)
                                                 goTohomePage()
                                             }
                                         }

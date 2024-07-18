@@ -80,7 +80,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                             async () => {
                                 await addHabit(habit)
                                 await okCallBack()
-                                notify('Add habit successfully','info', 1)
+                                notify('Add habit successfully','info', 2)
                                 closeCallBack()
                             }
                         }

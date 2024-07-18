@@ -66,6 +66,7 @@ const HabitCard = ({
                 onChangeFunction={() => { }}
                 pickerData={[]}
                 selectedValue=''
+                habit={habit}
             />
         </TouchableOpacity>
 
