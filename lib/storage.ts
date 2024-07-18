@@ -4,7 +4,8 @@ import { Type, Expose, Transform, plainToClass, plainToInstance, instanceToPlain
 import "reflect-metadata";
 import { getCurrentDateAndDayOfWeekInTimeZone } from './get_data';
 import { Alert } from 'react-native';
-import { getLanguageCode } from './locales/languageHandler';
+import { getLanguageCode } from './languageHandler'
+
 
 export enum HabitType {
     Daily,
@@ -15,23 +16,23 @@ export enum HabitType {
 export const habitTypeIntToString = (type: number) => {
     switch (type) {
         case 0:
-            return 'Daily'
+            return 'daily'
         case 1:
-            return 'Weekly'
+            return 'weekly'
         case 2:
-            return 'Monthly'
+            return 'monthly'
         default:
-            return 'Daily'
+            return 'daily'
     }
 }
 
 export const habitTypeStringToInt = (type: string) => {
     switch (type) {
-        case 'Daily':
+        case 'daily':
             return 0
-        case 'Weekly':
+        case 'weekly':
             return 1
-        case 'Monthly':
+        case 'monthly':
             return 2
         default:
             return 0

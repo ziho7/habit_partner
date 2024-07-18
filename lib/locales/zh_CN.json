@@ -28,5 +28,8 @@
     "totalClicked": "总共点击次数",
     "daysLefted": "距离结束天数",
     "currentStreak": "目前连续完成天数",
-    "bestStreak": "最长连续完成天数"
+    "bestStreak": "最长连续完成天数",
+    "everyday": "每天",
+    "weekends": "周末",
+    "weekdays": "工作日"
 }

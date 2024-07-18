@@ -28,5 +28,8 @@
     "totalClicked": "Total clicked",
     "daysLefted": "Days lefted",
     "currentStreak": "Current streak",
-    "bestStreak": "Best streak"
+    "bestStreak": "Best streak",
+    "everyday": "Everyday",
+    "weekends": "Weekends",
+    "weekdays": "Weekdays"
 }

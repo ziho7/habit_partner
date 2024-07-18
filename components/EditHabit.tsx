@@ -12,6 +12,7 @@ import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
 import { useGlobalContext } from '@/context/GlobalProvider'
 import i18n from '@/lib/i18n'
+import { useTranslation } from 'react-i18next'
 
 const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
     closeCallBack: () => void,
@@ -19,6 +20,8 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
     habitOriginal: Habit,
     goTohomePage: () => void
 }) => {
+
+    const {t} = useTranslation()
 
     const [habit, setHabit] = useState(habitOriginal)
 
@@ -80,7 +83,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                         <Text>{i18n.t('habitType')}</Text>
                         <View className='flex-row items-center h-12 '>
                             <Text className=' items-center justify-center'>
-                                {habitTypeIntToString(habit.type)}
+                                {t(habitTypeIntToString(habit.type))}
                             </Text>
                             <CustomIconButton
                                 image={images.arrowRight}
@@ -263,12 +266,16 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                     <PickerModal
                         showPicker={showHabitTypePicker}
                         closeFunction={() => { setShowHabitTypePicker(false) }}
-                        onChangeFunction={(selectedTimes: string) => {
-                            let habitTypeInt = habitTypeStringToInt(selectedTimes)
+                        onChangeFunction={(selectedValue: string) => {
+                            let habitTypeInt = habitTypeStringToInt(selectedValue)
                             setHabit({ ...habit, type: habitTypeInt })
                         }}
-                        pickerData={["Daily", "Weekly", "Monthly"]}
-                        selectedValue={habitTypeIntToString(habit.type)}
+                        pickerData={[
+                            { value : 'daily', label : t('daily') },
+                            { value : 'weekly', label : t('weekly') },
+                            { value : 'monthly', label : t('monthly') },
+                        ]}
+                        selectedValue={t(habitTypeIntToString(habit.type))}
                     >
                     </PickerModal>
 
@@ -289,7 +296,7 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                         closeFunction={() => {
                             setShowIconPicker(false)
                         }}
-                        pickData={habit.icon}
+                        selectedIcon={habit.icon}
                         onChangeFunction={(selectedData) => {
                             setHabit({ ...habit, icon: selectedData })
                         }}

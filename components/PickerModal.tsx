@@ -10,7 +10,7 @@ const PickerModal = ({ showPicker, closeFunction, onChangeFunction, pickerData, 
     showPicker: boolean,
     closeFunction: () => void,
     onChangeFunction: (data: string) => void,
-    pickerData: string[],
+    pickerData: any,
     selectedValue: string
 }) => {
     return <Modal
