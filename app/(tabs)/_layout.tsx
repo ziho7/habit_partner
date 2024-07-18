@@ -14,7 +14,7 @@ export default function TabLayout() {
 
     <Tabs screenOptions={{
       tabBarActiveTintColor: 'black',
-      tabBarInactiveTintColor: 'gray',
+      tabBarInactiveTintColor: '#A19C9C',
     }} >
       <Tabs.Screen
         name="index"

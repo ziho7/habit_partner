@@ -55,9 +55,9 @@ export const getHabitsByHabitType = async (habitType: HabitType) => {
 }
 
 export const getTodayHabits = async () => {
-    let res = await getAllHabits();
-    let habits: Habit[] = res;
-    let sortedHabits = filterHabits(habits);
+    let res = await getAllHabits()    
+    let habits: Habit[] = res
+    let sortedHabits = filterHabits(habits)
 
     return sortedHabits;
 }

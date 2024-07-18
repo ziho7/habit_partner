@@ -6,7 +6,7 @@ import { useGlobalContext } from '@/context/GlobalProvider'
 import { getClickCount, getCurrentDateAndDayOfWeekInTimeZone, getHabitsByHabitType, getMonthHabits, getTodayHabits, getWeekHabits } from '@/lib/get_data'
 import { dateToDash, dateToSlash } from '@/lib/utils'
 import SeperateLine from '@/components/SeperateLine'
-import HabitCard from '@/components/HabitCard'
+import HabitCard from '@/components/HabitCard2'
 import Header from '@/components/Header'
 import CustomIconButton from '@/components/CustomIconButton'
 import AddHabit from '@/components/AddHabit'
@@ -20,12 +20,13 @@ const Home = () => {
   const { refreshHomeCount } = useGlobalContext()
   // todo 这里好像有重复刷新的问题
 
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
   const [showHabits, setShowHabits] = useState<any>([])
   const [showAddHabit, setShowAddHabit] = useState(false)
   const [currentHabitType, setCurrentHabitType] = useState<HabitType>(HabitType.Daily)
+  
 
   const fetchHabits = async (habitType = currentHabitType) => {
     const todayHabits = await getHabitsByHabitType(habitType)
@@ -62,6 +63,7 @@ const Home = () => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         sections={showHabits}
+        extraData={showHabits}
         renderItem={({ item }: {
           item: Habit
         }) => {
@@ -69,6 +71,7 @@ const Home = () => {
             clickCount={getClickCount(item, currentDate)}
             habit={item}
             doneCallBack={fetchHabits}
+            currentDate={currentDate}
           />
         }}
         keyExtractor={(item) => item.id.toString()}
@@ -99,6 +102,8 @@ const Home = () => {
           fetchHabits()
         }} />
       </Modal>
+
+      
     </SafeAreaView>
 
 

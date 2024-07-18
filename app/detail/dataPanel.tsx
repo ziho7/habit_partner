@@ -102,7 +102,7 @@ const DataPanel = () => {
                 <Text className='text-[6px] text-mygray'>Done</Text>
               </View>
             </View>
-            <Text className='text-[12px] text-mygray'>{dateToSlash(habit.startDate)}-{dateToSlash(habit.endDate)}</Text>
+            <Text className='text-[12px] text-mygray'>{dateToSlash(habit.startDate)} - {dateToSlash(habit.endDate)}</Text>
           </View>
           <CustomIconButton
             image={images.pen}
@@ -124,7 +124,6 @@ const DataPanel = () => {
 
 
         {/* 月数据分析 */}
-        {/* todo 左右按钮对齐  */}
         <Calendar
           className='mx-4 mt-4 rounded-lg'
           initialDate={initialDate.toISOString()}
@@ -134,8 +133,8 @@ const DataPanel = () => {
           customHeaderTitle={CustomHeaderTitle}
           hideArrows={true}
           theme={mytheme as Theme}
-          
           hideExtraDays={true}
+          
         />
 
 
