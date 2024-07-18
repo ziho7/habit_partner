@@ -33,5 +33,7 @@
     "weekends": "周末",
     "weekdays": "工作日",
     "selectShowDaysEveryWeek": "选择每周展示的天数",
-    "sun": "周日", "mon": "周一", "tue": "周二", "wed": "周三", "thu": "周四", "fri": "周五", "sat": "周六"
+    "sun": "周日", "mon": "周一", "tue": "周二", "wed": "周三", "thu": "周四", "fri": "周五", "sat": "周六",
+    "Jan": "一月", "Feb": "二月", "Mar": "三月", "Apr": "四月", "May": "五月", "Jun": "六月", "Jul": "七月", "Aug": "八月", "Sep": "九月", "Oct": "十月", "Nov": "十一月", "Dec": "十二月"
+    
 }

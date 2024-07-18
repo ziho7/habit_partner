@@ -15,10 +15,12 @@ import { Theme } from 'react-native-calendars/src/types';
 import EditHabit from '@/components/EditHabit';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import i18n from '@/lib/i18n';
+import { useTranslation } from 'react-i18next';
 
 const DataPanel = () => {
   const { habitId } = useLocalSearchParams()
   const { refreshHome } = useGlobalContext()
+  const {t} = useTranslation()
 
   const [habit, setHabit] = useState<Habit>(new Habit())
 
@@ -164,13 +166,13 @@ const DataPanel = () => {
 
           <View className='m-2 flex-row'>
             <View className='flex w-[24px] h-full '>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Sun</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Mon</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Thu</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Wed</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Thu</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Fri</Text></View>
-              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>Sat</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('sun')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('mon')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('tue')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('wed')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('thu')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('fri')}</Text></View>
+              <View className='h-[17.5px] justify-center'><Text className='text-[7px]'>{t('sat')}</Text></View>
               <View className='h-[17.5px] justify-center'><Text className='text-[7px]'></Text></View>
             </View>
             <ContributionGraph

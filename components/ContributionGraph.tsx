@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, Dimensions } from 'react-native'
 import React, { useEffect, useRef } from 'react'
 import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data'
+import { useTranslation } from 'react-i18next'
 
 const ContributionGraph = ({ year, dataValues }: {
     year: number,
@@ -9,7 +10,8 @@ const ContributionGraph = ({ year, dataValues }: {
     const startDate = new Date(year + '-01-01')
     const endingDate = new Date(year + '-12-31')
     const today = getCurrentDateAndDayOfWeekInTimeZone().currentDate
-    const scrollViewRef = useRef<ScrollView>(null);
+    const scrollViewRef = useRef<ScrollView>(null)
+    const {t} = useTranslation()
 
     const differenceInMilliseconds = endingDate.getTime() - startDate.getTime()
     const daysTotal = Math.ceil((differenceInMilliseconds / (1000 * 60 * 60 * 24))) + 1;
@@ -42,7 +44,7 @@ const ContributionGraph = ({ year, dataValues }: {
                 continue
             }
 
-            let currentMonth2 = new Date(calenderGrid[i]).toLocaleString('default', { month: 'short' });
+            let currentMonth2 = t(new Date(calenderGrid[i]).toLocaleString('default', { month: 'short' })) // 这里写入了月份
             if (calenderGrid[i] !== '' && currentMonth2 !== currentMonth) {
                 currentMonth = currentMonth2
                 newCalenrerGrid.push(currentMonth)
@@ -96,8 +98,11 @@ const ContributionGraph = ({ year, dataValues }: {
                                 return <View className='rounded h-[14px] w-[14px] cursor-pointer' key={index}></View>
                             }
 
-                            if (!day.includes('-')) {
-                                return <Text className='text-[7px]' key={index}>{day}</Text>
+                            if (!day.includes('-')) { // 月份
+                                // return <Text className='text-[7px]' key={index}>{day}</Text>
+                                return <View className='rounded h-[14px] w-[14px] cursor-pointer' key={index}>
+                                        <Text className='text-[7px]'>{day}</Text>
+                                    </View>
                             }
 
                             const color = getColor(day)
