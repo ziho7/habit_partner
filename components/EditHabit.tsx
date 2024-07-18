@@ -189,38 +189,12 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                         </View>
                     </TouchableOpacity>
 
-                    {/* 删除， todo pause */}
-                    {/* <TouchableOpacity
-                        className='items-center justify-center h-12 bg-myred rounded-lg'
-                        onPress={() => {
-                            Alert.alert("Are you sure to delete the habit?", "This action cannot be undone", [
-                                {
-                                    text: "Cancel",
-                                    onPress: () => console.log("Cancel Pressed"),
-                                    style: "cancel"
-                                },
-                                {
-                                    text: "Delete", onPress: async () => {
-                                        setHabitOriginal(habit)
-                                        await updateHabit(habit)
-                                        okCallBack()
-                                        closeCallBack()
-                                    }
-                                }
-                            ])
-                        }}
-                    >
-                        <Text className=' items-center justify-center'>
-                            Delete the Habit
-                        </Text>
-                    </TouchableOpacity> */}
-
                     <View className='flex-row justify-end'>
                         <CustomIconButton
                             image={images.delete}
                             callBackFunction={
                                 () => {
-                                    Alert.alert(i18n.t('deleteAlert1'), i18n.t('deleteAlert1'), [
+                                    Alert.alert(i18n.t('deleteAlert1'), i18n.t('deleteAlert2'), [
                                         {
                                             text: i18n.t('cancel'),
                                             onPress: () => console.log("Cancel Pressed"),

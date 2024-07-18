@@ -31,5 +31,7 @@
     "bestStreak": "最长连续完成天数",
     "everyday": "每天",
     "weekends": "周末",
-    "weekdays": "工作日"
+    "weekdays": "工作日",
+    "selectShowDaysEveryWeek": "选择每周展示的天数",
+    "sun": "周日", "mon": "周一", "tue": "周二", "wed": "周三", "thu": "周四", "fri": "周五", "sat": "周六"
 }

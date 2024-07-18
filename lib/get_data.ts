@@ -238,14 +238,11 @@ export const dayStringToNumber = (daysString: string) => {
 export const getShowdaysStr = (showsDays: number[]) => {   
     if (showsDays.length === 7) {
         return i18n.t('everyday')
-        // return 'Everyday'
     }    
     if (showsDays.length === 2 && showsDays.includes(0) && showsDays.includes(6)) {
-        // return 'Weekends'
         return i18n.t('weekends')
     }
     if (showsDays.length === 5 && !showsDays.includes(0) && !showsDays.includes(6)) {
-        // return 'Weekdays'
         return i18n.t('weekdays')
     }
 

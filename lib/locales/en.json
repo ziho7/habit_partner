@@ -31,5 +31,8 @@
     "bestStreak": "Best streak",
     "everyday": "Everyday",
     "weekends": "Weekends",
-    "weekdays": "Weekdays"
+    "weekdays": "Weekdays",
+    "selectShowDaysEveryWeek" : "Select show days every week",
+    "sun": "Sun", "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat"
+    
 }
