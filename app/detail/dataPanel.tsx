@@ -8,7 +8,7 @@ import images, { getHabitIcons } from '@/constants/images';
 import ImageAndTitle from '@/components/ImageAndTitle';
 import DataBlock from '@/components/DataBlock';
 
-import { Calendar } from 'react-native-calendars';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
 import ContributionGraph from '@/components/ContributionGraph';
 import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitDone } from '@/lib/get_data';
 import { Theme } from 'react-native-calendars/src/types';
@@ -16,6 +16,7 @@ import EditHabit from '@/components/EditHabit';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import i18n from '@/lib/i18n';
 import { useTranslation } from 'react-i18next';
+import { dateToSlash } from '@/lib/utils';
 
 const DataPanel = () => {
   const { habitId } = useLocalSearchParams()
@@ -101,7 +102,7 @@ const DataPanel = () => {
                 <Text className='text-[6px] text-mygray'>Done</Text>
               </View>
             </View>
-            <Text className='text-[12px] text-mygray'>{habit.startDate}-{habit.endDate}</Text>
+            <Text className='text-[12px] text-mygray'>{dateToSlash(habit.startDate)}-{dateToSlash(habit.endDate)}</Text>
           </View>
           <CustomIconButton
             image={images.pen}
@@ -133,7 +134,7 @@ const DataPanel = () => {
           customHeaderTitle={CustomHeaderTitle}
           hideArrows={true}
           theme={mytheme as Theme}
-
+          
           hideExtraDays={true}
         />
 
