@@ -55,7 +55,7 @@ const DataPanel = () => {
         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
         customStyle='w-[8px] h-[8px]'
       />
-      <Text className='text-[14px]'>{initialDate.toLocaleString('default', { month: 'long' })}</Text>
+      <Text className='text-[14px]'>{t(initialDate.toLocaleString('default', { month: 'long' }))}</Text>
       <CustomIconButton
         image={images.arrowRight}
         callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() + 1, 1)) }}
@@ -135,14 +135,6 @@ const DataPanel = () => {
           theme={mytheme as Theme}
 
           hideExtraDays={true}
-        // renderArrow={(direction) => {
-        //   return <CustomIconButton
-        //     image={direction === 'left' ? images.arrowLeft : images.arrowRight}
-        //     callBackFunction={() => { }}
-        //     containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-        //     customStyle='w-[8px] h-[8px]'
-        //   />
-        // }}
         />
 
 

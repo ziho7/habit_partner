@@ -36,7 +36,7 @@ const Settings = () => {
                                     image={images.arrowRight}
                                     callBackFunction={() => { }}
                                     containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                    customStyle='w-[16px] h-[16px]'
+                                    customStyle='w-[8px] h-[8px]'
                                 />
                             </View>
                         </TouchableOpacity>
@@ -75,7 +75,7 @@ const Settings = () => {
                                     callBackFunction={() => {
                                     }}
                                     containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                    customStyle='w-[16px] h-[16px]'
+                                    customStyle='w-[8px] h-[8px]'
                                 />
                             </View>
                         </TouchableOpacity>

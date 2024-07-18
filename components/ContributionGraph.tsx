@@ -99,7 +99,6 @@ const ContributionGraph = ({ year, dataValues }: {
                             }
 
                             if (!day.includes('-')) { // 月份
-                                // return <Text className='text-[7px]' key={index}>{day}</Text>
                                 return <View className='rounded h-[14px] w-[14px] cursor-pointer' key={index}>
                                         <Text className='text-[7px]'>{day}</Text>
                                     </View>

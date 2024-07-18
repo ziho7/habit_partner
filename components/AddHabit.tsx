@@ -114,7 +114,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     setShowHabitTypePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -138,7 +138,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     setShowIconPicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -173,7 +173,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     setShowStartDatePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -190,7 +190,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     setShowEndDatePicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
@@ -207,7 +207,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                     setShowDaysPicker(true)
                                 }}
                                 containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
-                                customStyle='w-[16px] h-[16px]'
+                                customStyle='w-[8px] h-[8px]'
                             />
                         </View>
                     </TouchableOpacity>
