@@ -1,5 +1,5 @@
 import { View, Text, Modal, TouchableOpacity, Alert } from 'react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import { Picker } from 'react-native-wheel-pick';
 import { getHabit, Habit, habitTypeStringToInt, updateHabit } from '@/lib/storage';
@@ -7,30 +7,29 @@ import CustomIconButton from './CustomIconButton';
 import images from '@/constants/images';
 import i18n from '@/lib/i18n';
 import { useGlobalContext } from '@/context/GlobalProvider';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
+import Slider from '@react-native-community/slider';
 
 
 
-const LongPressModal = ({ showPicker, closeFunction, onChangeFunction, pickerData, selectedValue, habit, currentDate }: {
+
+const LongPressModal = ({ showPicker, closeFunction, habit, currentDate, clickCount, setClickCount }: {
     showPicker: boolean,
     closeFunction: () => void,
-    onChangeFunction: (data: string) => void,
-    pickerData: any,
-    selectedValue: string,
     habit: Habit,
-    currentDate: string
+    currentDate: string,
+    setClickCount: (clickCount: number) => void,
+    clickCount: number
 }) => {
-
     const { notify, refreshHome } = useGlobalContext()
 
-    const handleCancelClick = async () => {    
+    const handleCancelClick = async () => {
         habit.records.set(currentDate, { clickCount: 0 })
         await updateHabit(habit)
-        // let res = await getHabit(habit.id)
         refreshHome()
     }
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     return <Modal
         visible={showPicker}
@@ -56,8 +55,9 @@ const LongPressModal = ({ showPicker, closeFunction, onChangeFunction, pickerDat
                 {/* 第一个设置 取消当天打卡 */}
                 <TouchableOpacity
                     className='w-full flex-row justify-between items-center mt-8 bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'
-                    onPress={async() => {
-                        await handleCancelClick()                    
+                    onPress={async () => {
+                        setClickCount(0)
+                        await handleCancelClick()
                     }}
                 >
                     <Text>{t('cancelClick')}</Text>
@@ -111,6 +111,53 @@ const LongPressModal = ({ showPicker, closeFunction, onChangeFunction, pickerDat
                         />
                     </View>
                 </TouchableOpacity>
+
+                {/* 第3个设置 快速完成*/}
+                <TouchableOpacity
+                    className='w-full flex-row justify-between items-center mt-8 bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'
+                    onPress={async () => {
+
+                    }}
+                >
+                    <Text>{t('setFinishedCount')}</Text>
+                    <Slider
+                        style={{ width: 200, height: 40 }}
+                        minimumValue={0}
+                        maximumValue={habit.everyCount}
+                        minimumTrackTintColor="#CEBEE8"
+                        maximumTrackTintColor="#dbd9d9"
+                        value={clickCount}
+                        onValueChange={ async (value) => {
+                            // to int
+                            value = Math.round(value)
+                            setClickCount(value)
+                            habit.records.set(currentDate, { clickCount: value })
+                            await updateHabit(habit)
+                            if (value === habit.everyCount) {
+                                refreshHome()
+                            }
+                        }}
+                    />
+                </TouchableOpacity>
+
+                {/* 第四个 滑动完成 */}
+
+                {/* <Slider
+                    style={{ width: 340, height: 40 }}
+                    minimumValue={0}
+                    maximumValue={habit.everyCount}
+                    minimumTrackTintColor="#CEBEE8"
+                    maximumTrackTintColor="#F8F6F9"
+                    value={clickCount}
+                    onValueChange={(value) => {
+                        // to int
+                        value = Math.round(value)
+                        setClickCount(value)
+                    }}
+                /> */}
+
+
+
 
 
 

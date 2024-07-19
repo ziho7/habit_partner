@@ -8,25 +8,16 @@ import { useTranslation } from 'react-i18next';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-const DonutChart = ({clickCount1, habit, doneCallBack }: {
-    clickCount1: number,
+const DonutChart = ({clickCount, habit, doneCallBack, setClickCount }: {
+    clickCount: number,
     habit: Habit,
     doneCallBack: () => Promise<void>
+    setClickCount: (clickCount: number) => void
 }) => {  
-    console.log('clickCount1', clickCount1)
-      
-    const [clickCount, setClickCount] = useState(clickCount1);
+    
     const progress = useSharedValue(0);
     const currentDate = getCurrentDateAndDayOfWeekInTimeZone().currentDate
     const {t} = useTranslation()
-
-    useEffect(() => {
-        console.log('clickCount!!!', clickCount1);
-        
-        if (!(clickCount > 0 && clickCount1 === 0)) {
-          setClickCount(clickCount1)
-        }
-      }, [clickCount1])
 
     // 计算圆周长
     const radius = 40;
@@ -42,6 +33,7 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
     useEffect(() => {
         // 点击时更新进度动画
         progress.value = withTiming(clickCount / habit.everyCount, { duration: 500 });
+
     }, [clickCount]);
 
     const handleClick = async () => {
@@ -56,10 +48,7 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
     }
 
     const handleLongClick = async () => {    
-        habit.records.set(currentDate, { clickCount: 0 })
-        await updateHabit(habit)
-        setClickCount(0)
-        await doneCallBack()
+        
     }
 
 

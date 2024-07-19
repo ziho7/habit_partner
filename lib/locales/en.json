@@ -42,5 +42,6 @@
     "sat": "Sat",
     "done": "Done",
     "cancelClick": "Cancel click",
-    "deleteHabit": "Delete habit"
+    "deleteHabit": "Delete habit",
+    "setFinishedCount": "Set finished count"
 }
