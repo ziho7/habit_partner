@@ -2,24 +2,35 @@ import { View, Text, Modal, TouchableOpacity, Alert } from 'react-native'
 import React from 'react'
 
 import { Picker } from 'react-native-wheel-pick';
-import { Habit, habitTypeStringToInt, updateHabit } from '@/lib/storage';
+import { getHabit, Habit, habitTypeStringToInt, updateHabit } from '@/lib/storage';
 import CustomIconButton from './CustomIconButton';
 import images from '@/constants/images';
 import i18n from '@/lib/i18n';
 import { useGlobalContext } from '@/context/GlobalProvider';
+import { useTranslation } from 'react-i18next';
 
 
 
-const LongPressModal = ({ showPicker, closeFunction, onChangeFunction, pickerData, selectedValue, habit }: {
+const LongPressModal = ({ showPicker, closeFunction, onChangeFunction, pickerData, selectedValue, habit, currentDate }: {
     showPicker: boolean,
     closeFunction: () => void,
     onChangeFunction: (data: string) => void,
     pickerData: any,
     selectedValue: string,
     habit: Habit,
+    currentDate: string
 }) => {
 
     const { notify, refreshHome } = useGlobalContext()
+
+    const handleCancelClick = async () => {    
+        habit.records.set(currentDate, { clickCount: 0 })
+        await updateHabit(habit)
+        // let res = await getHabit(habit.id)
+        refreshHome()
+    }
+
+    const {t} = useTranslation()
 
     return <Modal
         visible={showPicker}
@@ -42,14 +53,14 @@ const LongPressModal = ({ showPicker, closeFunction, onChangeFunction, pickerDat
 
 
 
-                {/* 第一个设置 */}
+                {/* 第一个设置 取消当天打卡 */}
                 <TouchableOpacity
                     className='w-full flex-row justify-between items-center mt-8 bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'
-                    onPress={() => {
-
+                    onPress={async() => {
+                        await handleCancelClick()                    
                     }}
                 >
-                    <Text>Cancel click</Text>
+                    <Text>{t('cancelClick')}</Text>
                     <View className='flex-row items-center h-12'>
                         <Text className=' items-center justify-center'>
                             { }
@@ -64,7 +75,7 @@ const LongPressModal = ({ showPicker, closeFunction, onChangeFunction, pickerDat
                     </View>
                 </TouchableOpacity>
 
-                {/* 第二个设置 */}
+                {/* 第二个设置 删除习惯 */}
                 <TouchableOpacity
                     className='w-full flex-row justify-between items-center bg-mypurple-light border-2 border-mypurple-light rounded-lg px-4'
                     onPress={() => {
@@ -86,7 +97,7 @@ const LongPressModal = ({ showPicker, closeFunction, onChangeFunction, pickerDat
                         ])
                     }}
                 >
-                    <Text>Delete habit</Text>
+                    <Text>{t('deleteHabit')}</Text>
                     <View className='flex-row items-center h-12'>
                         <Text className=' items-center justify-center'>
                             { }

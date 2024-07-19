@@ -67,6 +67,7 @@ const HabitCard = ({
                 pickerData={[]}
                 selectedValue=''
                 habit={habit}
+                currentDate={currentDate}
             />
         </TouchableOpacity>
 

@@ -4,6 +4,7 @@ import Svg, { Circle, Path } from 'react-native-svg';
 import Animated, { useSharedValue, useAnimatedProps, withTiming } from 'react-native-reanimated';
 import { Habit, updateHabit } from '@/lib/storage';
 import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data';
+import { useTranslation } from 'react-i18next';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
@@ -11,10 +12,21 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
     clickCount1: number,
     habit: Habit,
     doneCallBack: () => Promise<void>
-}) => {    
+}) => {  
+    console.log('clickCount1', clickCount1)
+      
     const [clickCount, setClickCount] = useState(clickCount1);
     const progress = useSharedValue(0);
-    const currentDate = getCurrentDateAndDayOfWeekInTimeZone().currentDate;
+    const currentDate = getCurrentDateAndDayOfWeekInTimeZone().currentDate
+    const {t} = useTranslation()
+
+    useEffect(() => {
+        console.log('clickCount!!!', clickCount1);
+        
+        if (!(clickCount > 0 && clickCount1 === 0)) {
+          setClickCount(clickCount1)
+        }
+      }, [clickCount1])
 
     // 计算圆周长
     const radius = 40;
@@ -81,7 +93,7 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
                 className='text-[12px] text-mygray'
             >   
             {finished ? 
-                <Text className='text-[20px] font-semibold'>Done</Text> : 
+                <Text className='text-[20px] font-semibold'>{t('done')}</Text> : 
                 <Text className='text-[20px] font-semibold'>{clickCount} / {habit.everyCount}</Text>
             }
             

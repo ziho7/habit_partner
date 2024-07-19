@@ -32,7 +32,15 @@
     "everyday": "Everyday",
     "weekends": "Weekends",
     "weekdays": "Weekdays",
-    "selectShowDaysEveryWeek" : "Select show days every week",
-    "sun": "Sun", "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat"
-    
+    "selectShowDaysEveryWeek": "Select show days every week",
+    "sun": "Sun",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat",
+    "done": "Done",
+    "cancelClick": "Cancel click",
+    "deleteHabit": "Delete habit"
 }

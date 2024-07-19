@@ -54,7 +54,9 @@ const Home = () => {
   }
 
   useEffect(() => {
-    fetchHabits();
+    fetchHabits()
+    console.log("重新刷新");
+    
   }, [refreshHomeCount]);
 
   return (
