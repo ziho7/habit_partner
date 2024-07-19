@@ -119,23 +119,23 @@ const LongPressModal = ({ showPicker, closeFunction, habit, currentDate, clickCo
 
                     }}
                 >
-                    <Text>{t('setFinishedCount')}</Text>
+                    <Text>{t('clickedCount')}: {clickCount}</Text>
                     <Slider
-                        style={{ width: 200, height: 40 }}
+                        style={{ width: 180, height: 40 }}
                         minimumValue={0}
                         maximumValue={habit.everyCount}
                         minimumTrackTintColor="#CEBEE8"
                         maximumTrackTintColor="#dbd9d9"
                         value={clickCount}
-                        onValueChange={ async (value) => {
+                        onValueChange={async (value) => {
                             // to int
                             value = Math.round(value)
                             setClickCount(value)
                             habit.records.set(currentDate, { clickCount: value })
                             await updateHabit(habit)
-                            if (value === habit.everyCount) {
-                                refreshHome()
-                            }
+
+                            refreshHome()
+
                         }}
                     />
                 </TouchableOpacity>

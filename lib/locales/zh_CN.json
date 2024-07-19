@@ -40,5 +40,5 @@
     "done": "完成",
     "cancelClick": "取消打卡",
     "deleteHabit": "删除习惯",
-    "setFinishedCount": "快速完成个数"
+    "clickedCount": "点击次数"
 }

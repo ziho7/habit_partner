@@ -11,7 +11,6 @@ import Header from '@/components/Header'
 import CustomIconButton from '@/components/CustomIconButton'
 import AddHabit from '@/components/AddHabit'
 import { Habit, HabitType } from '@/lib/storage'
-import i18n from '@/lib/i18n'
 import { useTranslation } from 'react-i18next'
 
 
@@ -58,7 +57,7 @@ const Home = () => {
   }, [refreshHomeCount]);
 
   return (
-    <SafeAreaView className='mx-4'>
+    <SafeAreaView className='mx-4 h-full'>
       <SectionList
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}

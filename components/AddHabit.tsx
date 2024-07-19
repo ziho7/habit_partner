@@ -35,7 +35,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
         startDate: today,
         endDate: today,
         creatorId: '',
-        everyCount: 1,
+        everyCount: 5,
         type: 0,
         showsDays: [0, 1, 2, 3, 4, 5, 6],
         createTime: new Date(),
@@ -153,6 +153,18 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                 if (text === '') {
                                     num = 0
                                 }
+                                
+                                if (num < 0) {
+                                    num = 0
+                                }
+
+                                notify('The number of times to complete is too large', 'error', 2)
+                                if (num > 1000000) {
+                                    num = 1000000
+                                    notify('The number of times to complete is too large', 'error', 2)
+                                    notify('Add habit successfully','info', 2)
+                                }
+
                                 setHabit({ ...habit, everyCount: num })
                             }}
                             value={habit.everyCount === 0 ? '' : habit.everyCount.toString()}
