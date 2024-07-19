@@ -41,7 +41,12 @@ const LongPressModal = ({ showPicker, closeFunction, habit, currentDate, clickCo
     >
         <TouchableOpacity
             className='h-1/4 flex-1 justify-end h-[200px]'
-            onPressOut={closeFunction}
+            onPressOut={
+                () => {
+                    closeFunction()
+                    refreshHome()
+                }
+            }
             activeOpacity={1.0}
         >
             <TouchableOpacity
@@ -134,7 +139,7 @@ const LongPressModal = ({ showPicker, closeFunction, habit, currentDate, clickCo
                             habit.records.set(currentDate, { clickCount: value })
                             await updateHabit(habit)
 
-                            refreshHome()
+                            // refreshHome()
 
                         }}
                     />
