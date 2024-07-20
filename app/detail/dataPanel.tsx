@@ -44,9 +44,9 @@ const DataPanel = () => {
     // 遍历每一个日期
     for (let [date, record] of habit.records) {
       if (isHabitDone(habit, date)) {
-        markedDates[date] = { selected: true, selectedColor: '#8c789e' }
+        markedDates[date] = { selected: true, selectedColor: '#CEBEE8' }
       } else if (isHabitClicked(habit, date)) {
-        markedDates[date] = { selected: true, selectedColor: '#cab8d9' }
+        markedDates[date] = { selected: true, selectedColor: '#e4e0ec' }
       }
     }
 

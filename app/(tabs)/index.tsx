@@ -4,7 +4,6 @@ import CustomButton from '@/components/CustomButton'
 import images from '@/constants/images'
 import { useGlobalContext } from '@/context/GlobalProvider'
 import { getClickCount, getCurrentDateAndDayOfWeekInTimeZone, getHabitsByHabitType, getMonthHabits, getTodayHabits, getWeekHabits } from '@/lib/get_data'
-import { dateToDash, dateToSlash } from '@/lib/utils'
 import SeperateLine from '@/components/SeperateLine'
 import HabitCard from '@/components/HabitCard2'
 import Header from '@/components/Header'
@@ -47,8 +46,8 @@ const Home = () => {
           <CustomButton title={t('monthly')} handlePress={async () => changeCurrentHabitType(HabitType.Monthly)} containerStyles={`mr-6 w-[76px] ${currentHabitType === HabitType.Monthly ? 'bg-mypurple' : ''}`} textStyles="text-[12px]"></CustomButton>
         </View>
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
-
       </View>
+      
     </>
   }
 

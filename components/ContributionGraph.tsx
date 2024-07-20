@@ -71,15 +71,15 @@ const ContributionGraph = ({ year, dataValues, everyCount }: {
     const getColor = (date: string) => {
         const activityCount = dataValues.find(item => item.date === date)?.count || 0
         if (activityCount === 0) {
-            return '#f6f2f9'
+            return '#F8F6F9'
         }
         if (activityCount > 0 && activityCount < everyCount) {
-            return '#cab8d9'
+            return '#e4e0ec'
         }
         if (activityCount >= everyCount) {
-            return '#9b7db5'
+            return '#CEBEE8'
         }
-        return '#f6f2f9'
+        return '#ffffff'
     }
 
     const getBorderColor = (date: string) => {

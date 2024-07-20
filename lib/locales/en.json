@@ -43,5 +43,7 @@
     "done": "Done",
     "cancelClick": "Cancel click",
     "deleteHabit": "Delete habit",
-    "clickedCount": "clicked count"
+    "clickedCount": "clicked count",
+    "clicked": "clicked",
+    "finished": "finished"
 }

@@ -23,7 +23,7 @@ const DonutChart = ({clickCount, habit, doneCallBack, setClickCount }: {
     const radius = 40;
     const strokeWidth = 8;
     const circumference = 2 * Math.PI * radius;
-    const finished = clickCount === habit.everyCount;
+    const finished = clickCount >= habit.everyCount;
 
     // 动画路径属性
     const animatedProps = useAnimatedProps(() => ({
