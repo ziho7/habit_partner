@@ -49,9 +49,7 @@ const DataPanel = () => {
         markedDates[date] = { selected: true,   selectedColor: '#dacbe7'}
       }
     }
-
-    // console.log('markedDates', markedDates);
-    
+  
 
     return markedDates
   }
@@ -60,14 +58,14 @@ const DataPanel = () => {
     <View className='flex-row justify-between items-center mt-2 w-full '>
       <CustomIconButton
         image={images.arrowLeft}
-        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() - 1, 1)) }}
+        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() - 1, 15)) }}
         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
         customStyle='w-[8px] h-[8px]'
       />
       <Text className='text-[14px]'>{t(initialDate.toLocaleString('default', { month: 'long' }))}</Text>
       <CustomIconButton
         image={images.arrowRight}
-        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() + 1, 1)) }}
+        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() + 1, 15)) }}
         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
         customStyle='w-[8px] h-[8px]'
       />
@@ -84,9 +82,6 @@ const DataPanel = () => {
     refreshHome()
     router.back()
   }
-
-  console.log('initialDate', initialDate)
-  
 
   return (
     <SafeAreaView className=''>
