@@ -213,11 +213,19 @@ export const bestStreak = (habit: Habit) => {
 }
 
 export const isHabitDone = (habit: Habit, date: string) => {
-    if (habit.records === undefined) {
+    if (habit.records === undefined || habit.records.get(date) === undefined) {
         return false
     }
 
-    return habit.records.get(date)?.clickCount === habit.everyCount
+    return habit.records.get(date)!.clickCount >= habit.everyCount
+}
+
+export const isHabitClicked = (habit: Habit, date: string) => {
+    if (habit.records === undefined || habit.records.get(date) === undefined) {
+        return false
+    }
+
+    return habit.records.get(date)!.clickCount > 0 && habit.records.get(date)!.clickCount < habit.everyCount    
 }
 
 

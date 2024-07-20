@@ -66,6 +66,10 @@ export class Habit {
 export class Record {
     @Expose()
     clickCount: number
+
+    constructor(clickCount: number) {
+        this.clickCount = clickCount
+    }
 }
 
 // user to all habits key

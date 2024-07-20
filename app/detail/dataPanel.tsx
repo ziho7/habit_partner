@@ -10,18 +10,19 @@ import DataBlock from '@/components/DataBlock';
 
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import ContributionGraph from '@/components/ContributionGraph';
-import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitDone } from '@/lib/get_data';
+import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitClicked, isHabitDone } from '@/lib/get_data';
 import { Theme } from 'react-native-calendars/src/types';
 import EditHabit from '@/components/EditHabit';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import i18n from '@/lib/i18n';
 import { useTranslation } from 'react-i18next';
 import { dateToSlash } from '@/lib/utils';
+import CalendarDescription from '@/components/CalendarDescription';
 
 const DataPanel = () => {
   const { habitId } = useLocalSearchParams()
   const { refreshHome } = useGlobalContext()
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   const [habit, setHabit] = useState<Habit>(new Habit())
 
@@ -36,19 +37,26 @@ const DataPanel = () => {
 
 
   const markedDates = (habit: Habit) => {
-    let markedDates: { [key: string]: { selected: boolean, selectedColor: string } } = {}
+    let markedDates: { [key: string]: { selected: boolean, selectedColor:string } } = {}
     if (habit.records === undefined) {
       return markedDates
     }
+    // 遍历每一个日期
     for (let [date, record] of habit.records) {
       if (isHabitDone(habit, date)) {
         markedDates[date] = { selected: true, selectedColor: '#CEBEE8' }
+      } else if (isHabitClicked(habit, date)) {
+        markedDates[date] = { selected: true,   selectedColor: '#dacbe7'}
       }
     }
+
+    // console.log('markedDates', markedDates);
+    
+
     return markedDates
   }
 
-  const CustomHeaderTitle = (
+  const CustomHeaderTitle = ( // 这里前后翻有问题目前暂时
     <View className='flex-row justify-between items-center mt-2 w-full '>
       <CustomIconButton
         image={images.arrowLeft}
@@ -73,9 +81,12 @@ const DataPanel = () => {
   }, [refreshCount])
 
   const goTohomePage = () => {
-      refreshHome() 
-      router.back()
+    refreshHome()
+    router.back()
   }
+
+  console.log('initialDate', initialDate)
+  
 
   return (
     <SafeAreaView className=''>
@@ -134,8 +145,8 @@ const DataPanel = () => {
           hideArrows={true}
           theme={mytheme as Theme}
           hideExtraDays={true}
-          
         />
+        <CalendarDescription />
 
 
         {/* 年数据分析 */}
@@ -172,7 +183,7 @@ const DataPanel = () => {
               dataValues={transRecordToCommitsData(habit)}
             />
           </View>
-
+          <CalendarDescription />
 
         </View>
 
@@ -205,9 +216,9 @@ const mytheme = {
   textSectionTitleColor: '#A19C9C',
   textSectionTitleDisabledColor: '#d9e1e8',
   selectedDayBackgroundColor: '#CEBEE8',
-  selectedDayTextColor: '#ffffff',  // 选中的颜色
+  selectedDayTextColor: '#000000',  // 选中的颜色
   todayTextColor: '#ff3d57', // 今天颜色
-  todayBackgroundColor: '#CEBEE8', // 今天圆圈
+  // todayBackgroundColor: '#CEBEE8', // 今天圆圈
   dayTextColor: '#2d4150',
   textDisabledColor: '#d9e1e8',
   monthTextColor: 'black',
