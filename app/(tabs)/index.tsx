@@ -34,7 +34,7 @@ const Home = () => {
   const [showHabits, setShowHabits] = useState<any>([])
   const [showAddHabit, setShowAddHabit] = useState(false)
   const [currentHabitType, setCurrentHabitType] = useState<HabitType>(HabitType.Daily)
-  
+
 
   const fetchHabits = async (habitType = currentHabitType) => {
     const todayHabits = await getHabitsByHabitType(habitType)
@@ -57,12 +57,12 @@ const Home = () => {
         </View>
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
       </View>
-      
+
     </>
   }
 
   useEffect(() => {
-    fetchHabits()  
+    fetchHabits()
   }, [refreshHomeCount]);
 
   return (
@@ -112,12 +112,16 @@ const Home = () => {
         presentationStyle='overFullScreen'
         transparent={true}
       >
-        <AddHabit closeCallBack={() => setShowAddHabit(false)} okCallBack={async () => {
-          fetchHabits()
-        }} />
+        <AddHabit
+          closeCallBack={() => setShowAddHabit(false)}
+          currentHabitType = {currentHabitType}
+          okCallBack={async () => {
+            fetchHabits()
+          }}
+        />
       </Modal>
 
-      
+
     </SafeAreaView>
 
 

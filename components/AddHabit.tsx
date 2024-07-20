@@ -18,11 +18,11 @@ import { useTranslation } from 'react-i18next'
 // todo 是否添加成功
 const habits = ["Reading", "Gardening", "Photography", "Hiking", "Painting", "Cooking", "Woodworking", "Knitting", "Yoga", "Birdwatching", "Cycling", "Pottery", "Calligraphy", "Stargazing", "Creative writing", "Skateboarding", "Scrapbooking", "Fishing", "Archery", "Origami"]
 
-const AddHabit = ({ closeCallBack, okCallBack }: {
+const AddHabit = ({ closeCallBack, okCallBack, currentHabitType }: {
     closeCallBack: () => void,
-    okCallBack: () => Promise<void>
+    okCallBack: () => Promise<void>,
+    currentHabitType: number
 }) => {
-
     const {notify} = useGlobalContext()
     const {t} = useTranslation()
 
@@ -36,7 +36,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
         endDate: today,
         creatorId: '',
         everyCount: 5,
-        type: 0,
+        type: currentHabitType,
         showsDays: [0, 1, 2, 3, 4, 5, 6],
         createTime: new Date(),
         records: new Map<string, Record>([
@@ -44,7 +44,7 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
             // ["2024-07-12", new Record(10)], // 测试用
         ]),
         icon: 'ball',
-        states: 0
+        states: 0,
     } as Habit)
 
     const [pickStartDate, setPickStartDate] = useState(new Date())
