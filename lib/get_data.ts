@@ -197,9 +197,10 @@ export const bestStreak = (habit: Habit) => {
     }
     let currentStrak = 0
     let bestStreak = 0
-    let habitRecordsArray = Array.from(habit.records.keys());
+    let habitRecordsArray = Array.from(habit.records.keys()).sort()    
     for (let i = 0; i < habitRecordsArray.length; i++) {
-        if (isHabitDone(habit, habitRecordsArray[i])) {
+        // if (i > 0 ) console.log('habitRecordsArray[i]:', habitRecordsArray[i], isHabitDone(habit, habitRecordsArray[i]), daysDifference(habitRecordsArray[i - 1], habitRecordsArray[i]))
+        if (isHabitDone(habit, habitRecordsArray[i]) && (i === 0 || daysDifference(habitRecordsArray[i - 1], habitRecordsArray[i]) === 1)) {
             currentStrak++
         } else {
             bestStreak = Math.max(currentStrak, bestStreak)
@@ -210,6 +211,11 @@ export const bestStreak = (habit: Habit) => {
     bestStreak = Math.max(currentStrak, bestStreak)
 
     return bestStreak
+}
+
+// date1 = '2024-07-12' date2 = '2024-07-15' res = 3
+const daysDifference = (date1: string, date2: string) => {
+    return Math.floor((new Date(date2).getTime() - new Date(date1).getTime()) / (1000 * 60 * 60 * 24))
 }
 
 export const isHabitDone = (habit: Habit, date: string) => {
