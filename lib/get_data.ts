@@ -199,7 +199,7 @@ export const bestStreak = (habit: Habit) => {
     let bestStreak = 0
     let habitRecordsArray = Array.from(habit.records.keys()).sort()    
     for (let i = 0; i < habitRecordsArray.length; i++) {
-        if (isHabitDone(habit, habitRecordsArray[i]) && (i === 0 || daysDifference(habitRecordsArray[i - 1], habitRecordsArray[i]) === 1)) {
+        if (isHabitDone(habit, habitRecordsArray[i]) && (i === 0 || currentStrak === 0 || daysDifference(habitRecordsArray[i - 1], habitRecordsArray[i]) === 1)) {
             currentStrak++
         } else {
             bestStreak = Math.max(currentStrak, bestStreak)

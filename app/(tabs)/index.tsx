@@ -1,5 +1,5 @@
-import { View, Text, SafeAreaView, TouchableOpacity, Image, SectionList, ScrollView, Modal, StyleSheet, TextInput } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
+import { View, Text, SafeAreaView, TouchableOpacity, Image, SectionList, ScrollView, Modal, StyleSheet, TextInput, RefreshControl } from 'react-native'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import CustomButton from '@/components/CustomButton'
 import images from '@/constants/images'
 import { useGlobalContext } from '@/context/GlobalProvider'
@@ -19,6 +19,16 @@ const Home = () => {
   // todo 这里好像有重复刷新的问题
 
   const { t } = useTranslation()
+
+  const [refreshing, setRefreshing] = useState(false)
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
+    fetchHabits()
+    setTimeout(() => {
+      setRefreshing(false)
+    }, 600)
+  }, [])
 
   const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
   const [showHabits, setShowHabits] = useState<any>([])
@@ -60,6 +70,12 @@ const Home = () => {
       <SectionList
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
         sections={showHabits}
         extraData={showHabits}
         renderItem={({ item }: {

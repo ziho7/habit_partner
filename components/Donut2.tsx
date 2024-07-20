@@ -32,7 +32,11 @@ const DonutChart = ({clickCount, habit, doneCallBack, setClickCount }: {
 
     useEffect(() => {
         // 点击时更新进度动画
-        progress.value = withTiming(clickCount / habit.everyCount, { duration: 500 });
+        let value = clickCount
+        if (clickCount > habit.everyCount) {
+            value = habit.everyCount
+        }
+        progress.value = withTiming(value / habit.everyCount, { duration: 500 });
 
     }, [clickCount]);
 
@@ -51,6 +55,24 @@ const DonutChart = ({clickCount, habit, doneCallBack, setClickCount }: {
         
     }
 
+    const calFontSize = (everyCount: number) => {
+        if (everyCount < 100) {
+            return 'text-[20px]'
+        }
+        if (everyCount < 10000) {
+            return 'text-[16px]'
+        }
+
+        if (everyCount < 1000000) {
+            return 'text-[12px]'
+        }
+
+        if (everyCount < 100000000) {
+            return 'text-[10px]'
+        }
+
+        return 'text-[8px]'
+    }
 
 
     return (
@@ -83,7 +105,7 @@ const DonutChart = ({clickCount, habit, doneCallBack, setClickCount }: {
             >   
             {finished ? 
                 <Text className='text-[20px] font-semibold'>{t('done')}</Text> : 
-                <Text className='text-[20px] font-semibold'>{clickCount} / {habit.everyCount}</Text>
+                <Text className={`font-semibold ${calFontSize(habit.everyCount)}`}> {clickCount} / {habit.everyCount}</Text>
             }
             
             </TouchableOpacity>

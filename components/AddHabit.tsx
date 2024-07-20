@@ -40,8 +40,8 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
         showsDays: [0, 1, 2, 3, 4, 5, 6],
         createTime: new Date(),
         records: new Map<string, Record>([
-            ["2024-07-11", new Record(3)],
-            ["2024-07-12", new Record(10)], // 测试用
+            // ["2024-07-11", new Record(3)],
+            // ["2024-07-12", new Record(10)], // 测试用
         ]),
         icon: 'ball',
         states: 0
