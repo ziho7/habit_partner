@@ -37,19 +37,19 @@ const DataPanel = () => {
 
 
   const markedDates = (habit: Habit) => {
-    let markedDates: { [key: string]: { selected: boolean, selectedColor:string } } = {}
+    let markedDates: { [key: string]: { selected: boolean, selectedColor: string } } = {}
     if (habit.records === undefined) {
       return markedDates
     }
     // 遍历每一个日期
     for (let [date, record] of habit.records) {
       if (isHabitDone(habit, date)) {
-        markedDates[date] = { selected: true, selectedColor: '#CEBEE8' }
+        markedDates[date] = { selected: true, selectedColor: '#8c789e' }
       } else if (isHabitClicked(habit, date)) {
-        markedDates[date] = { selected: true,   selectedColor: '#dacbe7'}
+        markedDates[date] = { selected: true, selectedColor: '#cab8d9' }
       }
     }
-  
+
 
     return markedDates
   }
@@ -145,7 +145,7 @@ const DataPanel = () => {
 
 
         {/* 年数据分析 */}
-        <View className='mt-4 bg-mypurple-light mx-4 h-[260px] rounded-lg'>
+        <View className='mt-4 bg-mypurple-light mx-4 h-[200px] rounded-lg'>
           <View className='flex-row justify-between items-center mt-2'>
             <CustomIconButton
               image={images.arrowLeft}
@@ -176,11 +176,11 @@ const DataPanel = () => {
             <ContributionGraph
               year={year}
               dataValues={transRecordToCommitsData(habit)}
+              everyCount={habit.everyCount}
             />
           </View>
-          <CalendarDescription />
-
         </View>
+        <CalendarDescription />
 
       </ScrollView>
 
