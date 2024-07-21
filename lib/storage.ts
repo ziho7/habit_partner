@@ -13,6 +13,12 @@ export enum HabitType {
     Monthly
 }
 
+export enum HabitDisplay {
+    Show, // 0
+    Hide, // 1
+    All // 2
+}
+
 export const habitTypeIntToString = (type: number) => {
     switch (type) {
         case 0:
@@ -25,6 +31,21 @@ export const habitTypeIntToString = (type: number) => {
             return 'daily'
     }
 }
+
+export const habitDisplayIntToString = (display: number) => {
+    switch (display) {
+        case 0:
+            return 'show'
+        case 1:
+            return 'hide'
+        case 2:
+            return 'all'
+        default:
+            return 'show'
+    }
+
+}
+
 
 export const habitTypeStringToInt = (type: string) => {
     switch (type) {

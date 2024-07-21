@@ -15,12 +15,14 @@ const HabitCard = ({
     clickCount,
     habit,
     doneCallBack,
-    currentDate
+    currentDate,
+    pressCall,
 }: {
     clickCount: number,
     habit: Habit,
     doneCallBack: () => Promise<void>,
-    currentDate: string
+    currentDate: string,
+    pressCall: () => void
 }) => {
 
     const [showLongPressModal, setShowLongPressModal] = useState(false)
@@ -32,6 +34,7 @@ const HabitCard = ({
         <TouchableOpacity
             className='mt-4'
             onPress={() => {
+                pressCall()
                 router.push({
                     pathname: "/detail/dataPanel",
                     params: { habitId: habit.id }

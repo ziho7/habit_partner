@@ -42,5 +42,8 @@
     "deleteHabit": "删除习惯",
     "clickedCount": "点击次数",
     "clicked": "已点击",
-    "finished": "已完成"
+    "finished": "已完成",
+    "show": "待完成",
+    "all": "全部",
+    "hide": "隐藏"
 }

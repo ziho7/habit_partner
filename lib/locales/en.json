@@ -45,5 +45,8 @@
     "deleteHabit": "Delete habit",
     "clickedCount": "clicked count",
     "clicked": "clicked",
-    "finished": "finished"
+    "finished": "finished",
+    "show": "Show",
+    "all": "All",
+    "hide": "Hidden"
 }
