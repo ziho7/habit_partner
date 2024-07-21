@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Modal, Alert, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Keyboard } from 'react-native'
 import React, { useState } from 'react'
 import CustomIconButton from './CustomIconButton'
 import images, { getHabitIcons } from '@/constants/images'

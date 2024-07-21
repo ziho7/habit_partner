@@ -9,8 +9,9 @@ import HabitCard from '@/components/HabitCard2'
 import Header from '@/components/Header'
 import CustomIconButton from '@/components/CustomIconButton'
 import AddHabit from '@/components/AddHabit'
-import { Habit, HabitType } from '@/lib/storage'
+import { Habit, HabitType, habitTypeIntToString } from '@/lib/storage'
 import { useTranslation } from 'react-i18next'
+
 
 
 
@@ -24,7 +25,7 @@ const Home = () => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true)
-    fetchHabits()
+    // fetchHabits()
     setTimeout(() => {
       setRefreshing(false)
     }, 600)
@@ -35,6 +36,8 @@ const Home = () => {
   const [showAddHabit, setShowAddHabit] = useState(false)
   const [currentHabitType, setCurrentHabitType] = useState<HabitType>(HabitType.Daily)
 
+  const [showHabitType, setShowHabitType] = useState(false)
+  const [showAllHabit, setShowAllHabit] = useState(false)
 
   const fetchHabits = async (habitType = currentHabitType) => {
     const todayHabits = await getHabitsByHabitType(habitType)
@@ -58,6 +61,42 @@ const Home = () => {
         <CustomIconButton image={images.add} callBackFunction={() => setShowAddHabit(true)} />
       </View>
 
+      <View className='h-16 w-[76px]'>
+        <CustomButton title={t(habitTypeIntToString(currentHabitType))} handlePress={async () => setShowHabitType(!showHabitType)} containerStyles={`mr-6 w-[76px] `} textStyles="text-[12px]"></CustomButton>
+        {
+          showHabitType && (
+            <View className='parent'>
+              <View className='absolute'>
+                <CustomButton
+                  title={t('daily')}
+                  handlePress={async () => {
+                    setShowHabitType(false)
+                    await changeCurrentHabitType(HabitType.Daily)
+                  }}
+                  containerStyles={`mr-6 w-[76px] border-x-[0.5px] rounded-none ${currentHabitType === HabitType.Daily ? 'bg-mypurple' : ''}`}
+                  textStyles="text-[12px]" />
+                <CustomButton
+                  title={t('weekly')}
+                  handlePress={async () => {
+                    setShowHabitType(false)
+                    changeCurrentHabitType(HabitType.Weekly)
+                  }}
+                  containerStyles={`mr-6 w-[76px] border-x-[0.5px] border-[#000000] rounded-none ${currentHabitType === HabitType.Weekly ? 'bg-mypurple' : ''}`}
+                  textStyles="text-[12px]" />
+                <CustomButton
+                  title={t('monthly')}
+                  handlePress={async () => {
+                    changeCurrentHabitType(HabitType.Monthly)
+                    setShowHabitType(false)
+                  }}
+                  containerStyles={`mr-6 w-[76px] rounded-none border-x-[0.5px] border-b-[0.5px] rounded-b-lg ${currentHabitType === HabitType.Monthly ? 'bg-mypurple' : ''}`}
+                  textStyles="text-[12px]" />
+              </View>
+            </View>
+          )
+        }
+      </View>
+
     </>
   }
 
@@ -66,7 +105,7 @@ const Home = () => {
   }, [refreshHomeCount]);
 
   return (
-    <SafeAreaView className='mx-4 h-full'>
+    <SafeAreaView className='mx-4 h-full' style={{ flex: 1 }}>
       <SectionList
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -89,6 +128,7 @@ const Home = () => {
           />
         }}
         keyExtractor={(item) => item.id.toString()}
+        ListHeaderComponentStyle={{ zIndex: 10 }}
         renderSectionHeader={({ section }) => {
           if (section.title === 'finished' && section.data.length > 0) {
             return <SeperateLine />
@@ -114,7 +154,7 @@ const Home = () => {
       >
         <AddHabit
           closeCallBack={() => setShowAddHabit(false)}
-          currentHabitType = {currentHabitType}
+          currentHabitType={currentHabitType}
           okCallBack={async () => {
             fetchHabits()
           }}
