@@ -46,5 +46,6 @@
     "show": "待完成",
     "all": "全部",
     "hide": "隐藏",
-    "selectIcon": "选择图标"
+    "selectIcon": "选择图标",
+    "reading": "读书", "photography": "摄影", "study": "学习", "hiking": "登山",  "painting":"画画", "cooking":"烹饪", "yoga": "瑜伽", "cycling": "骑自行车", "fishing": "钓鱼"
 }

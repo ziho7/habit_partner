@@ -49,5 +49,6 @@
     "show": "Show",
     "all": "All",
     "hide": "Hidden",
-    "selectIcon": "Select Icon please"
+    "selectIcon": "Select Icon please",
+    "reading": "Reading", "photography": "Photography", "study": "Study", "hiking": "Hiking",  "painting":"Painting", "cooking":"Cooking", "yoga": "Yoga", "cycling": "Cycling", "fishing": "Fishing"
 }

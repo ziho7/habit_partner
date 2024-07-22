@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 
 
 // todo 是否添加成功
-const habits = ["Reading", "Gardening", "Photography", "Hiking", "Painting", "Cooking", "Woodworking", "Knitting", "Yoga", "Birdwatching", "Cycling", "Pottery", "Calligraphy", "Stargazing", "Creative writing", "Skateboarding", "Scrapbooking", "Fishing", "Archery", "Origami"]
+const habits = ["reading", "gardening", "study", "hiking", "painting", "cooking", "yoga", "cycling", "fishing"]
 
 const AddHabit = ({ closeCallBack, okCallBack, currentHabitType }: {
     closeCallBack: () => void,
@@ -31,7 +31,7 @@ const AddHabit = ({ closeCallBack, okCallBack, currentHabitType }: {
     const [habit, setHabit] = useState({
         id: "",
         userId: "",
-        name: habits[Math.floor(Math.random() * habits.length)],
+        name: t(habits[Math.floor(Math.random() * habits.length)]),
         startDate: today,
         endDate: today,
         creatorId: '',
