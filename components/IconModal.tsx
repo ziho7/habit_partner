@@ -1,7 +1,8 @@
-import { View, Text, Modal, TouchableOpacity } from 'react-native'
+import { View, Text, Modal, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import CustomIconButton from './CustomIconButton'
-import images, { getHabitIcons, habitList } from '@/constants/images'
+import images, { getHabitIconsByCode, getHabitNameByCode, habitList } from '@/constants/images'
+import { useTranslation } from 'react-i18next'
 
 const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }: {
     showPicker: boolean,
@@ -9,6 +10,18 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
     onChangeFunction: (data: any) => void,
     selectedIcon: string
 }) => {
+
+
+    // 1开头是运动 // 2开头是学习 // 3开头是生活 // 4开头是娱乐 // 5开头是健康 // 6开头是戒除 7开头是其他
+    const sportList = [101, 102, 103, 104, 105, 106]
+    const studyList = [201, 202, 203, 204, 205]
+    const dailyList = [301, 302, 303, 304, 305]
+    const entertainmentList = [401, 402]
+    const healthList = [501, 502, 503, 504]
+    const quitList = [601]
+    const otherList = [701]
+
+    const {t} = useTranslation()
 
     return <Modal
         visible={showPicker}
@@ -24,213 +37,209 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
             onPressOut={closeFunction}
         >
             <TouchableOpacity
-                className=' bg-[#FFFFFF] p-4 rounded-xl my-4 space-y-6 h-[300px]'
+                className=' bg-[#FFFFFF] p-4 rounded-xl my-4 space-y-6 h-[480x] border-t-[0.5px] border-x-[0.5px] border-mypurple'
                 activeOpacity={1.0}
-                onPressOut={() => {}}
+                onPressOut={() => { }}
             >
-                <View className='justify-center items-center my-2'>
-                    <Text className='text-[20px]'>
-                        Select the Icon of this habit
-                    </Text>
-                </View>
+                {/* 标题 */}
+                {/* <ScrollView> */}
+                    <View className='justify-center items-center my-2'>
+                        <Text className='text-[20px]'>
+                            {t('selectIcon')}
+                        </Text>
+                    </View>
 
-                <View className='flex-row px-2 justify-center items-center gap-4 flex-wrap'>
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[0])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[0])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[0] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
+                    {/* 第一类 运动 */}
+                    <View className='flex-row mx-2'>
+                        <View className='w-[40px]'>
+                            <Text className='text-[8px]'>Sport</Text>
+                        </View>
+                        <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
+                            {
+                                sportList.map((item) => {
+                                    return <TouchableOpacity
+                                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
+                                        key={'sport' + item}
+                                        onPress={() => { }}
+                                    >
+                                        <CustomIconButton
+                                            image={getHabitIconsByCode(item)}
+                                            callBackFunction={() => { 
+                                                onChangeFunction(getHabitNameByCode(item))
+                                            }}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            customStyle='w-[16px] h-[16px]'
+                                        />
+                                    </TouchableOpacity>
+                                })
+                            }
+                        </View>
+                    </View>
 
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[1])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[1])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[1] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
+                    {/* 第二类 学习 */}
+                    <View className='flex-row mx-2'>
+                        <View className='w-[40px]'>
+                            <Text className='text-[8px]'>Study</Text>
+                        </View>
+                        <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
+                            {
+                                studyList.map((item) => {
+                                    return <TouchableOpacity
+                                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
+                                        key={'sport' + item}
+                                        onPress={() => { }}
+                                    >
+                                        <CustomIconButton
+                                            image={getHabitIconsByCode(item)}
+                                            callBackFunction={() => {
+                                                onChangeFunction(getHabitNameByCode(item))
+                                            }}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            customStyle='w-[16px] h-[16px]'
+                                        />
+                                    </TouchableOpacity>
+                                })
+                            }
+                        </View>
+                    </View>
 
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[2])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[2])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[2] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
+                    {/* 第三类  */}
+                    <View className='flex-row mx-2'>
+                        <View className='w-[40px]'>
+                            <Text className='text-[8px]'>Daily</Text>
+                        </View>
+                        <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
+                            {
+                                dailyList.map((item) => {
+                                    return <TouchableOpacity
+                                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
+                                        key={'sport' + item}
+                                        onPress={() => { }}
+                                    >
+                                        <CustomIconButton
+                                            image={getHabitIconsByCode(item)}
+                                            callBackFunction={() => {
+                                                onChangeFunction(getHabitNameByCode(item))
+                                            }}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            customStyle='w-[16px] h-[16px]'
+                                        />
+                                    </TouchableOpacity>
+                                })
+                            }
+                        </View>
+                    </View>
 
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[3])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[3])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[3] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
+                    {/* 第四类 */}
+                    <View className='flex-row mx-2'>
+                        <View className='w-[40px]'>
+                            <Text className='text-[8px]'>Entertainment</Text>
+                        </View>
+                        <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
+                            {
+                                entertainmentList.map((item) => {
+                                    return <TouchableOpacity
+                                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
+                                        key={'sport' + item}
+                                        onPress={() => { }}
+                                    >
+                                        <CustomIconButton
+                                            image={getHabitIconsByCode(item)}
+                                            callBackFunction={() => {
+                                                onChangeFunction(getHabitNameByCode(item))
+                                            }}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            customStyle='w-[16px] h-[16px]'
+                                        />
+                                    </TouchableOpacity>
+                                })
+                            }
+                        </View>
+                    </View>
 
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[4])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[4])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[4] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
+                    {/* 第五类 */}
+                    <View className='flex-row mx-2'>
+                        <View className='w-[40px]'>
+                            <Text className='text-[8px]'>Health</Text>
+                        </View>
+                        <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
+                            {
+                                healthList.map((item) => {
+                                    return <TouchableOpacity
+                                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
+                                        key={'sport' + item}
+                                        onPress={() => { }}
+                                    >
+                                        <CustomIconButton
+                                            image={getHabitIconsByCode(item)}
+                                            callBackFunction={() => {
+                                                onChangeFunction(getHabitNameByCode(item))
+                                            }}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            customStyle='w-[16px] h-[16px]'
+                                        />
+                                    </TouchableOpacity>
+                                })
+                            }
+                        </View>
+                    </View>
 
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[5])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[5])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[5] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
+                    {/* 第六类 戒除 */}
+                    <View className='flex-row mx-2'>
+                        <View className='w-[40px]'>
+                            <Text className='text-[8px]'>Quit</Text>
+                        </View>
+                        <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
+                            {
+                                quitList.map((item) => {
+                                    return <TouchableOpacity
+                                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
+                                        key={'otherList' + item}
+                                        onPress={() => { }}
+                                    >
+                                        <CustomIconButton
+                                            image={getHabitIconsByCode(item)}
+                                            callBackFunction={() => {
+                                                onChangeFunction(getHabitNameByCode(item))
+                                            }}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            customStyle='w-[16px] h-[16px]'
+                                        />
+                                    </TouchableOpacity>
+                                })
+                            }
+                        </View>
+                    </View>
 
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[6])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[6])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[6] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
+                    {/* 第7类 戒除 */}
+                    <View className='flex-row mx-2'>
+                        <View className='w-[40px]'>
+                            <Text className='text-[8px]'>Other</Text>
+                        </View>
+                        <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
+                            {
+                                otherList.map((item) => {
+                                    return <TouchableOpacity
+                                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
+                                        key={'sport' + item}
+                                        onPress={() => { }}
+                                    >
+                                        <CustomIconButton
+                                            image={getHabitIconsByCode(item)}
+                                            callBackFunction={() => {
+                                                onChangeFunction(getHabitNameByCode(item))
+                                            }}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            customStyle='w-[16px] h-[16px]'
+                                        />
+                                    </TouchableOpacity>
+                                })
+                            }
+                        </View>
+                    </View>
 
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[7])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[7])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[7] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
+                {/* </ScrollView> */}
 
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[8])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[8])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[8] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[9])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[9])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[9] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[10])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[10])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[10] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[11])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[11])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[11] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[12])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[12])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[12] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        className={`border border-[#CEBEE8] h-[30px] w-[30px] items-center justify-center rounded-sm`}
-                        onPress={() => { }}
-                    >
-                        <CustomIconButton
-                            image={getHabitIcons(habitList[13])}
-                            callBackFunction={() => {
-                                onChangeFunction(habitList[13])
-                            }}
-                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === habitList[13] ? 'bg-mypurple' : 'bg-mypurple-light'}`}
-                            customStyle='w-[16px] h-[16px]'
-                        />
-                    </TouchableOpacity>
-                </View>
 
                 {/* todo 自己上传 */}
                 {/* <View className='flex-row px-2 justify-center items-center gap-4 flex-wrap'>

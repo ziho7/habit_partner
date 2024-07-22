@@ -45,5 +45,6 @@
     "finished": "已完成",
     "show": "待完成",
     "all": "全部",
-    "hide": "隐藏"
+    "hide": "隐藏",
+    "selectIcon": "选择图标"
 }

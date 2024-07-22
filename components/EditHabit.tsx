@@ -203,7 +203,12 @@ const EditHabit = ({ closeCallBack, okCallBack, habitOriginal, goTohomePage }: {
                                         {
                                             text: i18n.t('delete'), onPress: async () => {
                                                 habit.states = 1
-                                                await updateHabit(habit)
+                                                try {
+                                                    await updateHabit(habit)
+                                                } catch (error) {
+                                                    return 
+                                                }
+
                                                 okCallBack()
                                                 closeCallBack()
                                                 notify("habit deleted", "error", 2)

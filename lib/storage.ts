@@ -119,7 +119,6 @@ const habitCheck = (habit: Habit) => {
 }
 
 export const addHabit = async (habit: Habit) => {
-
     try {
         habitCheck(habit)
 
@@ -139,6 +138,7 @@ export const addHabit = async (habit: Habit) => {
         await setData(userHabitsKey, JSON.stringify(userHabits))
     } catch (error) {
         Alert.alert('Error', 'Failed to add habit' + error)
+        throw error
     }
 }
 
@@ -183,7 +183,8 @@ export const updateHabit = async (habit: Habit) => {
         let habitJson = JSON.stringify(instanceToPlain(habit))
         await setData(habit.id.toString(), habitJson)
     } catch (error) {
-        Alert.alert('Error', 'Failed to update habit' + error)
+        Alert.alert('Error', 'Failed to update habit' + error) //todo 翻译成中文
+        throw error
     }
 }
 

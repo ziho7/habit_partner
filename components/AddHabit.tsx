@@ -80,7 +80,13 @@ const AddHabit = ({ closeCallBack, okCallBack, currentHabitType }: {
                         image={images.ok}
                         callBackFunction={
                             async () => {
-                                await addHabit(habit)
+                                try {
+                                    await addHabit(habit)    
+                                } catch (e: any) {
+                                    // notify(e.message, 'error', 5)
+                                    // closeCallBack()
+                                    return 
+                                }
                                 await okCallBack()
                                 notify('Add habit successfully','info', 2)
                                 closeCallBack()
@@ -286,12 +292,6 @@ const AddHabit = ({ closeCallBack, okCallBack, currentHabitType }: {
                     >
 
                     </IconModal>
-
-                    
-
-                
-
-
                 </View>
             </View>
         </TouchableOpacity >

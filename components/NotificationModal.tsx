@@ -4,13 +4,17 @@ import React from 'react'
 import { useGlobalContext } from '@/context/GlobalProvider'
 
 const NotificationModal = () => {
-    const {showNotification, notificationMessage, notifyLevel, setShowNotification} = useGlobalContext()
+    const {showNotification, notificationMessage, notifyLevel, setShowNotification} = useGlobalContext()    
+    let color = 'bg-mygreen'
+    if (notifyLevel === 'error') {
+        color = 'bg-myred'
+    }
 
-    const color = notifyLevel === 'error' ? 'bg-myred' : 'bg-mygreen'
-
+    
     return (
         <View>
             <Modal 
+                style={{zIndex: 2000000, flex: 1}}
                 isVisible={showNotification}
                 animationIn="slideInDown"
                 animationOut="slideOutUp"

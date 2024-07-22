@@ -216,6 +216,7 @@ const Home = () => {
       </TouchableOpacity>
 
       <Modal
+        style={{zIndex: 10}}
         visible={showAddHabit}
         onRequestClose={() => setShowAddHabit(false)}
         animationType='slide'
