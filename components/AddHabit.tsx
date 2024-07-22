@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Modal, Alert, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Keyboard } from 'react-native'
 import React, { useState } from 'react'
 import CustomIconButton from './CustomIconButton'
 import images, { getHabitIcons } from '@/constants/images'
@@ -6,7 +6,7 @@ import { Record, Habit, habitTypeIntToString, habitTypeStringToInt } from '@/lib
 import { dateToDash, dateToSlash, dateTypeToDash } from '@/lib/utils'
 import DateModal from './DateModal'
 import { addHabit } from '@/lib/storage'
-import { getCurrentDateAndDayOfWeekInTimeZone, getShowdaysStr } from '@/lib/get_data'
+import { getClickCount, getCurrentDateAndDayOfWeekInTimeZone, getShowdaysStr } from '@/lib/get_data'
 import PickerModal from './PickerModal'
 import ShowDaysModal from './ShowDaysModal'
 import IconModal from './IconModal'
@@ -16,13 +16,13 @@ import { useTranslation } from 'react-i18next'
 
 
 // todo 是否添加成功
-const habits = ["Reading", "Gardening", "Photography", "Hiking", "Painting", "Cooking", "Woodworking", "Knitting", "Yoga", "Birdwatching", "Cycling", "Pottery", "Calligraphy", "Stargazing", "Creative writing", "Skateboarding", "Scrapbooking", "Fishing", "Archery", "Origami"]
+const habits = ["reading", "gardening", "study", "hiking", "painting", "cooking", "yoga", "cycling", "fishing"]
 
-const AddHabit = ({ closeCallBack, okCallBack }: {
+const AddHabit = ({ closeCallBack, okCallBack, currentHabitType }: {
     closeCallBack: () => void,
-    okCallBack: () => Promise<void>
+    okCallBack: () => Promise<void>,
+    currentHabitType: number
 }) => {
-
     const {notify} = useGlobalContext()
     const {t} = useTranslation()
 
@@ -31,18 +31,20 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
     const [habit, setHabit] = useState({
         id: "",
         userId: "",
-        name: habits[Math.floor(Math.random() * habits.length)],
+        name: t(habits[Math.floor(Math.random() * habits.length)]),
         startDate: today,
         endDate: today,
         creatorId: '',
-        everyCount: 1,
-        type: 0,
+        everyCount: 5,
+        type: currentHabitType,
         showsDays: [0, 1, 2, 3, 4, 5, 6],
         createTime: new Date(),
         records: new Map<string, Record>([
+            // ["2024-07-11", new Record(3)],
+            // ["2024-07-12", new Record(10)], // 测试用
         ]),
         icon: 'ball',
-        states: 0
+        states: 0,
     } as Habit)
 
     const [pickStartDate, setPickStartDate] = useState(new Date())
@@ -78,7 +80,13 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                         image={images.ok}
                         callBackFunction={
                             async () => {
-                                await addHabit(habit)
+                                try {
+                                    await addHabit(habit)    
+                                } catch (e: any) {
+                                    // notify(e.message, 'error', 5)
+                                    // closeCallBack()
+                                    return 
+                                }
                                 await okCallBack()
                                 notify('Add habit successfully','info', 2)
                                 closeCallBack()
@@ -153,6 +161,18 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                                 if (text === '') {
                                     num = 0
                                 }
+                                
+                                if (num < 0) {
+                                    num = 0
+                                }
+
+                                notify('The number of times to complete is too large', 'error', 2)
+                                if (num > 1000000) {
+                                    num = 1000000
+                                    notify('The number of times to complete is too large', 'error', 2)
+                                    notify('Add habit successfully','info', 2)
+                                }
+
                                 setHabit({ ...habit, everyCount: num })
                             }}
                             value={habit.everyCount === 0 ? '' : habit.everyCount.toString()}
@@ -272,12 +292,6 @@ const AddHabit = ({ closeCallBack, okCallBack }: {
                     >
 
                     </IconModal>
-
-                    
-
-                
-
-
                 </View>
             </View>
         </TouchableOpacity >

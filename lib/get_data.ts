@@ -1,6 +1,6 @@
 import { getCalendars } from 'expo-localization';
 import { dateToDash, getDatesOfMonth, getDatesOfWeek } from './utils';
-import { Habit, getAllHabits, HabitType } from './storage';
+import { Habit, getAllHabits, HabitType, HabitDisplay } from './storage';
 import i18n from './i18n';
 
 
@@ -39,44 +39,44 @@ const getClickCountMonthly = (habit: Habit, currentDate: string) => {
 }
 
 
-export const getHabitsByHabitType = async (habitType: HabitType) => {
+export const getHabitsByHabitType = async (habitType: HabitType, habitDisplay: HabitDisplay) => {
     if (habitType === HabitType.Daily) {
-        let res =  await getTodayHabits();
+        let res = await getTodayHabits(habitDisplay);
         return res
     }
     if (habitType === HabitType.Weekly) {
-        let res = await getWeekHabits();
+        let res = await getWeekHabits(habitDisplay);
         return res
     }
     if (habitType === HabitType.Monthly) {
-        let res = await getMonthHabits();
+        let res = await getMonthHabits(habitDisplay);
         return res
     }
 }
 
-export const getTodayHabits = async () => {
-    let res = await getAllHabits()    
+export const getTodayHabits = async (habitDisplay: HabitDisplay) => {
+    let res = await getAllHabits()
     let habits: Habit[] = res
-    let sortedHabits = filterHabits(habits)
+    let sortedHabits = filterHabits(habits, HabitType.Daily ,habitDisplay)
 
     return sortedHabits;
 }
 
-export const getWeekHabits = async () => {
+export const getWeekHabits = async (habitDisplay: HabitDisplay) => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
-    let sortedHabits = filterHabits(habits, HabitType.Weekly);
+    let sortedHabits = filterHabits(habits, HabitType.Weekly, habitDisplay);
     return sortedHabits;
 }
 
-export const getMonthHabits = async () => {
+export const getMonthHabits = async (habitDisplay: HabitDisplay) => {
     let res = await getAllHabits();
     let habits: Habit[] = res;
-    let filteredHabits = filterHabits(habits, HabitType.Monthly);
+    let filteredHabits = filterHabits(habits, HabitType.Monthly, habitDisplay);
     return filteredHabits;
 }
 
-const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) => {
+const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily, habitDisplay: HabitDisplay) => {
     const { currentDate, dayOfWeek } = getCurrentDateAndDayOfWeekInTimeZone()
     let unfinishedList: Habit[] = []
     let finishedList: Habit[] = []
@@ -89,12 +89,12 @@ const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) =
         // 不是这个类型的不显示
         if (habit.type !== habitType) {
             continue
-        }  
-        
+        }
+
         // 不显示的星期不显示
-        if (habit.showsDays.length !== 0 && !habit.showsDays.includes(dayStringToNumber(dayOfWeek))) {
+        if (!needShow(habit, dayOfWeek, habitDisplay)) {
             continue
-        }        
+        }
 
         // 不活跃的不显示
         if (habit.states != 0) {
@@ -108,8 +108,6 @@ const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) =
             finishedList.push(habit)
         }
     }
-    
-
 
     let res = [{
         "title": "unfinished",
@@ -126,6 +124,24 @@ const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily) =
 
     return res
 }
+
+const needShow = (habit: Habit, dayOfWeek: string, habitDisplay: HabitDisplay) => {
+    if (habitDisplay === HabitDisplay.All) {
+        return true
+    }
+
+    let hitShowPolicy = habit.showsDays.length !== 0 && habit.showsDays.includes(dayStringToNumber(dayOfWeek))
+    if (habitDisplay === HabitDisplay.Show) {
+        return hitShowPolicy
+    }
+
+    if (habitDisplay === HabitDisplay.Hide) {
+        return !hitShowPolicy
+    }
+
+    return false
+}
+
 
 
 new Intl.DateTimeFormat("fr-CA", { year: "numeric", month: "2-digit", day: "2-digit" }).format(Date.now())
@@ -197,9 +213,9 @@ export const bestStreak = (habit: Habit) => {
     }
     let currentStrak = 0
     let bestStreak = 0
-    let habitRecordsArray = Array.from(habit.records.keys());
+    let habitRecordsArray = Array.from(habit.records.keys()).sort()
     for (let i = 0; i < habitRecordsArray.length; i++) {
-        if (isHabitDone(habit, habitRecordsArray[i])) {
+        if (isHabitDone(habit, habitRecordsArray[i]) && (i === 0 || currentStrak === 0 || daysDifference(habitRecordsArray[i - 1], habitRecordsArray[i]) === 1)) {
             currentStrak++
         } else {
             bestStreak = Math.max(currentStrak, bestStreak)
@@ -212,12 +228,25 @@ export const bestStreak = (habit: Habit) => {
     return bestStreak
 }
 
+// date1 = '2024-07-12' date2 = '2024-07-15' res = 3
+const daysDifference = (date1: string, date2: string) => {
+    return Math.floor((new Date(date2).getTime() - new Date(date1).getTime()) / (1000 * 60 * 60 * 24))
+}
+
 export const isHabitDone = (habit: Habit, date: string) => {
-    if (habit.records === undefined) {
+    if (habit.records === undefined || habit.records.get(date) === undefined) {
         return false
     }
 
-    return habit.records.get(date)?.clickCount === habit.everyCount
+    return habit.records.get(date)!.clickCount >= habit.everyCount
+}
+
+export const isHabitClicked = (habit: Habit, date: string) => {
+    if (habit.records === undefined || habit.records.get(date) === undefined) {
+        return false
+    }
+
+    return habit.records.get(date)!.clickCount > 0 && habit.records.get(date)!.clickCount < habit.everyCount
 }
 
 
@@ -236,10 +265,10 @@ export const dayStringToNumber = (daysString: string) => {
     return 7 // 兜底
 }
 
-export const getShowdaysStr = (showsDays: number[]) => {   
+export const getShowdaysStr = (showsDays: number[]) => {
     if (showsDays.length === 7) {
         return i18n.t('everyday')
-    }    
+    }
     if (showsDays.length === 2 && showsDays.includes(0) && showsDays.includes(6)) {
         return i18n.t('weekends')
     }

@@ -32,7 +32,23 @@
     "everyday": "Everyday",
     "weekends": "Weekends",
     "weekdays": "Weekdays",
-    "selectShowDaysEveryWeek" : "Select show days every week",
-    "sun": "Sun", "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat"
-    
+    "selectShowDaysEveryWeek": "Select show days every week",
+    "sun": "Sun",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat",
+    "done": "Done",
+    "cancelClick": "Cancel click",
+    "deleteHabit": "Delete habit",
+    "clickedCount": "clicked count",
+    "clicked": "clicked",
+    "finished": "finished",
+    "show": "Show",
+    "all": "All",
+    "hide": "Hidden",
+    "selectIcon": "Select Icon please",
+    "reading": "Reading", "photography": "Photography", "study": "Study", "hiking": "Hiking",  "painting":"Painting", "cooking":"Cooking", "yoga": "Yoga", "cycling": "Cycling", "fishing": "Fishing"
 }

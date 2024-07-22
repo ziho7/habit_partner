@@ -10,18 +10,19 @@ import DataBlock from '@/components/DataBlock';
 
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import ContributionGraph from '@/components/ContributionGraph';
-import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitDone } from '@/lib/get_data';
+import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitClicked, isHabitDone } from '@/lib/get_data';
 import { Theme } from 'react-native-calendars/src/types';
 import EditHabit from '@/components/EditHabit';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import i18n from '@/lib/i18n';
 import { useTranslation } from 'react-i18next';
 import { dateToSlash } from '@/lib/utils';
+import CalendarDescription from '@/components/CalendarDescription';
 
 const DataPanel = () => {
   const { habitId } = useLocalSearchParams()
   const { refreshHome } = useGlobalContext()
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   const [habit, setHabit] = useState<Habit>(new Habit())
 
@@ -40,26 +41,31 @@ const DataPanel = () => {
     if (habit.records === undefined) {
       return markedDates
     }
+    // 遍历每一个日期
     for (let [date, record] of habit.records) {
       if (isHabitDone(habit, date)) {
         markedDates[date] = { selected: true, selectedColor: '#CEBEE8' }
+      } else if (isHabitClicked(habit, date)) {
+        markedDates[date] = { selected: true, selectedColor: '#e4e0ec' }
       }
     }
+
+
     return markedDates
   }
 
-  const CustomHeaderTitle = (
+  const CustomHeaderTitle = ( // 这里前后翻有问题目前暂时
     <View className='flex-row justify-between items-center mt-2 w-full '>
       <CustomIconButton
         image={images.arrowLeft}
-        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() - 1, 1)) }}
+        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() - 1, 15)) }}
         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
         customStyle='w-[8px] h-[8px]'
       />
       <Text className='text-[14px]'>{t(initialDate.toLocaleString('default', { month: 'long' }))}</Text>
       <CustomIconButton
         image={images.arrowRight}
-        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() + 1, 1)) }}
+        callBackFunction={() => { setInitialDate(new Date(initialDate.getFullYear(), initialDate.getMonth() + 1, 15)) }}
         containerStyles='w-[32px] h-[32px] bg-mypurple-light items-center justify-center rounded-lg'
         customStyle='w-[8px] h-[8px]'
       />
@@ -73,8 +79,8 @@ const DataPanel = () => {
   }, [refreshCount])
 
   const goTohomePage = () => {
-      refreshHome() 
-      router.back()
+    refreshHome()
+    router.back()
   }
 
   return (
@@ -134,12 +140,12 @@ const DataPanel = () => {
           hideArrows={true}
           theme={mytheme as Theme}
           hideExtraDays={true}
-          
         />
+        <CalendarDescription />
 
 
         {/* 年数据分析 */}
-        <View className='mt-4 bg-mypurple-light mx-4 h-[260px] rounded-lg'>
+        <View className='mt-4 bg-mypurple-light mx-4 h-[200px] rounded-lg'>
           <View className='flex-row justify-between items-center mt-2'>
             <CustomIconButton
               image={images.arrowLeft}
@@ -170,11 +176,11 @@ const DataPanel = () => {
             <ContributionGraph
               year={year}
               dataValues={transRecordToCommitsData(habit)}
+              everyCount={habit.everyCount}
             />
           </View>
-
-
         </View>
+        <CalendarDescription />
 
       </ScrollView>
 
@@ -205,9 +211,9 @@ const mytheme = {
   textSectionTitleColor: '#A19C9C',
   textSectionTitleDisabledColor: '#d9e1e8',
   selectedDayBackgroundColor: '#CEBEE8',
-  selectedDayTextColor: '#ffffff',  // 选中的颜色
+  selectedDayTextColor: '#000000',  // 选中的颜色
   todayTextColor: '#ff3d57', // 今天颜色
-  todayBackgroundColor: '#CEBEE8', // 今天圆圈
+  // todayBackgroundColor: '#CEBEE8', // 今天圆圈
   dayTextColor: '#2d4150',
   textDisabledColor: '#d9e1e8',
   monthTextColor: 'black',

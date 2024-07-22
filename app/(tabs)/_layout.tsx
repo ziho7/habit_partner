@@ -22,7 +22,6 @@ export default function TabLayout() {
           title: t('home'),
           headerShown: false,
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
-          // tabBarActiveTintColor='#CEBEE8'
         }}
       />
       <Tabs.Screen

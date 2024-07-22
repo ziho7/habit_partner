@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "habit_partner",
-    "slug": "habit_partner",
+    "slug": "habit-partner",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -32,6 +32,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "96119a14-af41-4f46-a9d6-ea5a4b06df51"
+      }
+    },
+    "owner": "ziho"
   }
 }

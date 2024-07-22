@@ -19,6 +19,7 @@ const GlobalProvider = ({ children }: {
   const refreshHome = () => {
     setRefreshHomeCount(refreshHomeCount + 1)
   }
+  
 
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
@@ -26,14 +27,17 @@ const GlobalProvider = ({ children }: {
   
   const notify = (message: string, level: 'error'| 'info', seconds: number) => {
     setNotificationMessage(message)
-    setShowNotification(true)
     if (level === 'error') {
       setNotifyLevel('error')
     } else {
       setNotifyLevel('info')
     }
+
+    setShowNotification(true)
+    
     setTimeout(() => {
       setShowNotification(false)
+      // setNotificationMessage('')
     }, seconds * 1000)
   }
 

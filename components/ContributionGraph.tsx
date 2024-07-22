@@ -3,9 +3,10 @@ import React, { useEffect, useRef } from 'react'
 import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data'
 import { useTranslation } from 'react-i18next'
 
-const ContributionGraph = ({ year, dataValues }: {
+const ContributionGraph = ({ year, dataValues, everyCount }: {
     year: number,
-    dataValues: { date: string, count: number }[]
+    dataValues: { date: string, count: number }[],
+    everyCount: number
 }) => {
     const startDate = new Date(year + '-01-01')
     const endingDate = new Date(year + '-12-31')
@@ -58,13 +59,27 @@ const ContributionGraph = ({ year, dataValues }: {
 
     let calenderGrid = getCalenderGrid(daysTotal)
 
-    const highestValue = dataValues?.reduce((a, b) => Math.max(a, b.count), -Infinity)
+    // const highestValue = dataValues?.reduce((a, b) => Math.max(a, b.count), -Infinity)
+    // const getColor = (date: string) => {
+    //     const activityCount = dataValues.find(item => item.date === date)?.count || 0
+    //     const intensity = highestValue !== 0 ? Number(activityCount / highestValue) : 0
+    //     const colorCodes = ['#f6f2f9', '#ede5f3', '#e3d8ed', '#dacbe7', '#c8b2db', '#b598cf'] // https://photokit.com/colors/color-gradient/?lang=zh
+    //     const colorIndex = Math.min(Math.floor((intensity * colorCodes.length)), colorCodes.length - 1)
+    //     return colorCodes[colorIndex]
+    // }
+
     const getColor = (date: string) => {
         const activityCount = dataValues.find(item => item.date === date)?.count || 0
-        const intensity = highestValue !== 0 ? Number(activityCount / highestValue) : 0
-        const colorCodes = ['#f6f2f9', '#ede5f3', '#e3d8ed', '#dacbe7', '#c8b2db', '#b598cf'] // https://photokit.com/colors/color-gradient/?lang=zh
-        const colorIndex = Math.min(Math.floor((intensity * colorCodes.length)), colorCodes.length - 1)
-        return colorCodes[colorIndex]
+        if (activityCount === 0) {
+            return '#F8F6F9'
+        }
+        if (activityCount > 0 && activityCount < everyCount) {
+            return '#e4e0ec'
+        }
+        if (activityCount >= everyCount) {
+            return '#CEBEE8'
+        }
+        return '#ffffff'
     }
 
     const getBorderColor = (date: string) => {

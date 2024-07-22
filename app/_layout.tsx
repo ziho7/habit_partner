@@ -1,5 +1,4 @@
 import GlobalProvider from "@/context/GlobalProvider";
-import { NotifierWrapper } from 'react-native-notifier';
 import { Stack } from "expo-router";
 import NotificationModal from "@/components/NotificationModal";
 

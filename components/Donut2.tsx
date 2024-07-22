@@ -4,23 +4,26 @@ import Svg, { Circle, Path } from 'react-native-svg';
 import Animated, { useSharedValue, useAnimatedProps, withTiming } from 'react-native-reanimated';
 import { Habit, updateHabit } from '@/lib/storage';
 import { getCurrentDateAndDayOfWeekInTimeZone } from '@/lib/get_data';
+import { useTranslation } from 'react-i18next';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-const DonutChart = ({clickCount1, habit, doneCallBack }: {
-    clickCount1: number,
+const DonutChart = ({clickCount, habit, doneCallBack, setClickCount }: {
+    clickCount: number,
     habit: Habit,
     doneCallBack: () => Promise<void>
-}) => {    
-    const [clickCount, setClickCount] = useState(clickCount1);
+    setClickCount: (clickCount: number) => void
+}) => {  
+    
     const progress = useSharedValue(0);
-    const currentDate = getCurrentDateAndDayOfWeekInTimeZone().currentDate;
+    const currentDate = getCurrentDateAndDayOfWeekInTimeZone().currentDate
+    const {t} = useTranslation()
 
     // 计算圆周长
     const radius = 40;
     const strokeWidth = 8;
     const circumference = 2 * Math.PI * radius;
-    const finished = clickCount === habit.everyCount;
+    const finished = clickCount >= habit.everyCount;
 
     // 动画路径属性
     const animatedProps = useAnimatedProps(() => ({
@@ -29,7 +32,12 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
 
     useEffect(() => {
         // 点击时更新进度动画
-        progress.value = withTiming(clickCount / habit.everyCount, { duration: 500 });
+        let value = clickCount
+        if (clickCount > habit.everyCount) {
+            value = habit.everyCount
+        }
+        progress.value = withTiming(value / habit.everyCount, { duration: 500 });
+
     }, [clickCount]);
 
     const handleClick = async () => {
@@ -44,12 +52,27 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
     }
 
     const handleLongClick = async () => {    
-        habit.records.set(currentDate, { clickCount: 0 })
-        await updateHabit(habit)
-        setClickCount(0)
-        await doneCallBack()
+        
     }
 
+    const calFontSize = (everyCount: number) => {
+        if (everyCount < 100) {
+            return 'text-[20px]'
+        }
+        if (everyCount < 10000) {
+            return 'text-[16px]'
+        }
+
+        if (everyCount < 1000000) {
+            return 'text-[12px]'
+        }
+
+        if (everyCount < 100000000) {
+            return 'text-[10px]'
+        }
+
+        return 'text-[8px]'
+    }
 
 
     return (
@@ -81,8 +104,8 @@ const DonutChart = ({clickCount1, habit, doneCallBack }: {
                 className='text-[12px] text-mygray'
             >   
             {finished ? 
-                <Text className='text-[20px] font-semibold'>Done</Text> : 
-                <Text className='text-[20px] font-semibold'>{clickCount} / {habit.everyCount}</Text>
+                <Text className='text-[20px] font-semibold'>{t('done')}</Text> : 
+                <Text className={`font-semibold ${calFontSize(habit.everyCount)}`}> {clickCount} / {habit.everyCount}</Text>
             }
             
             </TouchableOpacity>

@@ -36,6 +36,16 @@
     "sun": "周日", "mon": "周一", "tue": "周二", "wed": "周三", "thu": "周四", "fri": "周五", "sat": "周六",
     "Sun": "星期日", "Mon": "星期一", "Tue": "星期二", "Wed": "星期三", "Thu": "星期四", "Fri": "星期五", "Sat": "星期六",
     "Jan": "一月", "Feb": "二月", "Mar": "三月", "Apr": "四月", "May": "五月", "Jun": "六月", "Jul": "七月", "Aug": "八月", "Sep": "九月", "Oct": "十月", "Nov": "十一月", "Dec": "十二月",
-    "January": "一月", "February": "二月", "March": "三月", "April": "四月", "May": "五月", "June": "六月", "July": "七月", "August": "八月", "September": "九月", "October": "十月", "November": "十一月", "December": "十二月"
-    
+    "January": "一月", "February": "二月", "March": "三月", "April": "四月", "May": "五月", "June": "六月", "July": "七月", "August": "八月", "September": "九月", "October": "十月", "November": "十一月", "December": "十二月",
+    "done": "完成",
+    "cancelClick": "取消打卡",
+    "deleteHabit": "删除习惯",
+    "clickedCount": "点击次数",
+    "clicked": "已点击",
+    "finished": "已完成",
+    "show": "待完成",
+    "all": "全部",
+    "hide": "隐藏",
+    "selectIcon": "选择图标",
+    "reading": "读书", "photography": "摄影", "study": "学习", "hiking": "登山",  "painting":"画画", "cooking":"烹饪", "yoga": "瑜伽", "cycling": "骑自行车", "fishing": "钓鱼"
 }

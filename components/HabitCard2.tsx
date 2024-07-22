@@ -15,26 +15,26 @@ const HabitCard = ({
     clickCount,
     habit,
     doneCallBack,
-    currentDate
+    currentDate,
+    pressCall,
 }: {
     clickCount: number,
     habit: Habit,
     doneCallBack: () => Promise<void>,
-    currentDate: string
+    currentDate: string,
+    pressCall: () => void
 }) => {
 
     const [showLongPressModal, setShowLongPressModal] = useState(false)
 
-    // const handleLongClick = async () => {
-    //     habit.records.set(currentDate, { clickCount: 0 })
-    //     await updateHabit(habit)
-    //     await doneCallBack()
-    // }
+    const [clickCount1, setClickCount1] = useState(clickCount)
+    
 
     return (
         <TouchableOpacity
             className='mt-4'
             onPress={() => {
+                pressCall()
                 router.push({
                     pathname: "/detail/dataPanel",
                     params: { habitId: habit.id }
@@ -56,17 +56,17 @@ const HabitCard = ({
                     <Text className='text-[11px] text-mygray'>{getShowdaysStr(habit.showsDays)}</Text>
                 </View>
 
-                <Donut2 clickCount1={clickCount} habit={habit} doneCallBack={doneCallBack} />
+                <Donut2 clickCount={clickCount1} habit={habit} doneCallBack={doneCallBack} setClickCount={setClickCount1} />
             </View>
 
 
             <LongPressModal
                 showPicker={showLongPressModal}
                 closeFunction={() => { setShowLongPressModal(false)}}
-                onChangeFunction={() => { }}
-                pickerData={[]}
-                selectedValue=''
                 habit={habit}
+                currentDate={currentDate}
+                clickCount={clickCount1}
+                setClickCount={setClickCount1}
             />
         </TouchableOpacity>
 

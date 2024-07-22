@@ -13,6 +13,12 @@ export enum HabitType {
     Monthly
 }
 
+export enum HabitDisplay {
+    Show, // 0
+    Hide, // 1
+    All // 2
+}
+
 export const habitTypeIntToString = (type: number) => {
     switch (type) {
         case 0:
@@ -25,6 +31,21 @@ export const habitTypeIntToString = (type: number) => {
             return 'daily'
     }
 }
+
+export const habitDisplayIntToString = (display: number) => {
+    switch (display) {
+        case 0:
+            return 'show'
+        case 1:
+            return 'hide'
+        case 2:
+            return 'all'
+        default:
+            return 'show'
+    }
+
+}
+
 
 export const habitTypeStringToInt = (type: string) => {
     switch (type) {
@@ -66,6 +87,10 @@ export class Habit {
 export class Record {
     @Expose()
     clickCount: number
+
+    constructor(clickCount: number) {
+        this.clickCount = clickCount
+    }
 }
 
 // user to all habits key
@@ -94,7 +119,6 @@ const habitCheck = (habit: Habit) => {
 }
 
 export const addHabit = async (habit: Habit) => {
-
     try {
         habitCheck(habit)
 
@@ -114,6 +138,7 @@ export const addHabit = async (habit: Habit) => {
         await setData(userHabitsKey, JSON.stringify(userHabits))
     } catch (error) {
         Alert.alert('Error', 'Failed to add habit' + error)
+        throw error
     }
 }
 
@@ -158,7 +183,8 @@ export const updateHabit = async (habit: Habit) => {
         let habitJson = JSON.stringify(instanceToPlain(habit))
         await setData(habit.id.toString(), habitJson)
     } catch (error) {
-        Alert.alert('Error', 'Failed to update habit' + error)
+        Alert.alert('Error', 'Failed to update habit' + error) //todo 翻译成中文
+        throw error
     }
 }
 
@@ -244,7 +270,7 @@ export const calculateCompletedDays = (habit: Habit) => {
         return 0
     }
     const recordArray = Array.from(habit.records.values());
-    return recordArray.filter((record) => record.clickCount > 0).length;
+    return recordArray.filter((record) => record.clickCount >= habit.everyCount).length;
 }
 
 export const transRecordToCommitsData = (habit: Habit) => {
