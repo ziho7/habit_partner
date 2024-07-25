@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 
 
 // todo 是否添加成功
-const habits = ["reading", "gardening", "study", "hiking", "painting", "cooking", "yoga", "cycling", "fishing"]
+const habits = ["reading", "meditation", "study", "hiking", "painting", "cooking", "yoga", "cycling", "fishing"]
 
 const AddHabit = ({ closeCallBack, okCallBack, currentHabitType }: {
     closeCallBack: () => void,

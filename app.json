@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "habit_partner",
+    "name": "Habit Partner",
     "slug": "habit-partner",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ziho.habitpartner"
+      "bundleIdentifier": "com.ziho.habitpartner",
+      "infoPlist": {
+        "RCTAsyncStorageExcludeFromBackup": false
+      }
     },
     "android": {
       "adaptiveIcon": {

@@ -52,7 +52,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第一类 运动 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Sport</Text>
+                            <Text className='text-[8px]'>{t('sport')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -79,7 +79,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第二类 学习 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Study</Text>
+                            <Text className='text-[8px]'>{t('study')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -106,7 +106,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第三类  */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Daily</Text>
+                            <Text className='text-[8px]'>{t('daily2')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -133,7 +133,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第四类 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Entertainment</Text>
+                            <Text className='text-[8px]'>{t('entertainment')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -160,7 +160,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第五类 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Health</Text>
+                            <Text className='text-[8px]'>{t('health')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -187,7 +187,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第六类 戒除 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Quit</Text>
+                            <Text className='text-[8px]'>{t('quit')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -214,7 +214,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第7类 戒除 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Other</Text>
+                            <Text className='text-[8px]'>{t('other')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {

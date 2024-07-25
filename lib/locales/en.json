@@ -50,5 +50,6 @@
     "all": "All",
     "hide": "Hidden",
     "selectIcon": "Select Icon please",
-    "reading": "Reading", "photography": "Photography", "study": "Study", "hiking": "Hiking",  "painting":"Painting", "cooking":"Cooking", "yoga": "Yoga", "cycling": "Cycling", "fishing": "Fishing"
+    "reading": "Reading", "photography": "Photography", "study": "Study", "hiking": "Hiking",  "painting":"Painting", "cooking":"Cooking", "yoga": "Yoga", "cycling": "Cycling", "fishing": "Fishing", "meditation": "Meditation",
+    "sport": "Sport", "work": "Work","daily2": "Daily", "entertainment": "Entertainment", "health": "Health", "quit": "Quit","other": "Other"
 }
