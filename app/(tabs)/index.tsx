@@ -197,7 +197,7 @@ const Home = () => {
             />
           }}
           keyExtractor={(item) => item.id.toString()}
-          ListHeaderComponentStyle={{ zIndex: 10 }}
+          ListHeaderComponentStyle={{ zIndex: 1000 }}
           renderSectionHeader={({ section }) => {
             if (section.title === 'finished' && section.data.length > 0) {
               return <SeperateLine />
@@ -212,6 +212,9 @@ const Home = () => {
               <Text>{t("addAHabit")}</Text>
             </View>
           }
+
+          
+          
         />
       </TouchableOpacity>
 

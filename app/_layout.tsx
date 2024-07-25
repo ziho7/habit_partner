@@ -15,7 +15,7 @@ export default function RootLayout() {
 
   setTimeout(() => {
     onLayoutRootView()
-  }, 1000)
+  }, 1500)
 
   return (
     <GlobalProvider>
