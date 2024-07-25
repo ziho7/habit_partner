@@ -17,7 +17,8 @@
       "bundleIdentifier": "com.ziho.habitpartner",
       "infoPlist": {
         "RCTAsyncStorageExcludeFromBackup": false
-      }
+      },
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
