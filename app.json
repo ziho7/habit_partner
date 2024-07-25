@@ -19,9 +19,10 @@
         "RCTAsyncStorageExcludeFromBackup": false
       },
       "usesIcloudStorage": true,
-      "entaitlements": {
-        "entaitlement": "com.apple.developer.icloud-services",
-        "key-value": ["CloudKit"]
+      "entitlements": {
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.ziho.habitpartner"
+        ]
       },
       "buildNumber": "3"
     },
