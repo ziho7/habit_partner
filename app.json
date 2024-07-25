@@ -13,11 +13,12 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.ziho.habitpartner",
       "infoPlist": {
         "RCTAsyncStorageExcludeFromBackup": false
       },
+      "usesIcloudStorage": true,
       "buildNumber": "3"
     },
     "android": {
