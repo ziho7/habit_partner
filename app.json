@@ -24,7 +24,7 @@
           "iCloud.com.ziho.habitpartner"
         ]
       },
-      "RCTAsyncStorageExcludeFromBackup": "false",
+      "RCTAsyncStorageExcludeFromBackup": false,
       
       "buildNumber": "6"
     },
