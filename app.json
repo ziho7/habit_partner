@@ -22,6 +22,9 @@
       "entitlements": {
         "com.apple.developer.icloud-container-identifiers": [
           "iCloud.com.ziho.habitpartner"
+        ],
+        "com.apple.developer.ubiquity-container-identifiers": [
+          "iCloud.com.ziho.habitpartner"
         ]
       },
       "buildNumber": "3"
