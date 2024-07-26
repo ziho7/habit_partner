@@ -33,7 +33,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ziho.habitpartner"
     },
     "web": {
       "bundler": "metro",
