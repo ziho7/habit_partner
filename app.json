@@ -27,7 +27,7 @@
       "infoPlist": {
         "RCTAsyncStorageExcludeFromBackup": false
       },
-      "buildNumber": "6"
+      "buildNumber": "7"
     },
     "android": {
       "adaptiveIcon": {
