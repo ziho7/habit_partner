@@ -15,9 +15,6 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.ziho.habitpartner",
-      "infoPlist": {
-        "RCTAsyncStorageExcludeFromBackup": false
-      },
       "usesIcloudStorage": true,
       "entitlements": {
         "com.apple.developer.icloud-container-identifiers": [
