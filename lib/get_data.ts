@@ -222,7 +222,7 @@ export const currentStreakClicked = (habit: Habit) => {
     }
 
     while (habit.records.has(dateToDash(currentDate))) {
-        if (isHabitClicked(habit, currentDate)) {
+        if (isHabitClicked2(habit, currentDate)) {
             currentStreak++
         } else {
             break
@@ -263,7 +263,7 @@ export const bestStreakClicked = (habit: Habit) => {
     let bestStreak = 0
     let habitRecordsArray = Array.from(habit.records.keys()).sort()
     for (let i = 0; i < habitRecordsArray.length; i++) {
-        if (isHabitClicked(habit, habitRecordsArray[i]) && (i === 0 || currentStrak === 0 || daysDifference(habitRecordsArray[i - 1], habitRecordsArray[i]) === 1)) {
+        if (isHabitClicked2(habit, habitRecordsArray[i]) && (i === 0 || currentStrak === 0 || daysDifference(habitRecordsArray[i - 1], habitRecordsArray[i]) === 1)) {
             currentStrak++
         } else {
             bestStreak = Math.max(currentStrak, bestStreak)
@@ -296,6 +296,14 @@ export const isHabitClicked = (habit: Habit, date: string) => {
     }
 
     return habit.records.get(date)!.clickCount > 0 && habit.records.get(date)!.clickCount < habit.everyCount
+}
+
+const isHabitClicked2 = (habit: Habit, date: string) => {
+    if (habit.records === undefined || habit.records.get(date) === undefined) {
+        return false
+    }
+
+    return habit.records.get(date)!.clickCount > 0
 }
 
 
