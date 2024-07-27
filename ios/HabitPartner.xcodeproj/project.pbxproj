@@ -307,11 +307,11 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ziho.habitpartner;
-				PRODUCT_NAME = HabitPartner;
+				PRODUCT_NAME = "HabitPartner";
 				SWIFT_OBJC_BRIDGING_HEADER = "HabitPartner/HabitPartner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -338,10 +338,10 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ziho.habitpartner;
-				PRODUCT_NAME = HabitPartner;
+				PRODUCT_NAME = "HabitPartner";
 				SWIFT_OBJC_BRIDGING_HEADER = "HabitPartner/HabitPartner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
