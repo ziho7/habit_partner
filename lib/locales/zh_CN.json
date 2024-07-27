@@ -29,6 +29,8 @@
     "daysLefted": "距离结束天数",
     "currentStreak": "目前连续完成天数",
     "bestStreak": "最长连续完成天数",
+    "currentStreak2": "当前连续点击天数",
+    "bestStreak2": "最长连续点击天数",
     "everyday": "每天",
     "weekends": "周末",
     "weekdays": "工作日",
@@ -46,6 +48,7 @@
     "show": "待完成",
     "all": "全部",
     "hide": "隐藏",
+    "expired" : "已过期",
     "selectIcon": "选择图标",
     "reading": "读书", "photography": "摄影", "study": "学习", "hiking": "登山",  "painting":"画画", "cooking":"做饭", "yoga": "瑜伽", "cycling": "骑自行车", "fishing": "钓鱼", "meditation": "冥想",
     "sport": "运动", "work": "工作","daily2": "日常", "entertainment": "娱乐", "health": "健康", "hobby": "爱好", "quit": "戒除","other": "其他"

@@ -10,7 +10,7 @@ import DataBlock from '@/components/DataBlock';
 
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import ContributionGraph from '@/components/ContributionGraph';
-import { bestStreak, calDaysLeft, calTotalClickCount, currentStreak, isHabitClicked, isHabitDone } from '@/lib/get_data';
+import { bestStreak, bestStreakClicked, calDaysLeft, calTotalClickCount, currentStreak, currentStreakClicked, isHabitClicked, isHabitDone } from '@/lib/get_data';
 import { Theme } from 'react-native-calendars/src/types';
 import EditHabit from '@/components/EditHabit';
 import { useGlobalContext } from '@/context/GlobalProvider';
@@ -125,6 +125,8 @@ const DataPanel = () => {
             <DataBlock title={i18n.t('daysLefted')} count={calDaysLeft(habit)} />
             <DataBlock title={i18n.t('currentStreak')} count={currentStreak(habit)} />
             <DataBlock title={i18n.t('bestStreak')} count={bestStreak(habit)} />
+            <DataBlock title={i18n.t('currentStreak2')} count={currentStreakClicked(habit)} />
+            <DataBlock title={i18n.t('bestStreak2')} count={bestStreakClicked(habit)} />
           </View>
         </View>
 

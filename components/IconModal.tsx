@@ -11,7 +11,6 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
     selectedIcon: string
 }) => {
 
-
     // 1开头是运动 // 2开头是学习 // 3开头是生活 // 4开头是娱乐 // 5开头是健康 // 6开头是戒除 7开头是其他
     const sportList = [101, 102, 103, 104, 105, 106]
     const studyList = [201, 202, 203, 204, 205]
@@ -67,7 +66,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => { 
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -94,7 +93,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -121,7 +120,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -148,7 +147,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -175,7 +174,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -202,7 +201,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -229,7 +228,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>

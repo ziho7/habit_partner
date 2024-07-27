@@ -147,8 +147,16 @@ const Home = () => {
                         setShowHabitDisplay(false)
                         await changeCurrentHabitDisplay(HabitDisplay.All)
                       }}
-                      containerStyles={`mr-6 w-[76px] rounded-none border-x-[0.5px] border-b-[0.5px] rounded-b-lg ${currenthabitDisplay === HabitDisplay.All ? 'bg-mypurple' : ''}`}
+                      containerStyles={`mr-6 w-[76px] rounded-none border-x-[0.5px] border-b-[0.5px] ${currenthabitDisplay === HabitDisplay.All ? 'bg-mypurple' : ''}`}
                       textStyles="text-[12px]" />
+                    <CustomButton
+                      title={t('expired')}
+                      handlePress={async () => {
+                        setShowHabitDisplay(false)
+                        await changeCurrentHabitDisplay(HabitDisplay.Expired)
+                      }}
+                      containerStyles={`mr-6 w-[76px] rounded-none border-x-[0.5px] border-b-[0.5px] rounded-b-lg ${currenthabitDisplay === HabitDisplay.Expired ? 'bg-mypurple' : ''}`}
+                      textStyles="text-[12px] text-mygray" />
                   </View>
                 </View>
               )
@@ -213,13 +221,13 @@ const Home = () => {
             </View>
           }
 
-          
-          
+
+
         />
       </TouchableOpacity>
 
       <Modal
-        style={{zIndex: 10}}
+        style={{ zIndex: 10 }}
         visible={showAddHabit}
         onRequestClose={() => setShowAddHabit(false)}
         animationType='slide'
