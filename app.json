@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "habit_partner",
+    "name": "Habit Partner",
     "slug": "habit-partner",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "habit_partner",
+    "scheme": "habit-partner",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -13,13 +13,28 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.ziho.habitpartner",
+      "usesIcloudStorage": true,
+      "entitlements": {
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.ziho.habitpartner"
+        ],
+        "com.apple.developer.ubiquity-container-identifiers": [
+          "iCloud.com.ziho.habitpartner"
+        ]
+      },
+      "infoPlist": {
+        "RCTAsyncStorageExcludeFromBackup": false
+      },
+      "buildNumber": "8"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ziho.habitpartner"
     },
     "web": {
       "bundler": "metro",
@@ -28,7 +43,8 @@
     },
     "plugins": [
       "expo-router",
-      "expo-localization"
+      "expo-localization",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

@@ -24,11 +24,13 @@
     "deleteAlert2": "This action cannot be undone",
     "cancel": "Cancel",
     "delete": "Delete",
-    "completedDays": "Completed Days",
+    "completedDays": "Completed Times",
     "totalClicked": "Total clicked",
     "daysLefted": "Days lefted",
-    "currentStreak": "Current streak",
-    "bestStreak": "Best streak",
+    "currentStreak": "Current streak (Done)",
+    "bestStreak": "Best streak (Done)",
+    "currentStreak2": "Current streak (Clicked)",
+    "bestStreak2": "Best streak (Clicked)",
     "everyday": "Everyday",
     "weekends": "Weekends",
     "weekdays": "Weekdays",
@@ -49,6 +51,8 @@
     "show": "Show",
     "all": "All",
     "hide": "Hidden",
+    "expired" : "Expired",
     "selectIcon": "Select Icon please",
-    "reading": "Reading", "photography": "Photography", "study": "Study", "hiking": "Hiking",  "painting":"Painting", "cooking":"Cooking", "yoga": "Yoga", "cycling": "Cycling", "fishing": "Fishing"
+    "reading": "Reading", "photography": "Photography", "study": "Study", "hiking": "Hiking",  "painting":"Painting", "cooking":"Cooking", "yoga": "Yoga", "cycling": "Cycling", "fishing": "Fishing", "meditation": "Meditation",
+    "sport": "Sport", "work": "Work","daily2": "Daily", "entertainment": "Entertainment", "health": "Health", "quit": "Quit","other": "Other"
 }

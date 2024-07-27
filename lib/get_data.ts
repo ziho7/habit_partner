@@ -57,7 +57,7 @@ export const getHabitsByHabitType = async (habitType: HabitType, habitDisplay: H
 export const getTodayHabits = async (habitDisplay: HabitDisplay) => {
     let res = await getAllHabits()
     let habits: Habit[] = res
-    let sortedHabits = filterHabits(habits, HabitType.Daily ,habitDisplay)
+    let sortedHabits = filterHabits(habits, HabitType.Daily, habitDisplay)
 
     return sortedHabits;
 }
@@ -81,18 +81,13 @@ const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily, h
     let unfinishedList: Habit[] = []
     let finishedList: Habit[] = []
     for (let habit of habits) {
-        // 不在制定日期内的habit不显示
-        if (habit.startDate > currentDate || habit.endDate < currentDate) {
-            continue
-        }
-
         // 不是这个类型的不显示
         if (habit.type !== habitType) {
             continue
         }
 
         // 不显示的星期不显示
-        if (!needShow(habit, dayOfWeek, habitDisplay)) {
+        if (!needShow(habit, dayOfWeek, habitDisplay, currentDate)) {
             continue
         }
 
@@ -125,7 +120,15 @@ const filterHabits = (habits: Habit[], habitType: HabitType = HabitType.Daily, h
     return res
 }
 
-const needShow = (habit: Habit, dayOfWeek: string, habitDisplay: HabitDisplay) => {
+const needShow = (habit: Habit, dayOfWeek: string, habitDisplay: HabitDisplay, currentDate: string) => {
+    // 不在制定日期内的habit
+    if (!dateValid(habit, currentDate)) {
+        if (habitDisplay === HabitDisplay.Expired) {
+            return true
+        }
+        return false
+    }
+
     if (habitDisplay === HabitDisplay.All) {
         return true
     }
@@ -140,6 +143,10 @@ const needShow = (habit: Habit, dayOfWeek: string, habitDisplay: HabitDisplay) =
     }
 
     return false
+}
+
+const dateValid = (habit: Habit, currentDate: string) => {
+    return habit.startDate <= currentDate && habit.endDate >= currentDate
 }
 
 
@@ -207,6 +214,26 @@ export const currentStreak = (habit: Habit) => {
     return currentStreak
 }
 
+export const currentStreakClicked = (habit: Habit) => {
+    let { currentDate } = getCurrentDateAndDayOfWeekInTimeZone()
+    let currentStreak = 0
+    if (habit.records === undefined) {
+        return 0
+    }
+
+    while (habit.records.has(dateToDash(currentDate))) {
+        if (isHabitClicked2(habit, currentDate)) {
+            currentStreak++
+        } else {
+            break
+        }
+        const currentDateYesterDay = new Date(currentDate).setDate(new Date(currentDate).getDate() - 1)
+        currentDate = new Date(currentDateYesterDay).toISOString().slice(0, 10)
+    }
+
+    return currentStreak
+}
+
 export const bestStreak = (habit: Habit) => {
     if (habit.records === undefined) {
         return 0
@@ -216,6 +243,27 @@ export const bestStreak = (habit: Habit) => {
     let habitRecordsArray = Array.from(habit.records.keys()).sort()
     for (let i = 0; i < habitRecordsArray.length; i++) {
         if (isHabitDone(habit, habitRecordsArray[i]) && (i === 0 || currentStrak === 0 || daysDifference(habitRecordsArray[i - 1], habitRecordsArray[i]) === 1)) {
+            currentStrak++
+        } else {
+            bestStreak = Math.max(currentStrak, bestStreak)
+            currentStrak = 0
+        }
+    }
+
+    bestStreak = Math.max(currentStrak, bestStreak)
+
+    return bestStreak
+}
+
+export const bestStreakClicked = (habit: Habit) => {
+    if (habit.records === undefined) {
+        return 0
+    }
+    let currentStrak = 0
+    let bestStreak = 0
+    let habitRecordsArray = Array.from(habit.records.keys()).sort()
+    for (let i = 0; i < habitRecordsArray.length; i++) {
+        if (isHabitClicked2(habit, habitRecordsArray[i]) && (i === 0 || currentStrak === 0 || daysDifference(habitRecordsArray[i - 1], habitRecordsArray[i]) === 1)) {
             currentStrak++
         } else {
             bestStreak = Math.max(currentStrak, bestStreak)
@@ -241,12 +289,21 @@ export const isHabitDone = (habit: Habit, date: string) => {
     return habit.records.get(date)!.clickCount >= habit.everyCount
 }
 
+
 export const isHabitClicked = (habit: Habit, date: string) => {
     if (habit.records === undefined || habit.records.get(date) === undefined) {
         return false
     }
 
     return habit.records.get(date)!.clickCount > 0 && habit.records.get(date)!.clickCount < habit.everyCount
+}
+
+const isHabitClicked2 = (habit: Habit, date: string) => {
+    if (habit.records === undefined || habit.records.get(date) === undefined) {
+        return false
+    }
+
+    return habit.records.get(date)!.clickCount > 0
 }
 
 

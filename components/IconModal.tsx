@@ -11,7 +11,6 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
     selectedIcon: string
 }) => {
 
-
     // 1开头是运动 // 2开头是学习 // 3开头是生活 // 4开头是娱乐 // 5开头是健康 // 6开头是戒除 7开头是其他
     const sportList = [101, 102, 103, 104, 105, 106]
     const studyList = [201, 202, 203, 204, 205]
@@ -52,7 +51,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第一类 运动 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Sport</Text>
+                            <Text className='text-[8px]'>{t('sport')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -67,7 +66,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => { 
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -79,7 +78,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第二类 学习 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Study</Text>
+                            <Text className='text-[8px]'>{t('study')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -94,7 +93,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -106,7 +105,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第三类  */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Daily</Text>
+                            <Text className='text-[8px]'>{t('daily2')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -121,7 +120,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -133,7 +132,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第四类 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Entertainment</Text>
+                            <Text className='text-[8px]'>{t('entertainment')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -148,7 +147,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -160,7 +159,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第五类 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Health</Text>
+                            <Text className='text-[8px]'>{t('health')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -175,7 +174,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -187,7 +186,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第六类 戒除 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Quit</Text>
+                            <Text className='text-[8px]'>{t('quit')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -202,7 +201,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>
@@ -214,7 +213,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                     {/* 第7类 戒除 */}
                     <View className='flex-row mx-2'>
                         <View className='w-[40px]'>
-                            <Text className='text-[8px]'>Other</Text>
+                            <Text className='text-[8px]'>{t('other')}</Text>
                         </View>
                         <View className='flex-row px-2 justify-start items-center gap-4 flex-wrap'>
                             {
@@ -229,7 +228,7 @@ const IconModal = ({ showPicker, closeFunction, onChangeFunction, selectedIcon }
                                             callBackFunction={() => {
                                                 onChangeFunction(getHabitNameByCode(item))
                                             }}
-                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitIconsByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
+                                            containerStyles={`w-[32px] h-[32px] items-center justify-center rounded-sm ${selectedIcon === getHabitNameByCode(item) ? 'bg-mypurple' : 'bg-mypurple-light'}`}
                                             customStyle='w-[16px] h-[16px]'
                                         />
                                     </TouchableOpacity>

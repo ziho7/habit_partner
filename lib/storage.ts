@@ -16,7 +16,8 @@ export enum HabitType {
 export enum HabitDisplay {
     Show, // 0
     Hide, // 1
-    All // 2
+    All, // 2
+    Expired // 3
 }
 
 export const habitTypeIntToString = (type: number) => {

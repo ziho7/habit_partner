@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 
 
 // todo 是否添加成功
-const habits = ["reading", "gardening", "study", "hiking", "painting", "cooking", "yoga", "cycling", "fishing"]
+const habits = ["reading", "meditation", "study", "hiking", "painting", "cooking", "yoga", "cycling", "fishing"]
 
 const AddHabit = ({ closeCallBack, okCallBack, currentHabitType }: {
     closeCallBack: () => void,
@@ -28,12 +28,20 @@ const AddHabit = ({ closeCallBack, okCallBack, currentHabitType }: {
 
     const today = getCurrentDateAndDayOfWeekInTimeZone().currentDate
 
+    const nextYearDay = () => {
+        let today = new Date()
+        today.setFullYear(today.getFullYear() + 1)
+        
+        // 2025-07-27
+        return today.toISOString().split('T')[0]
+    }
+
     const [habit, setHabit] = useState({
         id: "",
         userId: "",
         name: t(habits[Math.floor(Math.random() * habits.length)]),
         startDate: today,
-        endDate: today,
+        endDate: nextYearDay(),
         creatorId: '',
         everyCount: 5,
         type: currentHabitType,

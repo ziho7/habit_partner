@@ -1,7 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Tabs } from 'expo-router';
-import i18n from '@/lib/i18n';
 import { useTranslation } from 'react-i18next';
 
 
